@@ -1,11 +1,10 @@
 # Safari Web Extension Wallet for iOS
 
-> This repository showcases an example iOS wallet that utilizes a **Safari Web Extension** to enable wallet signing within the Safari browser. 
+> This repository showcases an example iOS wallet that utilizes a **Safari Web Extension** to enable wallet signing within the Safari browser.
 
 ## Demo
 
 [Video](https://github.com/Michaelsulistio/SolanaSafariWalletExtension/assets/18451967/b40ce3e3-33bb-4c60-9486-4b34f8db0076) of a Jupiter Exchange swap
-
 
 <div style="display: flex;">
     <img src="assets/ExtensionScreen1.png" width="25%">
@@ -25,6 +24,14 @@
 2. In the extensions list, find the name, "Solana Safari Extension Wallet", and enable it.
 3. Back in the _Aa_ menu, press new "Solana Safari Extension Wallet" button.
 4. Select "Always allow" then "Always allow on every website".
+
+## Reference
+
+`js-extension`: The React UI that renders within the safari browser. The UI is bundled into raw minified `.js` scripts which are exported to the Safari Extension folder with `npm run build:publish`.
+
+`SolanaSafariWalletExtension Extension`: The **Safari Web Extension** code. This contains the bundled `js` and `html` from the `js-extension` folder and also the _Extension handler_ code, which acts as a bridge between JS and the native app.
+
+`SolanaSafariWalletExtension`: The native iOS wallet app built with SwiftUI.
 
 ## What is a Safari Web Extension?
 
