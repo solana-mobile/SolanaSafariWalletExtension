@@ -93,6 +93,7 @@ export default function ApprovalScreen() {
       .then(() => window.close());
   };
 
+  // TODO: Implement reject
   const handleReject = () => {};
 
   return (

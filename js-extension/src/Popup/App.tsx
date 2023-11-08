@@ -1,10 +1,8 @@
 import React from "react";
 
 export default function App() {
-  const cardStyle = {
+  const popupContainer = {
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     height: "100vh", // for full viewport height centering
     backgroundColor: "#f4f4f4" // background color for the entire viewport
   };
@@ -14,21 +12,6 @@ export default function App() {
     padding: "20px 40px",
     borderRadius: "10px", // to make it rounded
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" // some shadow for the floating effect
-  };
-
-  const getCurrentTabs = () => {
-    console.log("Get Current Tabs");
-  };
-
-  const tabsClick1 = () => {
-    console.log("Tabs Click 1");
-    browser.tabs
-      .create({
-        url: "popup.html"
-      })
-      .then((tab) => {
-        console.log("tab promise fulfilled");
-      });
   };
 
   const fetchKeypair = () => {
@@ -44,12 +27,11 @@ export default function App() {
   };
 
   return (
-    <div style={cardStyle}>
+    <div style={popupContainer}>
       <div style={contentStyle}>
-        <h1>React App Popup</h1>
-        <button onClick={getCurrentTabs}>Get Current Tabs</button>
+        <h1>Solana Safari Extension Wallet Pop Up</h1>
+        <p>This Popup UI is currently used for a debugging tool</p>
         <button onClick={fetchKeypair}>Fetch Keypair</button>
-        <button onClick={tabsClick1}>Tabs 1</button>
       </div>
     </div>
   );

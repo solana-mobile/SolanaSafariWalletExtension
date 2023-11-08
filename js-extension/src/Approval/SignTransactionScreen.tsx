@@ -65,7 +65,13 @@ export default function SignTransactionScreen({ request, onApprove }: Props) {
         <Separator className="mb-4" />
 
         <div className="text-lg font-bold">Estimated Changes</div>
-        <div className="flex justify-between">
+
+        <div className="bg-slate-400 rounded-lg p-4 text-center text-black">
+          Transaction simulation not implemented as part of demo
+        </div>
+
+        {/* Demo UI */}
+        {/* <div className="flex justify-between">
           <span className="font-bold">Network fee</span>
           <span>{"< 0.00001 SOL"}</span>
         </div>
@@ -84,7 +90,7 @@ export default function SignTransactionScreen({ request, onApprove }: Props) {
             <span className="font-bold ml-3">Received</span>
           </div>
           <span className="text-green-500 font-semibold">{"0.236 USDC"}</span>
-        </div>
+        </div>*/}
 
         <Separator className="my-4" />
 

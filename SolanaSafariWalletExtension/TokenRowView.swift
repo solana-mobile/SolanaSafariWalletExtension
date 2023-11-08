@@ -1,20 +1,20 @@
 import SwiftUI
 
 struct TokenRowView: View {
-    var tokenImage: String  // the name of the image for the token
-    var tokenName: String   // the name of the token
-    var tokenAmount: String // the amount of the token
-    var tokenSymbol: String // the amount of the token
-    var usdAmount: String   // the equivalent USD amount
+    var tokenImage: String  
+    var tokenName: String   
+    var tokenAmount: String 
+    var tokenSymbol: String 
+    var usdAmount: String   
 
     var body: some View {
         HStack {
-            Image(tokenImage)  // Image on the very left
+            Image(tokenImage)  
                 .frame(width: 36, height: 36)
                 .clipShape(Circle())
-                .background(Circle().fill(Color.init(uiColor: UIColor.systemGray5)))  // Adding a gray circle background
+                .background(Circle().fill(Color.init(uiColor: UIColor.systemGray5)))  
 
-            VStack(alignment: .leading, spacing: 6) {  // VStack with Token Name and Token Amount
+            VStack(alignment: .leading, spacing: 6) {  
                 Text(tokenName)
                     .font(.body)
                 Text(tokenAmount + " " + tokenSymbol)
@@ -25,7 +25,7 @@ struct TokenRowView: View {
 
             Spacer()
 
-            Text("$\(usdAmount)")  // USD amount on the very right
+            Text("$\(usdAmount)") 
                 .font(.headline)
                 .padding(.trailing, 8)
         }

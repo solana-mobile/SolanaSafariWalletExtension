@@ -7092,10 +7092,8 @@
   // src/Popup/App.tsx
   var import_react = __toModule(require_react());
   function App() {
-    const cardStyle = {
+    const popupContainer = {
       display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
       height: "100vh",
       backgroundColor: "#f4f4f4"
     };
@@ -7105,17 +7103,6 @@
       borderRadius: "10px",
       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
     };
-    const getCurrentTabs = () => {
-      console.log("Get Current Tabs");
-    };
-    const tabsClick1 = () => {
-      console.log("Tabs Click 1");
-      browser.tabs.create({
-        url: "popup.html"
-      }).then((tab) => {
-        console.log("tab promise fulfilled");
-      });
-    };
     const fetchKeypair = () => {
       console.log("Keypair fetch click");
       browser.runtime.sendNativeMessage("id", "fetch-keypair", function(response) {
@@ -7124,16 +7111,12 @@
       });
     };
     return /* @__PURE__ */ import_react.default.createElement("div", {
-      style: cardStyle
+      style: popupContainer
     }, /* @__PURE__ */ import_react.default.createElement("div", {
       style: contentStyle
-    }, /* @__PURE__ */ import_react.default.createElement("h1", null, "React App Popup"), /* @__PURE__ */ import_react.default.createElement("button", {
-      onClick: getCurrentTabs
-    }, "Get Current Tabs"), /* @__PURE__ */ import_react.default.createElement("button", {
+    }, /* @__PURE__ */ import_react.default.createElement("h1", null, "Solana Safari Extension Wallet Pop Up"), /* @__PURE__ */ import_react.default.createElement("p", null, "This Popup UI is currently used for a debugging tool"), /* @__PURE__ */ import_react.default.createElement("button", {
       onClick: fetchKeypair
-    }, "Fetch Keypair"), /* @__PURE__ */ import_react.default.createElement("button", {
-      onClick: tabsClick1
-    }, "Tabs 1")));
+    }, "Fetch Keypair")));
   }
 
   // src/popup.tsx
