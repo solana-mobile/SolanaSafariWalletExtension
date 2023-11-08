@@ -1,0 +1,43 @@
+{
+  "scripts": {
+    "build": "NODE_ENV=\"production\" node esbuild.js && npx tailwindcss -i ./src/input.css -o ./public/build/output.css",
+    "build:publish": "NODE_ENV=\"production\" node esbuild.js && npx tailwindcss -i ./src/input.css -o ./public/build/output.css && cp -R public/build/* ../SolanaSafariWalletExtension\\ Extension/Resources/",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check ."
+  },
+  "gitHooks": {
+    "pre-commit": "prettier --write . && git add -A"
+  },
+  "dependencies": {
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-scroll-area": "^1.0.5",
+    "@radix-ui/react-separator": "^1.0.3",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@solana/wallet-standard-features": "^1.1.0",
+    "@solana/web3.js": "^1.87.1",
+    "@types/firefox-webext-browser": "^111.0.2",
+    "@wallet-standard/base": "^1.0.1",
+    "@wallet-standard/features": "^1.0.3",
+    "@wallet-standard/wallet": "^1.0.1",
+    "bs58": "^5.0.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "lucide-react": "^0.287.0",
+    "tailwind-merge": "^1.14.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@types/chrome": "^0.0.129",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.0",
+    "esbuild": "^0.8.46",
+    "prettier": "^2.2.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^4.1.3",
+    "yorkie": "^2.0.0"
+  }
+}

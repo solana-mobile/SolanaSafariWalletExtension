@@ -1,0 +1,1 @@
+.card{width:200px;padding:16px;border:1px solid #e8fa91;border-radius:8px;transition:transform .3s,box-shadow .3s;box-shadow:0 4px 8px rgba(0,0,0,.1);cursor:pointer}.card:hover{transform:translateY(-5px);box-shadow:0 6px 12px rgba(0,0,0,.2)}.card-title{font-size:20px;margin-bottom:8px}.card-content{font-size:16px}
