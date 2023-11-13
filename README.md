@@ -1,6 +1,7 @@
 # Safari Web Extension Wallet for iOS
 
 > This repository showcases an example iOS wallet that utilizes a **Safari Web Extension** to enable wallet signing within the Safari browser.
+> This is a proof of concept and its implementation of key storage is unencrypted and should not be replicated in a real wallet.
 
 ## Demo
 
