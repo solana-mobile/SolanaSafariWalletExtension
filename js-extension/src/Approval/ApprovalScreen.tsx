@@ -87,9 +87,13 @@ export default function ApprovalScreen() {
     }
 
     const originTabId = response.origin.tab.id;
+    // TODO: Only `update` and `close` tab if its the last request in queue
     browser.tabs
-      .sendMessage(originTabId, response) // TODO: Only `update` and `close` tab if its the last request in queue
+      // Sends an approval response to the originTab
+      .sendMessage(originTabId, response)
+      // Switches active tab back to the dApp (originTab)
       .then(() => browser.tabs.update(originTabId, { active: true }))
+      // Closes the Approval UI tab
       .then(() => window.close());
   };
 

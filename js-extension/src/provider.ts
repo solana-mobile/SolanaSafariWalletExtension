@@ -52,8 +52,6 @@ export function register(): boolean {
     if (registered) return true;
 
     const wallet = get();
-    console.log("in register");
-    console.log(wallet);
     registerWallet(wallet);
     registered = true;
     return true;

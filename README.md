@@ -26,11 +26,11 @@
 3. Back in the _Aa_ menu, press new "Solana Safari Extension Wallet" button.
 4. Select "Always allow" then "Always allow on every website".
 
-## Reference
+## Folder Reference
 
 `js-extension`: The React UI that renders within the safari browser. The UI is bundled into raw minified `.js` scripts which are exported to the Safari Extension folder with `npm run build:publish`.
 
-`SolanaSafariWalletExtension Extension`: The **Safari Web Extension** code. This contains the bundled `js` and `html` from the `js-extension` folder and also the _Extension handler_ code, which acts as a bridge between JS and the native app.
+`SolanaSafariWalletExtension Extension`: The **Safari Web Extension** Swift code. TThis contains the bundled `js` and `html` from the `js-extension` folder and also the _Extension handler_ code, which acts as a bridge between JS and the native app.
 
 `SolanaSafariWalletExtension`: The native iOS wallet app built with SwiftUI.
 
@@ -43,8 +43,23 @@ The **key benefit** of the web extension on mobile is that it is able to securel
 
 ## Wallet Standard
 
-Just like Chrome extension wallets, this uses [Wallet-standard](https://github.com/solana-labs/wallet-standard/tree/master) to subscribe and respond to requests from the dApp. It is automatically compatible
-with existing Solana web dApps.
+Just like Chrome extension wallets, this uses [Wallet-standard](https://github.com/solana-labs/wallet-standard/tree/master) to subscribe and respond to requests from the dApp. It is automatically compatible with existing Solana web dApps.
+
+## Example Connect Request Flow
+
+1. On page load, the JS extension injects a page script (`injected.ts`) that registers the wallet implementation to `window` using Wallet-standard's `registerWallet`.
+
+2. When a standard _Connect_ event is emitted, the wallet provider (`provider.ts`) relays it to the Extension's _content script_ (`content.ts`) with `window.postMessage`.
+
+3. The _content script_ forwards this message to the Extension's _background script_ (`background.ts`) using ` browser.runtime.sendMessage`.
+
+4. The _background script_ initializes the Approval UI Tab (`approval.tsx`) using `browser.tabs` API.
+
+5. On approve, the Approval UI tab sends the connect response back to the connecting dApp (`browser.tabs.sendMessage(originTabId, response)`).
+
+## Javascript Extension Architecture
+
+The JS extension is composed of scripts and React UI.
 
 ## Diagram
 
