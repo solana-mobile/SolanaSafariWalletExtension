@@ -45,7 +45,7 @@ The **key benefit** of the web extension on mobile is that it is able to securel
 
 Just like Chrome extension wallets, this uses [Wallet-standard](https://github.com/solana-labs/wallet-standard/tree/master) to subscribe and respond to requests from the dApp. It is automatically compatible with existing Solana web dApps.
 
-## Example Connect Request Flow
+## Example: Connect Request Flow
 
 1. On page load, the JS extension injects a page script (`injected.ts`) that registers the wallet implementation to `window` using Wallet-standard's `registerWallet`.
 
@@ -57,10 +57,6 @@ Just like Chrome extension wallets, this uses [Wallet-standard](https://github.c
 
 5. On approve, the Approval UI tab sends the connect response back to the connecting dApp (`browser.tabs.sendMessage(originTabId, response)`).
 
-## Javascript Extension Architecture
+## Architecture Diagram
 
-The JS extension is composed of scripts and React UI.
-
-## Diagram
-
-TODO: Add Diagram of transaction signing
+![High Level Diagram](./assets/Diagram1.png)
