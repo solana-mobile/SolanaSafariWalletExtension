@@ -57,6 +57,12 @@ Just like Chrome extension wallets, this uses [Wallet-standard](https://github.c
 
 5. On approve, the Approval UI tab sends the connect response back to the connecting dApp (`browser.tabs.sendMessage(originTabId, response)`).
 
-## Architecture Diagram
+## Architecture Diagrams
+
+### App + Extension Diagram
 
 ![High Level Diagram](./assets/Diagram1.png)
+
+### JS Extension Diagram
+
+![JS Extension Diagram](./assets/Diagram2.png)
