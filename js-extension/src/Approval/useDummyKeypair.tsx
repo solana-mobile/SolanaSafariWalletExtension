@@ -14,8 +14,6 @@ function parseKeypairFromNativeResponse(response: any): Keypair {
   secretKey.set(privateKeyBytes, 0);
   // Set the next 32 bytes to be the publicKeyBytes
   secretKey.set(publicKeyBytes, 32);
-
-  console.log("Secret Key Bytes: ", secretKey);
   return Keypair.fromSecretKey(secretKey);
 }
 
@@ -28,8 +26,6 @@ const useDummyKeypair = (): Keypair | null => {
         "id",
         "fetch-keypair"
       );
-
-      console.log("In response: ", response);
 
       if (response?.value?.keypair && response.status === "success") {
         const parsedKeypair: Keypair = parseKeypairFromNativeResponse(response);

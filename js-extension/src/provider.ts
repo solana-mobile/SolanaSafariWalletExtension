@@ -152,8 +152,6 @@ class SafariExtensionDemoWallet implements Wallet {
   }
 
   #connected = (accounts: readonly WalletAccount[]) => {
-    console.log("connected");
-
     this.#accounts = accounts.map(
       (account) => new SafariExtensionDemoWalletAccount(account)
     );
@@ -162,8 +160,6 @@ class SafariExtensionDemoWallet implements Wallet {
   };
 
   #disconnected = () => {
-    console.log("disconnected");
-
     if (this.#accounts.length) {
       this.#accounts = [];
       this.#standardEventsEmit("change", { accounts: this.accounts });
@@ -174,7 +170,6 @@ class SafariExtensionDemoWallet implements Wallet {
     event: E,
     listener: StandardEventsListeners[E]
   ) => {
-    console.log("Events listener push");
     ((this.#listeners[event] ??= []) as StandardEventsListeners[E][]).push(
       listener
     );
@@ -185,8 +180,6 @@ class SafariExtensionDemoWallet implements Wallet {
     event: E,
     listener: StandardEventsListeners[E]
   ) => {
-    console.log("Events listener off");
-
     ((this.#listeners[event] ??= []) as StandardEventsListeners[E][]).filter(
       (existingListener) => listener !== existingListener
     );
@@ -196,10 +189,8 @@ class SafariExtensionDemoWallet implements Wallet {
     event: E,
     ...args: Parameters<StandardEventsListeners[E]>
   ) => {
-    console.log("In emitt");
     ((this.#listeners[event] ??= []) as StandardEventsListeners[E][]).forEach(
       (listener) => {
-        console.log("In emssion");
         // eslint-disable-next-line @typescript-eslint/ban-types,prefer-spread
         (listener as Function).apply(null, args);
       }
@@ -207,7 +198,6 @@ class SafariExtensionDemoWallet implements Wallet {
   };
 
   #standardConnect: StandardConnectMethod = async (input) => {
-    console.log("In connect");
     if (!this.#accounts.length || !input?.silent) {
       const response = await this.#messageClient.sendWalletRequest({
         type: "page-wallet-request",
@@ -216,21 +206,22 @@ class SafariExtensionDemoWallet implements Wallet {
         input: input ?? { silent: false }
       });
 
+      if (response?.error) {
+        throw new Error(response.error.value);
+      }
+
       this.#connected(response.output.accounts);
     }
     return { accounts: this.accounts };
   };
 
   #standardDisconnect: StandardDisconnectMethod = async () => {
-    console.log("std disconnect");
-
     this.#disconnected();
   };
 
   #solanaSignAndSendTransaction: SolanaSignAndSendTransactionMethod = async (
     ...inputs
   ) => {
-    console.log("In Sign And Send Transaction");
     if (!this.#accounts) throw new Error("not connected");
 
     const outputs: SolanaSignAndSendTransactionOutput[] = [];
@@ -254,6 +245,10 @@ class SafariExtensionDemoWallet implements Wallet {
         input: inputs[0]
       });
 
+      if (response?.error) {
+        throw new Error(response.error.value);
+      }
+
       outputs.push(response.output);
     } else if (inputs.length > 1) {
       for (const input of inputs) {
@@ -265,16 +260,12 @@ class SafariExtensionDemoWallet implements Wallet {
   };
 
   #solanaSignIn: SolanaSignInMethod = async (...inputs) => {
-    console.log("In Sign In");
-
     // TODO: Implement.
     const outputs = [] as SolanaSignInOutput[];
     return outputs;
   };
 
   #solanaSignMessage: SolanaSignMessageMethod = async (...inputs) => {
-    console.log("In Sign Message");
-
     if (!this.#accounts) throw new Error("not connected");
 
     const outputs: SolanaSignMessageOutput[] = [];
@@ -293,6 +284,10 @@ class SafariExtensionDemoWallet implements Wallet {
         method: WalletRequestMethod.SOLANA_SIGN_MESSAGE,
         input: inputs[0]
       });
+
+      if (response?.error) {
+        throw new Error(response.error.value);
+      }
 
       outputs.push(response.output);
     } else if (inputs.length > 1) {
@@ -325,6 +320,10 @@ class SafariExtensionDemoWallet implements Wallet {
         method: WalletRequestMethod.SOLANA_SIGN_TRANSACTION,
         input: inputs[0]
       });
+
+      if (response?.error) {
+        throw new Error(response.error.value);
+      }
 
       outputs.push(response.output);
     } else if (inputs.length > 1) {

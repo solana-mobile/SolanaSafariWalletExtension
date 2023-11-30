@@ -24,12 +24,14 @@ export default function SignAndSendTransactionScreen({
   const handleSignAndSendTransaction = async (
     request: SignAndSendTransactionRequestEncoded
   ) => {
-    if (!request.origin) {
-      throw new Error("Sender origin is missing: " + request);
-    }
     if (!dummyKeypair) {
       return;
     }
+
+    if (!request.origin) {
+      throw new Error("Sender origin is missing: " + request);
+    }
+
     const txBytes = bs58.decode(request.input.transaction);
 
     const input = request.input;
@@ -51,12 +53,39 @@ export default function SignAndSendTransactionScreen({
     });
   };
 
+  const handleCancel = async (
+    request: SignAndSendTransactionRequestEncoded
+  ) => {
+    if (!request.origin) {
+      throw new Error("Sender origin is missing: " + request);
+    }
+
+    onApprove({
+      type: "wallet-response",
+      method: request.method,
+      requestId: request.requestId,
+      origin: request.origin,
+      output: {
+        signature: ""
+      },
+      error: {
+        value: "User rejected signing."
+      }
+    });
+  };
+
   return (
     <div>
       <button onClick={() => handleSignAndSendTransaction(request)}>
         SignAndSendTransaction
       </button>
-      <button onClick={() => {}}>Reject</button>
+      <button
+        onClick={() => {
+          handleCancel(request);
+        }}
+      >
+        Reject
+      </button>
     </div>
   );
 }
