@@ -79,6 +79,9 @@ export interface BaseWalletResponse {
   method: WalletRequestMethod;
   output: WalletRequestOutput;
   origin: browser.runtime.MessageSender;
+  error?: {
+    value: string;
+  };
 }
 
 export interface BaseWalletResponseEncoded {
@@ -87,6 +90,9 @@ export interface BaseWalletResponseEncoded {
   method: WalletRequestMethod;
   output: WalletRequestOutputEncoded;
   origin: browser.runtime.MessageSender;
+  error?: {
+    value: string;
+  };
 }
 
 /**

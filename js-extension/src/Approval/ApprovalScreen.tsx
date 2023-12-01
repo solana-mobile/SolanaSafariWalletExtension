@@ -15,35 +15,35 @@ import SignAndSendTransactionScreen from "./SignAndSendTransactionScreen";
 
 function getRequestScreenComponent(
   request: BaseWalletRequestEncoded,
-  onApprove: (response: BaseWalletResponseEncoded) => void
+  onComplete: (response: BaseWalletResponseEncoded) => void
 ) {
   switch (request.method) {
     case WalletRequestMethod.SOLANA_CONNECT:
       return (
         <ConnectScreen
           request={request as ConnectRequest}
-          onApprove={onApprove}
+          onComplete={onComplete}
         />
       );
     case WalletRequestMethod.SOLANA_SIGN_MESSAGE:
       return (
         <SignMessageScreen
           request={request as SignMessageRequestEncoded}
-          onApprove={onApprove}
+          onComplete={onComplete}
         />
       );
     case WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION:
       return (
         <SignAndSendTransactionScreen
           request={request as SignAndSendTransactionRequestEncoded}
-          onApprove={onApprove}
+          onComplete={onComplete}
         />
       );
     case WalletRequestMethod.SOLANA_SIGN_TRANSACTION:
       return (
         <SignTransactionScreen
           request={request as SignTransactionRequestEncoded}
-          onApprove={onApprove}
+          onComplete={onComplete}
         />
       );
     default:
@@ -81,7 +81,7 @@ export default function ApprovalScreen() {
     };
   }, []);
 
-  const handleApprove = (response: BaseWalletResponseEncoded) => {
+  const onRequestComplete = (response: BaseWalletResponseEncoded) => {
     if (!response.origin?.tab?.id) {
       throw new Error("Request has no origin sender metadata");
     }
@@ -97,13 +97,10 @@ export default function ApprovalScreen() {
       .then(() => window.close());
   };
 
-  // TODO: Implement reject
-  const handleReject = () => {};
-
   return (
     <div className="p-6">
       {requestQueue.length > 0
-        ? getRequestScreenComponent(requestQueue[0], handleApprove)
+        ? getRequestScreenComponent(requestQueue[0], onRequestComplete)
         : null}
     </div>
   );

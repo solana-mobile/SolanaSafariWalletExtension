@@ -16,10 +16,10 @@ import useDummyKeypair from "./useDummyKeypair";
 
 type Props = Readonly<{
   request: SignTransactionRequestEncoded;
-  onApprove: (response: SignTransactionResponseEncoded) => void;
+  onComplete: (response: SignTransactionResponseEncoded) => void;
 }>;
 
-export default function SignTransactionScreen({ request, onApprove }: Props) {
+export default function SignTransactionScreen({ request, onComplete }: Props) {
   const dummyKeypair = useDummyKeypair();
 
   const handleSignTransaction = async (
@@ -41,13 +41,32 @@ export default function SignTransactionScreen({ request, onApprove }: Props) {
       throw new Error("Sender origin is missing: " + request);
     }
 
-    onApprove({
+    onComplete({
       type: "wallet-response",
       method: request.method,
       requestId: request.requestId,
       origin: request.origin,
       output: {
         signedTransaction: bs58.encode(signedTxBytes)
+      }
+    });
+  };
+
+  const handleCancel = async (request: SignTransactionRequestEncoded) => {
+    if (!request.origin) {
+      throw new Error("Sender origin is missing: " + request);
+    }
+
+    onComplete({
+      type: "wallet-response",
+      method: request.method,
+      requestId: request.requestId,
+      origin: request.origin,
+      output: {
+        signedTransaction: ""
+      },
+      error: {
+        value: "User rejected signing."
       }
     });
   };
@@ -101,8 +120,28 @@ export default function SignTransactionScreen({ request, onApprove }: Props) {
       </div>
 
       <ApprovalFooter
-        onCancel={() => {}}
-        onConfirm={() => handleSignTransaction(request)}
+        onCancel={() => {
+          handleCancel(request);
+        }}
+        onConfirm={async () => {
+          try {
+            await handleSignTransaction(request);
+          } catch (err: any) {
+            const error = err as Error;
+            onComplete({
+              type: "wallet-response",
+              method: request.method,
+              requestId: request.requestId,
+              origin: request.origin!,
+              output: {
+                signedTransaction: ""
+              },
+              error: {
+                value: `${error.name}: ${error.message}`
+              }
+            });
+          }
+        }}
         confirmText={"Confirm"}
       />
     </div>

@@ -15,10 +15,10 @@ import useDummyKeypair from "./useDummyKeypair";
 
 type Props = Readonly<{
   request: SignMessageRequestEncoded;
-  onApprove: (response: SignMessageResponseEncoded) => void;
+  onComplete: (response: SignMessageResponseEncoded) => void;
 }>;
 
-export default function SignMessageScreen({ request, onApprove }: Props) {
+export default function SignMessageScreen({ request, onComplete }: Props) {
   const dummyKeypair = useDummyKeypair();
 
   const handleSignMessage = async (request: SignMessageRequestEncoded) => {
@@ -36,7 +36,7 @@ export default function SignMessageScreen({ request, onApprove }: Props) {
       throw new Error("Sender origin is missing: " + request);
     }
 
-    onApprove({
+    onComplete({
       type: "wallet-response",
       method: request.method,
       requestId: request.requestId,
@@ -44,6 +44,30 @@ export default function SignMessageScreen({ request, onApprove }: Props) {
       output: {
         signedMessage: input.message,
         signature: bs58.encode(signature)
+      }
+    });
+  };
+
+  const handleCancel = async (request: SignMessageRequestEncoded) => {
+    if (!dummyKeypair) {
+      return;
+    }
+
+    if (!request.origin) {
+      throw new Error("Sender origin is missing: " + request);
+    }
+
+    onComplete({
+      type: "wallet-response",
+      method: request.method,
+      requestId: request.requestId,
+      origin: request.origin,
+      output: {
+        signedMessage: "",
+        signature: ""
+      },
+      error: {
+        value: "User rejected signing."
       }
     });
   };
@@ -76,8 +100,29 @@ export default function SignMessageScreen({ request, onApprove }: Props) {
       </div>
 
       <ApprovalFooter
-        onCancel={() => {}}
-        onConfirm={() => handleSignMessage(request)}
+        onCancel={() => {
+          handleCancel(request);
+        }}
+        onConfirm={async () => {
+          try {
+            await handleSignMessage(request);
+          } catch (err: any) {
+            const error = err as Error;
+            onComplete({
+              type: "wallet-response",
+              method: request.method,
+              requestId: request.requestId,
+              origin: request.origin!,
+              output: {
+                signedMessage: "",
+                signature: ""
+              },
+              error: {
+                value: `${error.name}: ${error.message}`
+              }
+            });
+          }
+        }}
         confirmText={"Sign Message"}
       />
     </div>

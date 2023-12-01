@@ -12,10 +12,10 @@ import useDummyKeypair from "./useDummyKeypair";
 
 type Props = Readonly<{
   request: ConnectRequest;
-  onApprove: (response: ConnectResponseEncoded) => void;
+  onComplete: (response: ConnectResponseEncoded) => void;
 }>;
 
-export default function ConnectScreen({ request, onApprove }: Props) {
+export default function ConnectScreen({ request, onComplete }: Props) {
   const dummyKeypair = useDummyKeypair();
   const handleConnect = async (request: ConnectRequest) => {
     if (!dummyKeypair) {
@@ -35,19 +35,36 @@ export default function ConnectScreen({ request, onApprove }: Props) {
       label: "Sample Safari Extension Wallet"
     };
 
-    console.log("Connected account: ", account);
-
     if (!request.origin) {
       throw new Error("Sender origin is missing: " + request);
     }
 
-    onApprove({
+    onComplete({
       type: "wallet-response",
       method: request.method,
       requestId: request.requestId,
       origin: request.origin,
       output: {
         accounts: [account]
+      }
+    });
+  };
+
+  const handleCancel = async (request: ConnectRequest) => {
+    if (!request.origin) {
+      throw new Error("Sender origin is missing: " + request);
+    }
+
+    onComplete({
+      type: "wallet-response",
+      method: request.method,
+      requestId: request.requestId,
+      origin: request.origin,
+      output: {
+        accounts: []
+      },
+      error: {
+        value: "User rejected connecting."
       }
     });
   };
@@ -73,7 +90,9 @@ export default function ConnectScreen({ request, onApprove }: Props) {
         You'll share your public wallet adddress
       </div>
       <ApprovalFooter
-        onCancel={() => {}}
+        onCancel={() => {
+          handleCancel(request);
+        }}
         onConfirm={() => handleConnect(request)}
         confirmText="Connect"
       />
