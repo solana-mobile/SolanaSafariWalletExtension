@@ -43,8 +43,6 @@ func sharedUserDefaults() -> UserDefaults? {
 
 Now your native app and extension handler can read and write to the same UserDefaults!
 
-https://github.com/solana-mobile/SolanaSafariWalletExtension/blob/main/Shared/KeypairUtil.swift#L62-L64
-
 ## Enable the extension
 
 1. In Safari, press the _Aa_ menu and click _Manage Extensions_
