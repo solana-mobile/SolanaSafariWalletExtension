@@ -103,7 +103,26 @@ export default function SignMessageScreen({ request, onComplete }: Props) {
         onCancel={() => {
           handleCancel(request);
         }}
-        onConfirm={() => handleSignMessage(request)}
+        onConfirm={async () => {
+          try {
+            await handleSignMessage(request);
+          } catch (err: any) {
+            const error = err as Error;
+            onComplete({
+              type: "wallet-response",
+              method: request.method,
+              requestId: request.requestId,
+              origin: request.origin!,
+              output: {
+                signedMessage: "",
+                signature: ""
+              },
+              error: {
+                value: `${error.name}: ${error.message}`
+              }
+            });
+          }
+        }}
         confirmText={"Sign Message"}
       />
     </div>
