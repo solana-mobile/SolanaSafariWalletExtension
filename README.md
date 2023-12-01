@@ -17,7 +17,33 @@
 
 1. Download [Xcode](https://developer.apple.com/xcode/)
 2. Build the Extension's JS bundle: `cd js-extension && npm install && npm run build:publish`
-3. Open the project in Xcode, choose your simulator/device, build and run.
+3. Follow the "Enable App Groups" steps below.
+4. Open the project in Xcode, choose your simulator/device, build and run.
+
+## Enable App Groups
+
+In order for the Safari Extension to read the same `UserDefaults` or Keychain as the iOS app, they need to use a shared [App group](https://developer.apple.com/documentation/xcode/configuring-app-groups).
+
+1. In Xcode, select the project > Signing & Capabilities > App Groups
+2. At the bottom, add an App Group identifier.
+
+<div style="display: flex;">
+    <img src="assets/AppGroup1.png" width="65%">
+</div>
+
+<br />
+
+3. In `/Shared/KeypairUtil.swift`, edit the `sharedUserDefaults()` function to use your app group identifier.
+
+```swift
+func sharedUserDefaults() -> UserDefaults? {
+    return UserDefaults(suiteName: "group.your.app")
+}
+```
+
+Now your native app and extension handler can read and write to the same UserDefaults!
+
+https://github.com/solana-mobile/SolanaSafariWalletExtension/blob/main/Shared/KeypairUtil.swift#L62-L64
 
 ## Enable the extension
 
