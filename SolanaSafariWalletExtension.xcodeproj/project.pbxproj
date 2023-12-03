@@ -18,6 +18,9 @@
 		FB46E4EB2AE720EE00879F4F /* KeypairUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4BA2AE3B58C00879F4F /* KeypairUtil.swift */; };
 		FB46E4EC2AE720EF00879F4F /* KeypairUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4BA2AE3B58C00879F4F /* KeypairUtil.swift */; };
 		FB46E4EF2AE721CB00879F4F /* Base58Swift in Frameworks */ = {isa = PBXBuildFile; productRef = FB46E4EE2AE721CB00879F4F /* Base58Swift */; };
+		FB4C43152B1C6B07002E74E8 /* solana.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4C43132B1C6B07002E74E8 /* solana.xcframework */; };
+		FB4C43162B1C6B51002E74E8 /* solana.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4C43132B1C6B07002E74E8 /* solana.xcframework */; };
+		FB4C43172B1C6B51002E74E8 /* solana.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB4C43132B1C6B07002E74E8 /* solana.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB54E87A2ACD07D200A6E21D /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = FB54E8782ACD07D200A6E21D /* Main.html */; };
 		FB54E87C2ACD07D200A6E21D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FB54E87B2ACD07D200A6E21D /* Icon.png */; };
 		FB54E87E2ACD07D200A6E21D /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = FB54E87D2ACD07D200A6E21D /* Style.css */; };
@@ -78,6 +81,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FB4C43172B1C6B51002E74E8 /* solana.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +105,7 @@
 		FB46E4C22AE6FD1C00879F4F /* Keypair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypair.swift; sourceTree = "<group>"; };
 		FB46E4F02AE7229F00879F4F /* SolanaSafariWalletExtension Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SolanaSafariWalletExtension Extension.entitlements"; sourceTree = "<group>"; };
 		FB46E4F12AE8650300879F4F /* SolanaSafariWalletExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SolanaSafariWalletExtension.entitlements; sourceTree = "<group>"; };
+		FB4C43132B1C6B07002E74E8 /* solana.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = solana.xcframework; sourceTree = "<group>"; };
 		FB54E8722ACD07D200A6E21D /* SolanaSafariWalletExtension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolanaSafariWalletExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB54E8792ACD07D200A6E21D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = ../Base.lproj/Main.html; sourceTree = "<group>"; };
 		FB54E87B2ACD07D200A6E21D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -140,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB46E4C12AE6F55F00879F4F /* Base58Swift in Frameworks */,
+				FB4C43162B1C6B51002E74E8 /* solana.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB46E4EF2AE721CB00879F4F /* Base58Swift in Frameworks */,
+				FB4C43152B1C6B07002E74E8 /* solana.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +187,7 @@
 		FB46E4ED2AE721CB00879F4F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB4C43132B1C6B07002E74E8 /* solana.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
