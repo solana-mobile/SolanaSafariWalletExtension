@@ -12,6 +12,7 @@ import WalletDisplay from "./WalletDisplay";
 import ApprovalHeader from "./ApprovalHeader";
 import ApprovalFooter from "./ApprovalFooter";
 import useDummyKeypair from "./useDummyKeypair";
+import { requestNativeSignMessage } from "../util/requestNative";
 
 type Props = Readonly<{
   request: SignMessageRequestEncoded;
@@ -25,6 +26,8 @@ export default function SignMessageScreen({ request, onComplete }: Props) {
     if (!dummyKeypair) {
       return;
     }
+
+    await requestNativeSignMessage(request);
 
     const input = request.input;
     const { signature } = await signMessage(

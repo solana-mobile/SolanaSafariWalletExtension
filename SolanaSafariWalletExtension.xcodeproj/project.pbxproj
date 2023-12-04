@@ -21,6 +21,16 @@
 		FB4C43152B1C6B07002E74E8 /* solana.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4C43132B1C6B07002E74E8 /* solana.xcframework */; };
 		FB4C43162B1C6B51002E74E8 /* solana.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4C43132B1C6B07002E74E8 /* solana.xcframework */; };
 		FB4C43172B1C6B51002E74E8 /* solana.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB4C43132B1C6B07002E74E8 /* solana.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FB4C431A2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43192B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift */; };
+		FB4C431B2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43192B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift */; };
+		FB4C431F2B1D69B9002E74E8 /* SafariExtensionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C431E2B1D69B9002E74E8 /* SafariExtensionRequest.swift */; };
+		FB4C43202B1D69B9002E74E8 /* SafariExtensionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C431E2B1D69B9002E74E8 /* SafariExtensionRequest.swift */; };
+		FB4C43222B1D7478002E74E8 /* ConnectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */; };
+		FB4C43232B1D7478002E74E8 /* ConnectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */; };
+		FB4C43252B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43242B1D7BEE002E74E8 /* SignTransactionRequest.swift */; };
+		FB4C43262B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43242B1D7BEE002E74E8 /* SignTransactionRequest.swift */; };
+		FB4C43292B1D9145002E74E8 /* SignMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */; };
+		FB4C432A2B1D9145002E74E8 /* SignMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */; };
 		FB54E87A2ACD07D200A6E21D /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = FB54E8782ACD07D200A6E21D /* Main.html */; };
 		FB54E87C2ACD07D200A6E21D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FB54E87B2ACD07D200A6E21D /* Icon.png */; };
 		FB54E87E2ACD07D200A6E21D /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = FB54E87D2ACD07D200A6E21D /* Style.css */; };
@@ -106,6 +116,11 @@
 		FB46E4F02AE7229F00879F4F /* SolanaSafariWalletExtension Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SolanaSafariWalletExtension Extension.entitlements"; sourceTree = "<group>"; };
 		FB46E4F12AE8650300879F4F /* SolanaSafariWalletExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SolanaSafariWalletExtension.entitlements; sourceTree = "<group>"; };
 		FB4C43132B1C6B07002E74E8 /* solana.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = solana.xcframework; sourceTree = "<group>"; };
+		FB4C43192B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSExtensionContext+SafariRequestType.swift"; sourceTree = "<group>"; };
+		FB4C431E2B1D69B9002E74E8 /* SafariExtensionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariExtensionRequest.swift; sourceTree = "<group>"; };
+		FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequest.swift; sourceTree = "<group>"; };
+		FB4C43242B1D7BEE002E74E8 /* SignTransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTransactionRequest.swift; sourceTree = "<group>"; };
+		FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignMessageRequest.swift; sourceTree = "<group>"; };
 		FB54E8722ACD07D200A6E21D /* SolanaSafariWalletExtension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolanaSafariWalletExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB54E8792ACD07D200A6E21D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = ../Base.lproj/Main.html; sourceTree = "<group>"; };
 		FB54E87B2ACD07D200A6E21D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -192,6 +207,41 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FB4C43182B1D2AD0002E74E8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FB4C43192B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FB4C431C2B1D697E002E74E8 /* requests */ = {
+			isa = PBXGroup;
+			children = (
+				FB4C43272B1D9010002E74E8 /* models */,
+				FB4C431D2B1D6993002E74E8 /* protocols */,
+				FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */,
+				FB4C43242B1D7BEE002E74E8 /* SignTransactionRequest.swift */,
+				FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */,
+			);
+			path = requests;
+			sourceTree = "<group>";
+		};
+		FB4C431D2B1D6993002E74E8 /* protocols */ = {
+			isa = PBXGroup;
+			children = (
+				FB4C431E2B1D69B9002E74E8 /* SafariExtensionRequest.swift */,
+			);
+			path = protocols;
+			sourceTree = "<group>";
+		};
+		FB4C43272B1D9010002E74E8 /* models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
 		FB54E8692ACD07D200A6E21D = {
 			isa = PBXGroup;
 			children = (
@@ -264,6 +314,8 @@
 		FB54E8A92ACD07D300A6E21D /* SolanaSafariWalletExtension Extension */ = {
 			isa = PBXGroup;
 			children = (
+				FB4C431C2B1D697E002E74E8 /* requests */,
+				FB4C43182B1D2AD0002E74E8 /* Extensions */,
 				FB46E4F02AE7229F00879F4F /* SolanaSafariWalletExtension Extension.entitlements */,
 				FB54E8AA2ACD07D300A6E21D /* SafariWebExtensionHandler.swift */,
 				FB54E8BD2ACD07D300A6E21D /* Info.plist */,
@@ -484,12 +536,17 @@
 			files = (
 				FB46E4C32AE6FD1C00879F4F /* Keypair.swift in Sources */,
 				FBD745582AE09D2E003D5E6B /* WalletHomeView.swift in Sources */,
+				FB4C431A2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */,
 				FBD745622AE39546003D5E6B /* WalletTabItemView.swift in Sources */,
+				FB4C431F2B1D69B9002E74E8 /* SafariExtensionRequest.swift in Sources */,
+				FB4C43252B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */,
 				FB46E4BB2AE3B58C00879F4F /* KeypairUtil.swift in Sources */,
 				FBD7455E2AE3304A003D5E6B /* WalletTopBarView.swift in Sources */,
 				FBD745602AE334DE003D5E6B /* TokenRowView.swift in Sources */,
 				FB46E4BD2AE3BC4B00879F4F /* SettingsView.swift in Sources */,
+				FB4C43292B1D9145002E74E8 /* SignMessageRequest.swift in Sources */,
 				FBD745652AE39738003D5E6B /* WalletTabView.swift in Sources */,
+				FB4C43222B1D7478002E74E8 /* ConnectRequest.swift in Sources */,
 				FBD7454C2AE090C9003D5E6B /* MainApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,8 +576,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB4C431B2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */,
+				FB4C43202B1D69B9002E74E8 /* SafariExtensionRequest.swift in Sources */,
+				FB4C432A2B1D9145002E74E8 /* SignMessageRequest.swift in Sources */,
 				FB54E8AB2ACD07D300A6E21D /* SafariWebExtensionHandler.swift in Sources */,
+				FB4C43262B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */,
 				FB46E4E82AE71EB600879F4F /* KeypairUtil.swift in Sources */,
+				FB4C43232B1D7478002E74E8 /* ConnectRequest.swift in Sources */,
 				FB46E4E72AE71EB300879F4F /* Keypair.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

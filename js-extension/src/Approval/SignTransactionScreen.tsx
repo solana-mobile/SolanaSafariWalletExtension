@@ -13,6 +13,7 @@ import WalletDisplay from "./WalletDisplay";
 import { Download, SendHorizontal } from "lucide-react";
 import signVersionedTransaction from "../util/signVersionedTransaction";
 import useDummyKeypair from "./useDummyKeypair";
+import { requestNativeSignTransaction } from "../util/requestNative";
 
 type Props = Readonly<{
   request: SignTransactionRequestEncoded;
@@ -28,6 +29,8 @@ export default function SignTransactionScreen({ request, onComplete }: Props) {
     if (!dummyKeypair) {
       return;
     }
+
+    await requestNativeSignTransaction(request);
 
     const input = request.input;
     const txBytes = bs58.decode(input.transaction);

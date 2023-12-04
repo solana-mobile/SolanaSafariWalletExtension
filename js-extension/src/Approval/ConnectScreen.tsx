@@ -9,6 +9,7 @@ import WalletDisplay from "./WalletDisplay";
 import ApprovalHeader from "./ApprovalHeader";
 import ApprovalFooter from "./ApprovalFooter";
 import useDummyKeypair from "./useDummyKeypair";
+import { requestNativeConnect } from "../util/requestNative";
 
 type Props = Readonly<{
   request: ConnectRequest;
@@ -21,6 +22,8 @@ export default function ConnectScreen({ request, onComplete }: Props) {
     if (!dummyKeypair) {
       return;
     }
+
+    await requestNativeConnect(request);
 
     const account: WalletAccountEncoded = {
       address: dummyKeypair.publicKey.toBase58(),
