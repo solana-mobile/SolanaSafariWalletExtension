@@ -31,6 +31,8 @@
 		FB4C43262B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43242B1D7BEE002E74E8 /* SignTransactionRequest.swift */; };
 		FB4C43292B1D9145002E74E8 /* SignMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */; };
 		FB4C432A2B1D9145002E74E8 /* SignMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */; };
+		FB4C432C2B1E7219002E74E8 /* GetAccountsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C432B2B1E7219002E74E8 /* GetAccountsRequest.swift */; };
+		FB4C432D2B1E7219002E74E8 /* GetAccountsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C432B2B1E7219002E74E8 /* GetAccountsRequest.swift */; };
 		FB54E87A2ACD07D200A6E21D /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = FB54E8782ACD07D200A6E21D /* Main.html */; };
 		FB54E87C2ACD07D200A6E21D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FB54E87B2ACD07D200A6E21D /* Icon.png */; };
 		FB54E87E2ACD07D200A6E21D /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = FB54E87D2ACD07D200A6E21D /* Style.css */; };
@@ -121,6 +123,7 @@
 		FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequest.swift; sourceTree = "<group>"; };
 		FB4C43242B1D7BEE002E74E8 /* SignTransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTransactionRequest.swift; sourceTree = "<group>"; };
 		FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignMessageRequest.swift; sourceTree = "<group>"; };
+		FB4C432B2B1E7219002E74E8 /* GetAccountsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountsRequest.swift; sourceTree = "<group>"; };
 		FB54E8722ACD07D200A6E21D /* SolanaSafariWalletExtension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolanaSafariWalletExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB54E8792ACD07D200A6E21D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = ../Base.lproj/Main.html; sourceTree = "<group>"; };
 		FB54E87B2ACD07D200A6E21D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -221,6 +224,7 @@
 				FB4C43272B1D9010002E74E8 /* models */,
 				FB4C431D2B1D6993002E74E8 /* protocols */,
 				FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */,
+				FB4C432B2B1E7219002E74E8 /* GetAccountsRequest.swift */,
 				FB4C43242B1D7BEE002E74E8 /* SignTransactionRequest.swift */,
 				FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */,
 			);
@@ -539,6 +543,7 @@
 				FB4C431A2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */,
 				FBD745622AE39546003D5E6B /* WalletTabItemView.swift in Sources */,
 				FB4C431F2B1D69B9002E74E8 /* SafariExtensionRequest.swift in Sources */,
+				FB4C432C2B1E7219002E74E8 /* GetAccountsRequest.swift in Sources */,
 				FB4C43252B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */,
 				FB46E4BB2AE3B58C00879F4F /* KeypairUtil.swift in Sources */,
 				FBD7455E2AE3304A003D5E6B /* WalletTopBarView.swift in Sources */,
@@ -581,6 +586,7 @@
 				FB4C432A2B1D9145002E74E8 /* SignMessageRequest.swift in Sources */,
 				FB54E8AB2ACD07D300A6E21D /* SafariWebExtensionHandler.swift in Sources */,
 				FB4C43262B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */,
+				FB4C432D2B1E7219002E74E8 /* GetAccountsRequest.swift in Sources */,
 				FB46E4E82AE71EB600879F4F /* KeypairUtil.swift in Sources */,
 				FB4C43232B1D7478002E74E8 /* ConnectRequest.swift in Sources */,
 				FB46E4E72AE71EB300879F4F /* Keypair.swift in Sources */,

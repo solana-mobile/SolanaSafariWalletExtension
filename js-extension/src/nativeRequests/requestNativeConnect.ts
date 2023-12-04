@@ -1,14 +1,15 @@
+import { Base58EncodedAddress } from "../Approval/ApprovalScreen";
 import {
   ConnectRequest,
   StandardConnectOutputEncoded,
   WalletAccountEncoded
 } from "../types/messageTypes";
 
-type Address = string;
-
-function parseConnectResponse(response: any): Address[] | null {
+function parseConnectResponse(
+  accountsJson: any
+): Base58EncodedAddress[] | null {
   try {
-    const accounts = JSON.parse(response.value);
+    const accounts = JSON.parse(accountsJson);
 
     if (
       !Array.isArray(accounts) ||
@@ -17,7 +18,7 @@ function parseConnectResponse(response: any): Address[] | null {
       throw new Error("Invalid format");
     }
 
-    return accounts as Address[];
+    return accounts as Base58EncodedAddress[];
   } catch (err: any) {
     console.error("Error parsing connect response: ", err);
     return null;

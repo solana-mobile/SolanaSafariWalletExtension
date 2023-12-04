@@ -7092,11 +7092,40 @@
   // src/Popup/App.tsx
   var import_react = __toModule(require_react());
 
-  // src/util/requestNative.ts
+  // src/nativeRequests/requestNativeConnect.ts
+  function parseConnectResponse(accountsJson) {
+    try {
+      const accounts = JSON.parse(accountsJson);
+      if (!Array.isArray(accounts) || !accounts.every((item) => typeof item === "string")) {
+        throw new Error("Invalid format");
+      }
+      return accounts;
+    } catch (err) {
+      console.error("Error parsing connect response: ", err);
+      return null;
+    }
+  }
   async function requestNativeConnect(request) {
     const response = await browser.runtime.sendNativeMessage("id", request);
-    console.log("Native Connect Response: ", response);
-    return response;
+    const accounts = parseConnectResponse(response.value);
+    if (accounts === null) {
+      return null;
+    }
+    const account = {
+      address: accounts[0],
+      publicKey: accounts[0],
+      chains: [
+        "solana:mainnet",
+        "solana:devnet",
+        "solana:testnet",
+        "solana:localnet"
+      ],
+      features: [],
+      label: "Sample Safari Extension Wallet"
+    };
+    return {
+      accounts: [account]
+    };
   }
 
   // src/types/messageTypes.ts
@@ -7107,6 +7136,33 @@
     WalletRequestMethod2["SOLANA_SIGN_TRANSACTION"] = "SOLANA_SIGN_TRANSACTION";
     WalletRequestMethod2["SOLANA_SIGN_AND_SEND_TRANSACTION"] = "SOLANA_SIGN_AND_SEND_TRANSACTION";
   })(WalletRequestMethod || (WalletRequestMethod = {}));
+
+  // src/nativeRequests/requestNativeGetAccounts.ts
+  function parseGetAccountsResponse(accountsJson) {
+    try {
+      console.log("right before parse", accountsJson);
+      const accounts = JSON.parse(accountsJson);
+      if (!Array.isArray(accounts) || !accounts.every((item) => typeof item === "string")) {
+        throw new Error("Invalid format");
+      }
+      return accounts;
+    } catch (err) {
+      console.error("Error parsing get accounts response: ", err);
+      return null;
+    }
+  }
+  async function requestNativeGetAccounts() {
+    const response = await browser.runtime.sendNativeMessage("id", {
+      method: "GET_ACCOUNTS"
+    });
+    const accounts = parseGetAccountsResponse(response.value);
+    if (accounts === null) {
+      return null;
+    }
+    return {
+      accounts
+    };
+  }
 
   // src/Popup/App.tsx
   function App() {
@@ -7126,6 +7182,10 @@
         console.log("Received sendNativeMessage response:");
         console.log(response);
       });
+    };
+    const simulateGetAccountsRequest = async () => {
+      const response = await requestNativeGetAccounts();
+      console.log(response);
     };
     const simulateNativeConnectRequest = async () => {
       const response = await requestNativeConnect({
@@ -7147,6 +7207,8 @@
     }, /* @__PURE__ */ import_react.default.createElement("h1", null, "Solana Safari Extension Wallet Pop Up"), /* @__PURE__ */ import_react.default.createElement("p", null, "This Popup UI is currently used for a debugging tool"), /* @__PURE__ */ import_react.default.createElement("button", {
       onClick: fetchKeypair
     }, "Fetch Keypair"), /* @__PURE__ */ import_react.default.createElement("button", {
+      onClick: simulateGetAccountsRequest
+    }, "Simulate Get Accounts Request"), /* @__PURE__ */ import_react.default.createElement("button", {
       onClick: simulateNativeConnectRequest
     }, "Simulate Native Connect Request"), /* @__PURE__ */ import_react.default.createElement("button", {
       onClick: simulateNativeSignMessageRequest

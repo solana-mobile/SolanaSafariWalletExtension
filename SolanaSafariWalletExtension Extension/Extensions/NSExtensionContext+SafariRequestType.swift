@@ -3,12 +3,15 @@ import SafariServices
 
 public enum SafariRequestType {
 
+  case getAccounts
   case connect
   case signMessage(Any?)
   case signTransaction(Any?)
 
   public func getRequest() -> SafariExtensionRequest {
     switch self {
+    case .getAccounts:
+        return GetAccountsRequest()
     case .connect:
         return ConnectRequest()
     case .signMessage(let input):
@@ -31,6 +34,8 @@ extension NSExtensionContext {
     }
 
     switch method {
+        case "GET_ACCOUNTS":
+            return .getAccounts
         case "SOLANA_CONNECT":
             return .connect
         case "SOLANA_SIGN_MESSAGE":

@@ -12,7 +12,7 @@ import WalletDisplay from "./WalletDisplay";
 import ApprovalHeader from "./ApprovalHeader";
 import ApprovalFooter from "./ApprovalFooter";
 import useDummyKeypair from "./useDummyKeypair";
-import { requestNativeSignMessage } from "../util/requestNative";
+import { requestNativeSignMessage } from "../nativeRequests/requestNativeSignMessage";
 
 type Props = Readonly<{
   request: SignMessageRequestEncoded;

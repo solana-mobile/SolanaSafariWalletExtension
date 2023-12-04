@@ -1,6 +1,7 @@
 import React from "react";
-import { requestNativeConnect } from "../util/requestNative";
+import { requestNativeConnect } from "../nativeRequests/requestNativeConnect";
 import { WalletRequestMethod } from "../types/messageTypes";
+import { requestNativeGetAccounts } from "../nativeRequests/requestNativeGetAccounts";
 
 export default function App() {
   const popupContainer = {
@@ -27,6 +28,11 @@ export default function App() {
     );
   };
 
+  const simulateGetAccountsRequest = async () => {
+    const response = await requestNativeGetAccounts();
+    console.log(response);
+  };
+
   const simulateNativeConnectRequest = async () => {
     const response = await requestNativeConnect({
       input: {},
@@ -48,6 +54,9 @@ export default function App() {
         <h1>Solana Safari Extension Wallet Pop Up</h1>
         <p>This Popup UI is currently used for a debugging tool</p>
         <button onClick={fetchKeypair}>Fetch Keypair</button>
+        <button onClick={simulateGetAccountsRequest}>
+          Simulate Get Accounts Request
+        </button>
         <button onClick={simulateNativeConnectRequest}>
           Simulate Native Connect Request
         </button>

@@ -24,7 +24,7 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         let response = NSExtensionItem()
         response.userInfo = [
             SFExtensionMessageKey: [
-                "output": method.getRequest().response ?? "",
+                "value": method.getRequest().response ?? "",
             ]
         ]
         os_log("Completing request", log: logger, type: .default)

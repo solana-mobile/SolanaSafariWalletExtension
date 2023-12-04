@@ -1,14 +1,11 @@
-import {
-  ConnectRequest,
-  StandardConnectOutputEncoded,
-  WalletAccountEncoded
-} from "../types/messageTypes";
+import { Base58EncodedAddress } from "../Approval/ApprovalScreen";
 
-type Address = string;
-
-function parseGetAccountsResponse(response: any): Address[] | null {
+function parseGetAccountsResponse(
+  accountsJson: any
+): Base58EncodedAddress[] | null {
   try {
-    const accounts = JSON.parse(response.value);
+    console.log("right before parse", accountsJson);
+    const accounts = JSON.parse(accountsJson);
 
     if (
       !Array.isArray(accounts) ||
@@ -17,17 +14,19 @@ function parseGetAccountsResponse(response: any): Address[] | null {
       throw new Error("Invalid format");
     }
 
-    return accounts as Address[];
+    return accounts as Base58EncodedAddress[];
   } catch (err: any) {
-    console.error("Error parsing connect response: ", err);
+    console.error("Error parsing get accounts response: ", err);
     return null;
   }
 }
 
-export async function requestNativeGetAccounts(
-  request: ConnectRequest
-): Promise<StandardConnectOutputEncoded | null> {
-  const response = await browser.runtime.sendNativeMessage("id", request);
+export async function requestNativeGetAccounts(): Promise<{
+  accounts: Base58EncodedAddress[];
+} | null> {
+  const response = await browser.runtime.sendNativeMessage("id", {
+    method: "GET_ACCOUNTS"
+  });
 
   const accounts = parseGetAccountsResponse(response.value);
 
@@ -35,20 +34,7 @@ export async function requestNativeGetAccounts(
     return null;
   }
 
-  const account: WalletAccountEncoded = {
-    address: accounts[0],
-    publicKey: accounts[0],
-    chains: [
-      "solana:mainnet",
-      "solana:devnet",
-      "solana:testnet",
-      "solana:localnet"
-    ],
-    features: [],
-    label: "Sample Safari Extension Wallet"
-  };
-
   return {
-    accounts: [account]
+    accounts
   };
 }

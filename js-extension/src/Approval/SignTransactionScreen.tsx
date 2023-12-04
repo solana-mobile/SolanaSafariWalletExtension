@@ -13,7 +13,7 @@ import WalletDisplay from "./WalletDisplay";
 import { Download, SendHorizontal } from "lucide-react";
 import signVersionedTransaction from "../util/signVersionedTransaction";
 import useDummyKeypair from "./useDummyKeypair";
-import { requestNativeSignTransaction } from "../util/requestNative";
+import { requestNativeSignTransaction } from "../nativeRequests/requestNativeSignTransaction";
 
 type Props = Readonly<{
   request: SignTransactionRequestEncoded;
