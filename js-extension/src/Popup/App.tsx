@@ -1,4 +1,6 @@
 import React from "react";
+import { requestNativeConnect } from "../util/requestNative";
+import { WalletRequestMethod } from "../types/messageTypes";
 
 export default function App() {
   const popupContainer = {
@@ -15,7 +17,6 @@ export default function App() {
   };
 
   const fetchKeypair = () => {
-    console.log("Keypair fetch click");
     browser.runtime.sendNativeMessage(
       "id",
       "fetch-keypair",
@@ -26,12 +27,36 @@ export default function App() {
     );
   };
 
+  const simulateNativeConnectRequest = async () => {
+    const response = await requestNativeConnect({
+      input: {},
+      method: WalletRequestMethod.SOLANA_CONNECT,
+      type: "native-request",
+      requestId: "testConnectRequestId"
+    });
+
+    console.log(response);
+  };
+
+  const simulateNativeSignMessageRequest = () => {};
+
+  const simulateNativeSignTransactionRequest = () => {};
+
   return (
     <div style={popupContainer}>
       <div style={contentStyle}>
         <h1>Solana Safari Extension Wallet Pop Up</h1>
         <p>This Popup UI is currently used for a debugging tool</p>
         <button onClick={fetchKeypair}>Fetch Keypair</button>
+        <button onClick={simulateNativeConnectRequest}>
+          Simulate Native Connect Request
+        </button>
+        <button onClick={simulateNativeSignMessageRequest}>
+          Simulate Native Sign Message Request
+        </button>
+        <button onClick={simulateNativeSignTransactionRequest}>
+          Simulate Native Sign Transaction Request
+        </button>
       </div>
     </div>
   );

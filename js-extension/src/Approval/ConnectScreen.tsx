@@ -23,7 +23,9 @@ export default function ConnectScreen({ request, onComplete }: Props) {
       return;
     }
 
-    await requestNativeConnect(request);
+    const response = await requestNativeConnect(request);
+
+    console.log(response);
 
     const account: WalletAccountEncoded = {
       address: dummyKeypair.publicKey.toBase58(),

@@ -7091,6 +7091,24 @@
 
   // src/Popup/App.tsx
   var import_react = __toModule(require_react());
+
+  // src/util/requestNative.ts
+  async function requestNativeConnect(request) {
+    const response = await browser.runtime.sendNativeMessage("id", request);
+    console.log("Native Connect Response: ", response);
+    return response;
+  }
+
+  // src/types/messageTypes.ts
+  var WalletRequestMethod;
+  (function(WalletRequestMethod2) {
+    WalletRequestMethod2["SOLANA_CONNECT"] = "SOLANA_CONNECT";
+    WalletRequestMethod2["SOLANA_SIGN_MESSAGE"] = "SOLANA_SIGN_MESSAGE";
+    WalletRequestMethod2["SOLANA_SIGN_TRANSACTION"] = "SOLANA_SIGN_TRANSACTION";
+    WalletRequestMethod2["SOLANA_SIGN_AND_SEND_TRANSACTION"] = "SOLANA_SIGN_AND_SEND_TRANSACTION";
+  })(WalletRequestMethod || (WalletRequestMethod = {}));
+
+  // src/Popup/App.tsx
   function App() {
     const popupContainer = {
       display: "flex",
@@ -7104,11 +7122,23 @@
       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
     };
     const fetchKeypair = () => {
-      console.log("Keypair fetch click");
       browser.runtime.sendNativeMessage("id", "fetch-keypair", function(response) {
         console.log("Received sendNativeMessage response:");
         console.log(response);
       });
+    };
+    const simulateNativeConnectRequest = async () => {
+      const response = await requestNativeConnect({
+        input: {},
+        method: WalletRequestMethod.SOLANA_CONNECT,
+        type: "native-request",
+        requestId: "testConnectRequestId"
+      });
+      console.log(response);
+    };
+    const simulateNativeSignMessageRequest = () => {
+    };
+    const simulateNativeSignTransactionRequest = () => {
     };
     return /* @__PURE__ */ import_react.default.createElement("div", {
       style: popupContainer
@@ -7116,7 +7146,13 @@
       style: contentStyle
     }, /* @__PURE__ */ import_react.default.createElement("h1", null, "Solana Safari Extension Wallet Pop Up"), /* @__PURE__ */ import_react.default.createElement("p", null, "This Popup UI is currently used for a debugging tool"), /* @__PURE__ */ import_react.default.createElement("button", {
       onClick: fetchKeypair
-    }, "Fetch Keypair")));
+    }, "Fetch Keypair"), /* @__PURE__ */ import_react.default.createElement("button", {
+      onClick: simulateNativeConnectRequest
+    }, "Simulate Native Connect Request"), /* @__PURE__ */ import_react.default.createElement("button", {
+      onClick: simulateNativeSignMessageRequest
+    }, "Simulate Native Sign Message Request"), /* @__PURE__ */ import_react.default.createElement("button", {
+      onClick: simulateNativeSignTransactionRequest
+    }, "Simulate Native Sign Transaction Request")));
   }
 
   // src/popup.tsx

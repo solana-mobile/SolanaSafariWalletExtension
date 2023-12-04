@@ -13,17 +13,19 @@ export async function requestNativeConnect(
   const response = await browser.runtime.sendNativeMessage("id", request);
   console.log("Native Connect Response: ", response);
 
-  //   if (response?.value?.keypair && response.status === "success") {
-  //     const parsedKeypair: Keypair = parseKeypairFromNativeResponse(response);
-  //     console.log("parsedPubKey: ", parsedKeypair.publicKey.toBase58());
-  //     setKeypair(parsedKeypair);
-  //   } else if (response && response.status === "error") {
-  //     console.error("Error fetching keypair:", response.message);
-  //     setKeypair(null);
-  //   } else {
-  //     console.error("Unexpected response format from native message");
-  //   }
-  return null;
+  return response;
+
+  // if (response?.value?.keypair && response.status === "success") {
+  //   const parsedKeypair: Keypair = parseKeypairFromNativeResponse(response);
+  //   console.log("parsedPubKey: ", parsedKeypair.publicKey.toBase58());
+  //   setKeypair(parsedKeypair);
+  // } else if (response && response.status === "error") {
+  //   console.error("Error fetching keypair:", response.message);
+  //   setKeypair(null);
+  // } else {
+  //   console.error("Unexpected response format from native message");
+  // }
+  // return null;
 }
 
 export async function requestNativeSignMessage(

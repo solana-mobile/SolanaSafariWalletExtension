@@ -16,12 +16,19 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
     private var context: NSExtensionContext?
 
     func beginRequest(with context: NSExtensionContext) {
-      guard let method = context.requestMethod() else { return }
-      Task {
+        os_log("In beginRequest", log: logger, type: .default)
+        guard let method = context.requestMethod() else {
+            os_log("Method request failed", log: logger, type: .default)
+            return
+        }
         let response = NSExtensionItem()
-        defer { context.completeRequest(returningItems: [response], completionHandler: nil) }
-        response.userInfo = ["output": method.getRequest().response ?? ""]
-      }
+        response.userInfo = [
+            SFExtensionMessageKey: [
+                "output": method.getRequest().response ?? "",
+            ]
+        ]
+        os_log("Completing request", log: logger, type: .default)
+        context.completeRequest(returningItems: [response], completionHandler: nil)
     }
 
 //    func beginRequest(with context: NSExtensionContext) {
