@@ -34,18 +34,26 @@ export default function SignTransactionScreen({
       return;
     }
 
-    await requestNativeSignTransaction(request);
-
-    const input = request.input;
-    const txBytes = bs58.decode(input.transaction);
-
-    const signedTxBytes = await signVersionedTransaction(
-      VersionedTransaction.deserialize(txBytes),
-      dummyKeypair
-    );
-
     if (!request.origin) {
       throw new Error("Sender origin is missing: " + request);
+    }
+
+    const signedTx = await requestNativeSignTransaction(request);
+
+    if (!signedTx) {
+      onComplete({
+        type: "wallet-response",
+        method: request.method,
+        requestId: request.requestId,
+        origin: request.origin,
+        output: {
+          signedTransaction: ""
+        },
+        error: {
+          value: "An error occured during signing."
+        }
+      });
+      return;
     }
 
     onComplete({
@@ -54,7 +62,7 @@ export default function SignTransactionScreen({
       requestId: request.requestId,
       origin: request.origin,
       output: {
-        signedTransaction: bs58.encode(signedTxBytes)
+        signedTransaction: signedTx
       }
     });
   };

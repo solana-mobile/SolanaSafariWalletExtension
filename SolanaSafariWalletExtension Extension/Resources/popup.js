@@ -7140,7 +7140,6 @@
   // src/nativeRequests/requestNativeGetAccounts.ts
   function parseGetAccountsResponse(accountsJson) {
     try {
-      console.log("right before parse", accountsJson);
       const accounts = JSON.parse(accountsJson);
       if (!Array.isArray(accounts) || !accounts.every((item) => typeof item === "string")) {
         throw new Error("Invalid format");

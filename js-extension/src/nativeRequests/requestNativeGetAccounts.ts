@@ -4,7 +4,6 @@ function parseGetAccountsResponse(
   accountsJson: any
 ): Base58EncodedAddress[] | null {
   try {
-    console.log("right before parse", accountsJson);
     const accounts = JSON.parse(accountsJson);
 
     if (

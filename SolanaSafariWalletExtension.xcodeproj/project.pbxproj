@@ -37,6 +37,8 @@
 		FB54E8E52ACD0FB600A6E21D /* injected.js in Resources */ = {isa = PBXBuildFile; fileRef = FB54E8E12ACD0FB600A6E21D /* injected.js */; };
 		FB54E8E62ACD0FB600A6E21D /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = FB54E8E22ACD0FB600A6E21D /* content.js */; };
 		FB94F7412B1EC0C50065A675 /* CodeServices in Frameworks */ = {isa = PBXBuildFile; productRef = FB94F7402B1EC0C50065A675 /* CodeServices */; };
+		FB94F7522B1F069E0065A675 /* SignTransactionParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB94F7512B1F069E0065A675 /* SignTransactionParams.swift */; };
+		FB94F7532B1F069E0065A675 /* SignTransactionParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB94F7512B1F069E0065A675 /* SignTransactionParams.swift */; };
 		FBC93F562B1EAB7B0098826B /* CodeServices in Frameworks */ = {isa = PBXBuildFile; productRef = FBC93F552B1EAB7B0098826B /* CodeServices */; };
 		FBC93F582B1EBBB30098826B /* KeypairStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC93F572B1EBBB30098826B /* KeypairStorage.swift */; };
 		FBC93F592B1EBBB30098826B /* KeypairStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC93F572B1EBBB30098826B /* KeypairStorage.swift */; };
@@ -143,6 +145,7 @@
 		FB54E8E02ACD0FB600A6E21D /* background.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = background.js; sourceTree = "<group>"; };
 		FB54E8E12ACD0FB600A6E21D /* injected.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = injected.js; sourceTree = "<group>"; };
 		FB54E8E22ACD0FB600A6E21D /* content.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = content.js; sourceTree = "<group>"; };
+		FB94F7512B1F069E0065A675 /* SignTransactionParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTransactionParams.swift; sourceTree = "<group>"; };
 		FBC93F542B1EA55A0098826B /* SolanaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SolanaCore; sourceTree = "<group>"; };
 		FBC93F572B1EBBB30098826B /* KeypairStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypairStorage.swift; sourceTree = "<group>"; };
 		FBD7450D2ADA094B003D5E6B /* approval.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = approval.html; sourceTree = "<group>"; };
@@ -218,6 +221,7 @@
 		FB4C431C2B1D697E002E74E8 /* requests */ = {
 			isa = PBXGroup;
 			children = (
+				FB94F7502B1F065A0065A675 /* model */,
 				FB4C431D2B1D6993002E74E8 /* protocols */,
 				FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */,
 				FB4C432B2B1E7219002E74E8 /* GetAccountsRequest.swift */,
@@ -342,6 +346,14 @@
 			children = (
 			);
 			path = build;
+			sourceTree = "<group>";
+		};
+		FB94F7502B1F065A0065A675 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				FB94F7512B1F069E0065A675 /* SignTransactionParams.swift */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		FBC93F4F2B1EA3190098826B /* Packages */ = {
@@ -536,6 +548,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB94F7522B1F069E0065A675 /* SignTransactionParams.swift in Sources */,
 				FBD745582AE09D2E003D5E6B /* WalletHomeView.swift in Sources */,
 				FB4C431A2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */,
 				FBD745622AE39546003D5E6B /* WalletTabItemView.swift in Sources */,
@@ -582,6 +595,7 @@
 				FB54E8AB2ACD07D300A6E21D /* SafariWebExtensionHandler.swift in Sources */,
 				FB4C43262B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */,
 				FB4C432D2B1E7219002E74E8 /* GetAccountsRequest.swift in Sources */,
+				FB94F7532B1F069E0065A675 /* SignTransactionParams.swift in Sources */,
 				FB4C43232B1D7478002E74E8 /* ConnectRequest.swift in Sources */,
 				FBC93F5B2B1EBBB30098826B /* KeypairStorage.swift in Sources */,
 			);

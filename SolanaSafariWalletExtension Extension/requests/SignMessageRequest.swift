@@ -33,5 +33,4 @@ final class SignMessageRequest: SafariExtensionRequest {
 
         return Base58.fromBytes(signedMessageBytes.bytes)
     }
-
 }
