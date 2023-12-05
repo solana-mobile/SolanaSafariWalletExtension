@@ -1,6 +1,0 @@
-framework module solana {
-    umbrella header "solana.h"
-
-    export *
-    module * { export * }
-}
