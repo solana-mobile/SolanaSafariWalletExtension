@@ -218,7 +218,6 @@
 		FB4C431C2B1D697E002E74E8 /* requests */ = {
 			isa = PBXGroup;
 			children = (
-				FB4C43272B1D9010002E74E8 /* models */,
 				FB4C431D2B1D6993002E74E8 /* protocols */,
 				FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */,
 				FB4C432B2B1E7219002E74E8 /* GetAccountsRequest.swift */,
@@ -234,13 +233,6 @@
 				FB4C431E2B1D69B9002E74E8 /* SafariExtensionRequest.swift */,
 			);
 			path = protocols;
-			sourceTree = "<group>";
-		};
-		FB4C43272B1D9010002E74E8 /* models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = models;
 			sourceTree = "<group>";
 		};
 		FB54E8692ACD07D200A6E21D = {

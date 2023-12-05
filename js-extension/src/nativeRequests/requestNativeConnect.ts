@@ -29,7 +29,6 @@ export async function requestNativeConnect(
   request: ConnectRequest
 ): Promise<StandardConnectOutputEncoded | null> {
   const response = await browser.runtime.sendNativeMessage("id", request);
-
   const accounts = parseConnectResponse(response.value);
 
   if (accounts === null) {
