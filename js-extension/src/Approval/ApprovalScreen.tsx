@@ -12,10 +12,14 @@ import ConnectScreen from "./ConnectScreen";
 import SignMessageScreen from "./SignMessageScreen";
 import SignTransactionScreen from "./SignTransactionScreen";
 import SignAndSendTransactionScreen from "./SignAndSendTransactionScreen";
+import { requestNativeGetAccounts } from "../nativeRequests/requestNativeGetAccounts";
+
+export type Base58EncodedAddress = string;
 
 function getRequestScreenComponent(
   request: BaseWalletRequestEncoded,
-  onComplete: (response: BaseWalletResponseEncoded) => void
+  onComplete: (response: BaseWalletResponseEncoded) => void,
+  selectedAccount: Base58EncodedAddress | null
 ) {
   switch (request.method) {
     case WalletRequestMethod.SOLANA_CONNECT:
@@ -23,6 +27,7 @@ function getRequestScreenComponent(
         <ConnectScreen
           request={request as ConnectRequest}
           onComplete={onComplete}
+          selectedAccount={selectedAccount}
         />
       );
     case WalletRequestMethod.SOLANA_SIGN_MESSAGE:
@@ -30,6 +35,7 @@ function getRequestScreenComponent(
         <SignMessageScreen
           request={request as SignMessageRequestEncoded}
           onComplete={onComplete}
+          selectedAccount={selectedAccount}
         />
       );
     case WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION:
@@ -37,6 +43,7 @@ function getRequestScreenComponent(
         <SignAndSendTransactionScreen
           request={request as SignAndSendTransactionRequestEncoded}
           onComplete={onComplete}
+          selectedAccount={selectedAccount}
         />
       );
     case WalletRequestMethod.SOLANA_SIGN_TRANSACTION:
@@ -44,6 +51,7 @@ function getRequestScreenComponent(
         <SignTransactionScreen
           request={request as SignTransactionRequestEncoded}
           onComplete={onComplete}
+          selectedAccount={selectedAccount}
         />
       );
     default:
@@ -55,6 +63,9 @@ export default function ApprovalScreen() {
   const [requestQueue, setRequestQueue] = useState<
     Array<BaseWalletRequestEncoded>
   >([]);
+  const [selectedAccount, setSelectedAccount] =
+    useState<Base58EncodedAddress | null>(null);
+
   // This effect achieves two things:
   //    1. Initializes the wallet request listener for the approval tab
   //    2. Signals to background that this listener, and thus the approval tab, is ready to receive requests
@@ -81,6 +92,17 @@ export default function ApprovalScreen() {
     };
   }, []);
 
+  // Fetch the address of the selected account
+  useEffect(() => {
+    async function getSelectedAccount() {
+      const response = await requestNativeGetAccounts();
+      if (response && response.accounts.length > 0) {
+        setSelectedAccount(response.accounts[0]);
+      }
+    }
+    getSelectedAccount();
+  }, []);
+
   const onRequestComplete = (response: BaseWalletResponseEncoded) => {
     if (!response.origin?.tab?.id) {
       throw new Error("Request has no origin sender metadata");
@@ -100,7 +122,11 @@ export default function ApprovalScreen() {
   return (
     <div className="p-6">
       {requestQueue.length > 0
-        ? getRequestScreenComponent(requestQueue[0], onRequestComplete)
+        ? getRequestScreenComponent(
+            requestQueue[0],
+            onRequestComplete,
+            selectedAccount
+          )
         : null}
     </div>
   );

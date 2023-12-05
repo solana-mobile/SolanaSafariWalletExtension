@@ -3,37 +3,51 @@ import {
   SignMessageRequestEncoded,
   SignMessageResponseEncoded
 } from "../types/messageTypes";
-import getDummyKeypair from "../util/getDummyKeypair";
-import signMessage from "../util/signMessage";
-import bs58 from "bs58";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import WalletDisplay from "./WalletDisplay";
 import ApprovalHeader from "./ApprovalHeader";
 import ApprovalFooter from "./ApprovalFooter";
-import useDummyKeypair from "./useDummyKeypair";
+import { requestNativeSignMessage } from "../nativeRequests/requestNativeSignMessage";
+import { Base58EncodedAddress } from "./ApprovalScreen";
 
 type Props = Readonly<{
   request: SignMessageRequestEncoded;
   onComplete: (response: SignMessageResponseEncoded) => void;
+  selectedAccount: Base58EncodedAddress;
 }>;
 
-export default function SignMessageScreen({ request, onComplete }: Props) {
-  const dummyKeypair = useDummyKeypair();
-
+export default function SignMessageScreen({
+  request,
+  onComplete,
+  selectedAccount
+}: Props) {
   const handleSignMessage = async (request: SignMessageRequestEncoded) => {
-    if (!dummyKeypair) {
+    if (!selectedAccount) {
       return;
     }
 
-    const input = request.input;
-    const { signature } = await signMessage(
-      bs58.decode(input.message),
-      dummyKeypair
-    );
-
     if (!request.origin) {
       throw new Error("Sender origin is missing: " + request);
+    }
+
+    const signedMessage = await requestNativeSignMessage(request);
+
+    if (!signedMessage) {
+      onComplete({
+        type: "wallet-response",
+        method: request.method,
+        requestId: request.requestId,
+        origin: request.origin,
+        output: {
+          signedMessage: "",
+          signature: ""
+        },
+        error: {
+          value: "An error occured during signing."
+        }
+      });
+      return;
     }
 
     onComplete({
@@ -42,14 +56,14 @@ export default function SignMessageScreen({ request, onComplete }: Props) {
       requestId: request.requestId,
       origin: request.origin,
       output: {
-        signedMessage: input.message,
-        signature: bs58.encode(signature)
+        signedMessage: request.input.message,
+        signature: signedMessage
       }
     });
   };
 
   const handleCancel = async (request: SignMessageRequestEncoded) => {
-    if (!dummyKeypair) {
+    if (!selectedAccount) {
       return;
     }
 
@@ -94,9 +108,7 @@ export default function SignMessageScreen({ request, onComplete }: Props) {
         <Separator className="my-4" />
 
         <div className="text-lg font-bold">Wallet</div>
-        <WalletDisplay
-          walletAddress={dummyKeypair?.publicKey.toBase58() ?? "Loading.."}
-        />
+        <WalletDisplay walletAddress={selectedAccount ?? "Loading.."} />
       </div>
 
       <ApprovalFooter

@@ -1,42 +1,44 @@
 import React from "react";
-import {
-  ConnectRequest,
-  ConnectResponseEncoded,
-  WalletAccountEncoded
-} from "../types/messageTypes";
+import { ConnectRequest, ConnectResponseEncoded } from "../types/messageTypes";
 
 import WalletDisplay from "./WalletDisplay";
 import ApprovalHeader from "./ApprovalHeader";
 import ApprovalFooter from "./ApprovalFooter";
-import useDummyKeypair from "./useDummyKeypair";
+import { requestNativeConnect } from "../nativeRequests/requestNativeConnect";
+import { Base58EncodedAddress } from "./ApprovalScreen";
 
 type Props = Readonly<{
   request: ConnectRequest;
   onComplete: (response: ConnectResponseEncoded) => void;
+  selectedAccount: Base58EncodedAddress | null;
 }>;
 
-export default function ConnectScreen({ request, onComplete }: Props) {
-  const dummyKeypair = useDummyKeypair();
+export default function ConnectScreen({
+  request,
+  onComplete,
+  selectedAccount
+}: Props) {
   const handleConnect = async (request: ConnectRequest) => {
-    if (!dummyKeypair) {
-      return;
-    }
-
-    const account: WalletAccountEncoded = {
-      address: dummyKeypair.publicKey.toBase58(),
-      publicKey: dummyKeypair.publicKey.toBase58(),
-      chains: [
-        "solana:mainnet",
-        "solana:devnet",
-        "solana:testnet",
-        "solana:localnet"
-      ],
-      features: [],
-      label: "Sample Safari Extension Wallet"
-    };
-
     if (!request.origin) {
       throw new Error("Sender origin is missing: " + request);
+    }
+
+    const connectResponseOutput = await requestNativeConnect(request);
+
+    if (connectResponseOutput === null) {
+      onComplete({
+        type: "wallet-response",
+        method: request.method,
+        requestId: request.requestId,
+        origin: request.origin,
+        output: {
+          accounts: []
+        },
+        error: {
+          value: "An error occured during connect."
+        }
+      });
+      return;
     }
 
     onComplete({
@@ -44,9 +46,7 @@ export default function ConnectScreen({ request, onComplete }: Props) {
       method: request.method,
       requestId: request.requestId,
       origin: request.origin,
-      output: {
-        accounts: [account]
-      }
+      output: connectResponseOutput
     });
   };
 
@@ -81,9 +81,7 @@ export default function ConnectScreen({ request, onComplete }: Props) {
 
         <div className="flex flex-col justify-center items-center">
           <div className="text-sm font-bold pb-4">as:</div>
-          <WalletDisplay
-            walletAddress={dummyKeypair?.publicKey.toBase58() ?? "Loading..."}
-          />
+          <WalletDisplay walletAddress={selectedAccount ?? "Loading..."} />
         </div>
       </div>
       <div className="text-sm text-center pb-8">

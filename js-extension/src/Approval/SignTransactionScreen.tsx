@@ -13,32 +13,47 @@ import WalletDisplay from "./WalletDisplay";
 import { Download, SendHorizontal } from "lucide-react";
 import signVersionedTransaction from "../util/signVersionedTransaction";
 import useDummyKeypair from "./useDummyKeypair";
+import { requestNativeSignTransaction } from "../nativeRequests/requestNativeSignTransaction";
+import { Base58EncodedAddress } from "./ApprovalScreen";
 
 type Props = Readonly<{
   request: SignTransactionRequestEncoded;
   onComplete: (response: SignTransactionResponseEncoded) => void;
+  selectedAccount: Base58EncodedAddress;
 }>;
 
-export default function SignTransactionScreen({ request, onComplete }: Props) {
-  const dummyKeypair = useDummyKeypair();
-
+export default function SignTransactionScreen({
+  request,
+  onComplete,
+  selectedAccount
+}: Props) {
   const handleSignTransaction = async (
     request: SignTransactionRequestEncoded
   ) => {
-    if (!dummyKeypair) {
+    if (!selectedAccount) {
       return;
     }
 
-    const input = request.input;
-    const txBytes = bs58.decode(input.transaction);
-
-    const signedTxBytes = await signVersionedTransaction(
-      VersionedTransaction.deserialize(txBytes),
-      dummyKeypair
-    );
-
     if (!request.origin) {
       throw new Error("Sender origin is missing: " + request);
+    }
+
+    const signedTx = await requestNativeSignTransaction(request);
+
+    if (!signedTx) {
+      onComplete({
+        type: "wallet-response",
+        method: request.method,
+        requestId: request.requestId,
+        origin: request.origin,
+        output: {
+          signedTransaction: ""
+        },
+        error: {
+          value: "An error occured during signing."
+        }
+      });
+      return;
     }
 
     onComplete({
@@ -47,7 +62,7 @@ export default function SignTransactionScreen({ request, onComplete }: Props) {
       requestId: request.requestId,
       origin: request.origin,
       output: {
-        signedTransaction: bs58.encode(signedTxBytes)
+        signedTransaction: signedTx
       }
     });
   };
@@ -114,9 +129,7 @@ export default function SignTransactionScreen({ request, onComplete }: Props) {
         <Separator className="my-4" />
 
         <div className="text-lg font-bold">as:</div>
-        <WalletDisplay
-          walletAddress={dummyKeypair?.publicKey.toBase58() ?? "Loading..."}
-        />
+        <WalletDisplay walletAddress={selectedAccount ?? "Loading..."} />
       </div>
 
       <ApprovalFooter
