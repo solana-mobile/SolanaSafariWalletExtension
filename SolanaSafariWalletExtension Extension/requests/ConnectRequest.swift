@@ -1,11 +1,12 @@
 import Foundation
 import os.log
+import CodeServices
 
 final class ConnectRequest: SafariExtensionRequest {
     var response: String? {
         if let keypair = fetchStoredKeypair() {
             os_log("Fetched keypair", type: .default)
-            let publicKeyArray = [keypair.publicKeyToBase58String()]
+            let publicKeyArray = [Base58.fromBytes(keypair.publicKey.bytes)]
             
             // Convert array to JSON string
             if let jsonData = try? JSONSerialization.data(withJSONObject: publicKeyArray, options: []),

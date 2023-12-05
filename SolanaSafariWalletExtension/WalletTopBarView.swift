@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CodeServices
 
 func truncatePubKey(pubKeyBase58: String) -> String {
     guard pubKeyBase58.count > 6 else { return pubKeyBase58 }
@@ -15,7 +16,7 @@ func truncatePubKey(pubKeyBase58: String) -> String {
 
 struct WalletTopBarView: View {
     
-    var keypair: Keypair?
+    var keypair: KeyPair?
 
     var body: some View {
         HStack(spacing: 0) {
@@ -47,7 +48,7 @@ struct WalletTopBarView: View {
 
             HStack(alignment: .center) {
                 
-                Text(keypair != nil ? truncatePubKey(pubKeyBase58: keypair!.publicKeyToBase58String()) : "...")
+                Text(keypair != nil ? truncatePubKey(pubKeyBase58: Base58.fromBytes(keypair!.publicKey.bytes)) : "...")
                     .font(.system(size: 12))
                     .foregroundColor(.black)
 

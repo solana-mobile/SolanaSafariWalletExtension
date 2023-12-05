@@ -1,4 +1,5 @@
 import Foundation
+import CodeServices
 
 final class SignMessageRequest: SafariExtensionRequest {
     
@@ -10,7 +11,7 @@ final class SignMessageRequest: SafariExtensionRequest {
 
     var response: String? {
         if let keypair = fetchStoredKeypair() {
-            let publicKeyEncoded = keypair.publicKeyToBase58String()
+            let publicKeyEncoded = Base58.fromBytes(keypair.publicKey.bytes)
             return publicKeyEncoded
         } else {
             return nil

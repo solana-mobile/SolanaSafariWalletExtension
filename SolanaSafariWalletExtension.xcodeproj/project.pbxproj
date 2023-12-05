@@ -7,20 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FB46E4BB2AE3B58C00879F4F /* KeypairUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4BA2AE3B58C00879F4F /* KeypairUtil.swift */; };
 		FB46E4BD2AE3BC4B00879F4F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4BC2AE3BC4B00879F4F /* SettingsView.swift */; };
-		FB46E4C12AE6F55F00879F4F /* Base58Swift in Frameworks */ = {isa = PBXBuildFile; productRef = FB46E4C02AE6F55F00879F4F /* Base58Swift */; };
-		FB46E4C32AE6FD1C00879F4F /* Keypair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4C22AE6FD1C00879F4F /* Keypair.swift */; };
-		FB46E4E72AE71EB300879F4F /* Keypair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4C22AE6FD1C00879F4F /* Keypair.swift */; };
-		FB46E4E82AE71EB600879F4F /* KeypairUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4BA2AE3B58C00879F4F /* KeypairUtil.swift */; };
-		FB46E4E92AE720EA00879F4F /* Keypair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4C22AE6FD1C00879F4F /* Keypair.swift */; };
-		FB46E4EA2AE720EB00879F4F /* Keypair.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4C22AE6FD1C00879F4F /* Keypair.swift */; };
-		FB46E4EB2AE720EE00879F4F /* KeypairUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4BA2AE3B58C00879F4F /* KeypairUtil.swift */; };
-		FB46E4EC2AE720EF00879F4F /* KeypairUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4BA2AE3B58C00879F4F /* KeypairUtil.swift */; };
-		FB46E4EF2AE721CB00879F4F /* Base58Swift in Frameworks */ = {isa = PBXBuildFile; productRef = FB46E4EE2AE721CB00879F4F /* Base58Swift */; };
-		FB4C43152B1C6B07002E74E8 /* solana.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4C43132B1C6B07002E74E8 /* solana.xcframework */; };
-		FB4C43162B1C6B51002E74E8 /* solana.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4C43132B1C6B07002E74E8 /* solana.xcframework */; };
-		FB4C43172B1C6B51002E74E8 /* solana.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB4C43132B1C6B07002E74E8 /* solana.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB4C431A2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43192B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift */; };
 		FB4C431B2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43192B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift */; };
 		FB4C431F2B1D69B9002E74E8 /* SafariExtensionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C431E2B1D69B9002E74E8 /* SafariExtensionRequest.swift */; };
@@ -49,6 +36,12 @@
 		FB54E8E42ACD0FB600A6E21D /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = FB54E8E02ACD0FB600A6E21D /* background.js */; };
 		FB54E8E52ACD0FB600A6E21D /* injected.js in Resources */ = {isa = PBXBuildFile; fileRef = FB54E8E12ACD0FB600A6E21D /* injected.js */; };
 		FB54E8E62ACD0FB600A6E21D /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = FB54E8E22ACD0FB600A6E21D /* content.js */; };
+		FB94F7412B1EC0C50065A675 /* CodeServices in Frameworks */ = {isa = PBXBuildFile; productRef = FB94F7402B1EC0C50065A675 /* CodeServices */; };
+		FBC93F562B1EAB7B0098826B /* CodeServices in Frameworks */ = {isa = PBXBuildFile; productRef = FBC93F552B1EAB7B0098826B /* CodeServices */; };
+		FBC93F582B1EBBB30098826B /* KeypairStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC93F572B1EBBB30098826B /* KeypairStorage.swift */; };
+		FBC93F592B1EBBB30098826B /* KeypairStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC93F572B1EBBB30098826B /* KeypairStorage.swift */; };
+		FBC93F5A2B1EBBB30098826B /* KeypairStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC93F572B1EBBB30098826B /* KeypairStorage.swift */; };
+		FBC93F5B2B1EBBB30098826B /* KeypairStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC93F572B1EBBB30098826B /* KeypairStorage.swift */; };
 		FBD7450E2ADA094C003D5E6B /* approval.html in Resources */ = {isa = PBXBuildFile; fileRef = FBD7450D2ADA094B003D5E6B /* approval.html */; };
 		FBD745102ADA1757003D5E6B /* approval.js in Resources */ = {isa = PBXBuildFile; fileRef = FBD7450F2ADA1757003D5E6B /* approval.js */; };
 		FBD745122ADA5521003D5E6B /* output.css in Resources */ = {isa = PBXBuildFile; fileRef = FBD745112ADA5521003D5E6B /* output.css */; };
@@ -93,7 +86,16 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FB4C43172B1C6B51002E74E8 /* solana.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB4C43302B1E8789002E74E8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,12 +114,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FB46E4BA2AE3B58C00879F4F /* KeypairUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypairUtil.swift; sourceTree = "<group>"; };
 		FB46E4BC2AE3BC4B00879F4F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		FB46E4C22AE6FD1C00879F4F /* Keypair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypair.swift; sourceTree = "<group>"; };
 		FB46E4F02AE7229F00879F4F /* SolanaSafariWalletExtension Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SolanaSafariWalletExtension Extension.entitlements"; sourceTree = "<group>"; };
 		FB46E4F12AE8650300879F4F /* SolanaSafariWalletExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SolanaSafariWalletExtension.entitlements; sourceTree = "<group>"; };
-		FB4C43132B1C6B07002E74E8 /* solana.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = solana.xcframework; sourceTree = "<group>"; };
 		FB4C43192B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSExtensionContext+SafariRequestType.swift"; sourceTree = "<group>"; };
 		FB4C431E2B1D69B9002E74E8 /* SafariExtensionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariExtensionRequest.swift; sourceTree = "<group>"; };
 		FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequest.swift; sourceTree = "<group>"; };
@@ -144,6 +143,8 @@
 		FB54E8E02ACD0FB600A6E21D /* background.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = background.js; sourceTree = "<group>"; };
 		FB54E8E12ACD0FB600A6E21D /* injected.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = injected.js; sourceTree = "<group>"; };
 		FB54E8E22ACD0FB600A6E21D /* content.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = content.js; sourceTree = "<group>"; };
+		FBC93F542B1EA55A0098826B /* SolanaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SolanaCore; sourceTree = "<group>"; };
+		FBC93F572B1EBBB30098826B /* KeypairStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypairStorage.swift; sourceTree = "<group>"; };
 		FBD7450D2ADA094B003D5E6B /* approval.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = approval.html; sourceTree = "<group>"; };
 		FBD7450F2ADA1757003D5E6B /* approval.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = approval.js; sourceTree = "<group>"; };
 		FBD745112ADA5521003D5E6B /* output.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = output.css; sourceTree = "<group>"; };
@@ -162,8 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB46E4C12AE6F55F00879F4F /* Base58Swift in Frameworks */,
-				FB4C43162B1C6B51002E74E8 /* solana.xcframework in Frameworks */,
+				FB94F7412B1EC0C50065A675 /* CodeServices in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,8 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB46E4EF2AE721CB00879F4F /* Base58Swift in Frameworks */,
-				FB4C43152B1C6B07002E74E8 /* solana.xcframework in Frameworks */,
+				FBC93F562B1EAB7B0098826B /* CodeServices in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,8 +195,7 @@
 		FB46E4BE2AE6F05B00879F4F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				FB46E4BA2AE3B58C00879F4F /* KeypairUtil.swift */,
-				FB46E4C22AE6FD1C00879F4F /* Keypair.swift */,
+				FBC93F572B1EBBB30098826B /* KeypairStorage.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -205,7 +203,6 @@
 		FB46E4ED2AE721CB00879F4F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FB4C43132B1C6B07002E74E8 /* solana.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -249,6 +246,7 @@
 		FB54E8692ACD07D200A6E21D = {
 			isa = PBXGroup;
 			children = (
+				FBC93F4F2B1EA3190098826B /* Packages */,
 				FB46E4BE2AE6F05B00879F4F /* Shared */,
 				FB54E8742ACD07D200A6E21D /* SolanaSafariWalletExtension */,
 				FB54E8922ACD07D300A6E21D /* SolanaSafariWalletExtensionTests */,
@@ -354,6 +352,14 @@
 			path = build;
 			sourceTree = "<group>";
 		};
+		FBC93F4F2B1EA3190098826B /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				FBC93F542B1EA55A0098826B /* SolanaCore */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -374,7 +380,7 @@
 			);
 			name = SolanaSafariWalletExtension;
 			packageProductDependencies = (
-				FB46E4C02AE6F55F00879F4F /* Base58Swift */,
+				FB94F7402B1EC0C50065A675 /* CodeServices */,
 			);
 			productName = SolanaSafariWalletExtension;
 			productReference = FB54E8722ACD07D200A6E21D /* SolanaSafariWalletExtension.app */;
@@ -423,6 +429,7 @@
 				FB54E8A12ACD07D300A6E21D /* Sources */,
 				FB54E8A22ACD07D300A6E21D /* Frameworks */,
 				FB54E8A32ACD07D300A6E21D /* Resources */,
+				FB4C43302B1E8789002E74E8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -430,7 +437,7 @@
 			);
 			name = "SolanaSafariWalletExtension Extension";
 			packageProductDependencies = (
-				FB46E4EE2AE721CB00879F4F /* Base58Swift */,
+				FBC93F552B1EAB7B0098826B /* CodeServices */,
 			);
 			productName = "SolanaSafariWalletExtension Extension";
 			productReference = FB54E8A52ACD07D300A6E21D /* SolanaSafariWalletExtension Extension.appex */;
@@ -472,7 +479,6 @@
 			);
 			mainGroup = FB54E8692ACD07D200A6E21D;
 			packageReferences = (
-				FB46E4BF2AE6F55F00879F4F /* XCRemoteSwiftPackageReference "Base58Swift" */,
 			);
 			productRefGroup = FB54E8732ACD07D200A6E21D /* Products */;
 			projectDirPath = "";
@@ -538,19 +544,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB46E4C32AE6FD1C00879F4F /* Keypair.swift in Sources */,
 				FBD745582AE09D2E003D5E6B /* WalletHomeView.swift in Sources */,
 				FB4C431A2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */,
 				FBD745622AE39546003D5E6B /* WalletTabItemView.swift in Sources */,
 				FB4C431F2B1D69B9002E74E8 /* SafariExtensionRequest.swift in Sources */,
 				FB4C432C2B1E7219002E74E8 /* GetAccountsRequest.swift in Sources */,
 				FB4C43252B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */,
-				FB46E4BB2AE3B58C00879F4F /* KeypairUtil.swift in Sources */,
 				FBD7455E2AE3304A003D5E6B /* WalletTopBarView.swift in Sources */,
 				FBD745602AE334DE003D5E6B /* TokenRowView.swift in Sources */,
 				FB46E4BD2AE3BC4B00879F4F /* SettingsView.swift in Sources */,
 				FB4C43292B1D9145002E74E8 /* SignMessageRequest.swift in Sources */,
 				FBD745652AE39738003D5E6B /* WalletTabView.swift in Sources */,
+				FBC93F582B1EBBB30098826B /* KeypairStorage.swift in Sources */,
 				FB4C43222B1D7478002E74E8 /* ConnectRequest.swift in Sources */,
 				FBD7454C2AE090C9003D5E6B /* MainApp.swift in Sources */,
 			);
@@ -561,8 +566,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB54E8942ACD07D300A6E21D /* SolanaSafariWalletExtensionTests.swift in Sources */,
-				FB46E4EB2AE720EE00879F4F /* KeypairUtil.swift in Sources */,
-				FB46E4E92AE720EA00879F4F /* Keypair.swift in Sources */,
+				FBC93F592B1EBBB30098826B /* KeypairStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,10 +574,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB46E4EA2AE720EB00879F4F /* Keypair.swift in Sources */,
 				FB54E89E2ACD07D300A6E21D /* SolanaSafariWalletExtensionUITests.swift in Sources */,
 				FB54E8A02ACD07D300A6E21D /* SolanaSafariWalletExtensionUITestsLaunchTests.swift in Sources */,
-				FB46E4EC2AE720EF00879F4F /* KeypairUtil.swift in Sources */,
+				FBC93F5A2B1EBBB30098826B /* KeypairStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,9 +590,8 @@
 				FB54E8AB2ACD07D300A6E21D /* SafariWebExtensionHandler.swift in Sources */,
 				FB4C43262B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */,
 				FB4C432D2B1E7219002E74E8 /* GetAccountsRequest.swift in Sources */,
-				FB46E4E82AE71EB600879F4F /* KeypairUtil.swift in Sources */,
 				FB4C43232B1D7478002E74E8 /* ConnectRequest.swift in Sources */,
-				FB46E4E72AE71EB300879F4F /* Keypair.swift in Sources */,
+				FBC93F5B2B1EBBB30098826B /* KeypairStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1001,27 +1003,14 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		FB46E4BF2AE6F55F00879F4F /* XCRemoteSwiftPackageReference "Base58Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/keefertaylor/Base58Swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		FB46E4C02AE6F55F00879F4F /* Base58Swift */ = {
+		FB94F7402B1EC0C50065A675 /* CodeServices */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FB46E4BF2AE6F55F00879F4F /* XCRemoteSwiftPackageReference "Base58Swift" */;
-			productName = Base58Swift;
+			productName = CodeServices;
 		};
-		FB46E4EE2AE721CB00879F4F /* Base58Swift */ = {
+		FBC93F552B1EAB7B0098826B /* CodeServices */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FB46E4BF2AE6F55F00879F4F /* XCRemoteSwiftPackageReference "Base58Swift" */;
-			productName = Base58Swift;
+			productName = CodeServices;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

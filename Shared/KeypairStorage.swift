@@ -1,16 +1,15 @@
-import CryptoKit
 import Foundation
-import Base58Swift
 import os.log
+import CodeServices
 
-func generateEd25519KeyPair() -> Keypair {
-    return Keypair()
+func generateEd25519KeyPair() -> KeyPair {
+    return KeyPair.generate()!
 }
 
-func storeKeyPair(_ keypair: Keypair) {
+func storeKeyPair(_ keypair: KeyPair) {
     let keysDictionary: [String: String] = [
-        "publicKey": keypair.publicKeyToBase58String(),
-        "privateKey": keypair.privateKeyToBase58String()
+        "publicKey": Base58.fromBytes(keypair.publicKey.bytes),
+        "privateKey": Base58.fromBytes(keypair.privateKey.bytes)
     ]
 
     do {
@@ -23,7 +22,7 @@ func storeKeyPair(_ keypair: Keypair) {
     }
 }
 
-func fetchStoredKeypair() -> Keypair? {
+func fetchStoredKeypair() -> KeyPair? {
     let logger = OSLog(subsystem: "solanamobile.SolanaSafariWalletExtension", category: "ExtensionHandler")
 
     guard let defaults = sharedUserDefaults() else {
@@ -36,9 +35,9 @@ func fetchStoredKeypair() -> Keypair? {
         
         do {
             if let deserialized = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: String],
-               let _ = deserialized["publicKey"],
+               let bs58PublicKey = deserialized["publicKey"],
                let bs58PrivKey = deserialized["privateKey"] {
-                return Keypair.fromPrivateKey(base58PrivateKey: (bs58PrivKey));
+                return KeyPair(publicKey: Key32(base58: bs58PublicKey)!, privateKey: Key64(base58: bs58PrivKey)!)
             }
         } catch {
             print("Error deserializing JSON: \(error)")
@@ -51,8 +50,8 @@ func fetchStoredKeypair() -> Keypair? {
 
 func logKeypairFromUserDefaults() {
     if let keypair = fetchStoredKeypair() {
-        print("Public Key (Base58): \(keypair.publicKeyToBase58String())")
-        print("Private Key (Base58): \(keypair.privateKeyToBase58String())")
+        print("Public Key (Base58): \(Base58.fromBytes(keypair.publicKey.bytes))")
+        print("Private Key (Base58): \(Base58.fromBytes(keypair.privateKey.bytes))")
     } else {
         print("Public Key: null")
         print("Private Key: null")

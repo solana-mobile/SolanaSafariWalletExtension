@@ -1,8 +1,9 @@
 import SwiftUI
+import CodeServices
 
 struct WalletHomeView: View {
     
-    @State private var keypair: Keypair?;
+    @State private var keypair: KeyPair?;
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {

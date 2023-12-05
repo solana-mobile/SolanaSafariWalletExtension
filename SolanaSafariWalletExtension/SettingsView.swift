@@ -1,9 +1,9 @@
 import SwiftUI
 import CryptoKit
-import Base58Swift
+import CodeServices
 
 struct SettingsView: View {
-    @State private var keypair: Keypair?;
+    @State private var keypair: KeyPair?;
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -12,7 +12,7 @@ struct SettingsView: View {
                 Text("Public Key:")
                     .bold()
                 if let keypair {
-                    Text(keypair.publicKeyToBase58String())
+                    Text(Base58.fromBytes(keypair.publicKey.bytes))
                         .frame(maxWidth: .infinity, minHeight: 50)
                         .font(.footnote)
                         .padding()
@@ -30,7 +30,7 @@ struct SettingsView: View {
                     
                 
                 if let keypair {
-                    Text(keypair.privateKeyToBase58String())
+                    Text(Base58.fromBytes(keypair.privateKey.bytes))
                         .frame(maxWidth: .infinity, minHeight: 50)
                         .font(.footnote)
                         .padding()
