@@ -25,7 +25,8 @@
     "clsx": "^2.0.0",
     "lucide-react": "^0.287.0",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "safari-extension-walletlib": "file:../safari-extension-walletlib"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",

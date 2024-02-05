@@ -32,10 +32,7 @@ import {
   StandardEventsNames,
   StandardEventsOnMethod
 } from "@wallet-standard/features";
-import getKeypairForAccount from "./util/getKeypairForAccount";
 import { SolanaChain, isSolanaChain } from "./wallet/solana";
-import { Transaction } from "@solana/web3.js";
-import signAllTransactions from "./util/signAllTransactions";
 import MessageClient from "./wallet/message-client";
 import { WalletRequestMethod } from "./types/messageTypes";
 import { SafariExtensionDemoWalletAccount } from "./wallet/account";
