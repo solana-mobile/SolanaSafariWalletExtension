@@ -1,9 +1,9 @@
 import {
   SolanaSignMessageInput,
   SolanaSignTransactionInput,
-  SolanaSignAndSendTransactionInput
-} from "@solana/wallet-standard-features";
-import * as bs58 from "bs58";
+  SolanaSignAndSendTransactionInput,
+} from '@solana/wallet-standard-features';
+import * as bs58 from 'bs58';
 import {
   SolanaSignMessageInputEncoded,
   SolanaSignTransactionInputEncoded,
@@ -12,16 +12,16 @@ import {
   BaseWalletRequestEncoded,
   WalletRequestMethod,
   WalletRequestInput,
-  WalletRequestInputEncoded
-} from "../types/messageTypes";
-import { StandardConnectInput } from "@wallet-standard/features";
+  WalletRequestInputEncoded,
+} from '../messages/walletMessage';
+import { StandardConnectInput } from '@wallet-standard/features';
 
 export function encodeWalletRequest(
   request: BaseWalletRequest
 ): BaseWalletRequestEncoded {
   return {
     ...request,
-    input: encodeInput(request.method, request.input)
+    input: encodeInput(request.method, request.input),
   };
 }
 
@@ -51,9 +51,9 @@ function encodeSignMessageInput(
   return {
     account: {
       ...input.account,
-      publicKey: bs58.encode(input.account.publicKey)
+      publicKey: bs58.encode(input.account.publicKey),
     },
-    message: bs58.encode(input.message)
+    message: bs58.encode(input.message),
   };
 }
 
@@ -63,11 +63,11 @@ function encodeSignTransactionInput(
   return {
     account: {
       ...input.account,
-      publicKey: bs58.encode(input.account.publicKey)
+      publicKey: bs58.encode(input.account.publicKey),
     },
     transaction: bs58.encode(input.transaction),
     chain: input.chain,
-    options: input.options
+    options: input.options,
   };
 }
 
@@ -77,6 +77,6 @@ function encodeSignAndSendTransactionInput(
   return {
     ...encodeSignTransactionInput(input),
     chain: input.chain,
-    options: input.options
+    options: input.options,
   };
 }

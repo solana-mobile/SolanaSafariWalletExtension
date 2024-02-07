@@ -1,4 +1,4 @@
-import { SignMessageRequestEncoded } from '../types/messageTypes';
+import { SignMessageRequestEncoded } from '../messages/walletMessage';
 
 type Base58EncodedSignature = string;
 

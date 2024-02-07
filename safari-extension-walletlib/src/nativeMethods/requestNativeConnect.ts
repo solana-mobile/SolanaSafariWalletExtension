@@ -1,9 +1,9 @@
-import { Base58EncodedAddress } from "../Approval/ApprovalScreen";
+import { Base58EncodedAddress } from '../Approval/ApprovalScreen';
 import {
   ConnectRequest,
   StandardConnectOutputEncoded,
-  WalletAccountEncoded
-} from "../types/messageTypes";
+  WalletAccountEncoded,
+} from '../messages/walletMessage';
 
 function parseConnectResponse(
   accountsJson: any
@@ -13,14 +13,14 @@ function parseConnectResponse(
 
     if (
       !Array.isArray(accounts) ||
-      !accounts.every((item) => typeof item === "string")
+      !accounts.every(item => typeof item === 'string')
     ) {
-      throw new Error("Invalid format");
+      throw new Error('Invalid format');
     }
 
     return accounts as Base58EncodedAddress[];
   } catch (err: any) {
-    console.error("Error parsing connect response: ", err);
+    console.error('Error parsing connect response: ', err);
     return null;
   }
 }
@@ -28,7 +28,7 @@ function parseConnectResponse(
 export async function requestNativeConnect(
   request: ConnectRequest
 ): Promise<StandardConnectOutputEncoded | null> {
-  const response = await browser.runtime.sendNativeMessage("id", request);
+  const response = await browser.runtime.sendNativeMessage('id', request);
   const accounts = parseConnectResponse(response.value);
 
   if (accounts === null) {
@@ -39,16 +39,16 @@ export async function requestNativeConnect(
     address: accounts[0],
     publicKey: accounts[0],
     chains: [
-      "solana:mainnet",
-      "solana:devnet",
-      "solana:testnet",
-      "solana:localnet"
+      'solana:mainnet',
+      'solana:devnet',
+      'solana:testnet',
+      'solana:localnet',
     ],
     features: [],
-    label: "Sample Safari Extension Wallet"
+    label: 'Sample Safari Extension Wallet',
   };
 
   return {
-    accounts: [account]
+    accounts: [account],
   };
 }

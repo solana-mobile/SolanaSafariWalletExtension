@@ -11,11 +11,11 @@ import {
   SignTransactionResponse,
   WalletRequestEvent,
   WalletResponseEvent,
-} from './types/messageTypes';
+} from './messages/walletMessage';
 import { decodeWalletResponse } from './util/decodeWalletResponse';
 import { encodeWalletRequest } from './util/encodeWalletRequest';
 
-// Communicates from the injected script to the content script
+// Communicates from the page script to the content script.
 export default class SafariExtensionMessageClient {
   #resolveHandler: {
     [key: string]: {
@@ -25,7 +25,10 @@ export default class SafariExtensionMessageClient {
   } = {};
 
   constructor() {
-    window.addEventListener('wallet-response', this.#handleResponse.bind(this));
+    window.addEventListener(
+      WalletResponseEvent.EVENT_TYPE,
+      this.#handleResponse.bind(this)
+    );
   }
 
   // Handles wallet responses from content script.

@@ -21,15 +21,20 @@ export enum WalletRequestMethod {
   SOLANA_SIGN_AND_SEND_TRANSACTION = 'SOLANA_SIGN_AND_SEND_TRANSACTION',
 }
 
+// A request that starts from page script -> content script -> background script -> approval UI
 export class WalletRequestEvent extends CustomEvent<BaseWalletRequestEncoded> {
+  public static readonly EVENT_TYPE = 'wallet-page-request';
+
   constructor(request: BaseWalletRequestEncoded) {
-    super('page-wallet-request', { detail: request });
+    super(WalletRequestEvent.EVENT_TYPE, { detail: request });
   }
 }
 
 export class WalletResponseEvent extends CustomEvent<BaseWalletResponseEncoded> {
+  public static readonly EVENT_TYPE = 'wallet-response';
+
   constructor(detail: BaseWalletResponseEncoded) {
-    super('wallet-response', { detail });
+    super(WalletResponseEvent.EVENT_TYPE, { detail });
   }
 }
 

@@ -1,4 +1,4 @@
-import { Base58EncodedAddress } from "../Approval/ApprovalScreen";
+type Base58EncodedAddress = string;
 
 function parseGetAccountsResponse(
   accountsJson: any
@@ -8,14 +8,14 @@ function parseGetAccountsResponse(
 
     if (
       !Array.isArray(accounts) ||
-      !accounts.every((item) => typeof item === "string")
+      !accounts.every(item => typeof item === 'string')
     ) {
-      throw new Error("Invalid format");
+      throw new Error('Invalid format');
     }
 
     return accounts as Base58EncodedAddress[];
   } catch (err: any) {
-    console.error("Error parsing get accounts response: ", err);
+    console.error('Error parsing get accounts response: ', err);
     return null;
   }
 }
@@ -23,8 +23,8 @@ function parseGetAccountsResponse(
 export async function requestNativeGetAccounts(): Promise<{
   accounts: Base58EncodedAddress[];
 } | null> {
-  const response = await browser.runtime.sendNativeMessage("id", {
-    method: "GET_ACCOUNTS"
+  const response = await browser.runtime.sendNativeMessage('id', {
+    method: 'GET_ACCOUNTS',
   });
 
   const accounts = parseGetAccountsResponse(response.value);
@@ -34,6 +34,6 @@ export async function requestNativeGetAccounts(): Promise<{
   }
 
   return {
-    accounts
+    accounts,
   };
 }
