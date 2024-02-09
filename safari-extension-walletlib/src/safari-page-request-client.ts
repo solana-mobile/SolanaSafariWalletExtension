@@ -9,7 +9,7 @@ import {
   WalletRequestOutput,
   WalletRequestOutputEncoded,
   WalletRpcRequest,
-} from './pageRpc/walletRpcRequest';
+} from './pageRpc/requests';
 import { encodeWalletRpcParams } from './pageRpc/encodeRpcRequest';
 import {
   PAGE_WALLET_REQUEST_CHANNEL,

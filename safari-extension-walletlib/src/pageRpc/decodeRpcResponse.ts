@@ -13,7 +13,7 @@ import {
   WalletRequestMethod,
   WalletRequestOutput,
   WalletRequestOutputEncoded,
-} from './walletRpcRequest';
+} from './requests';
 
 export function decodeWalletRpcResult(
   method: WalletRequestMethod,

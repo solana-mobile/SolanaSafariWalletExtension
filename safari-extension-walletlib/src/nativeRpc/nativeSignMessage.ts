@@ -29,7 +29,10 @@ export async function nativeSignMessage({
   account,
   message,
 }: NativeSignTransactionParams): Promise<Base58EncodedSignature | null> {
-  const response = await browser.runtime.sendNativeMessage('id', request);
+  const response = await browser.runtime.sendNativeMessage('id', {
+    account,
+    message,
+  });
   console.log('Native Sign Message Response: ', response);
 
   return parseSignMessageResponse(response);
