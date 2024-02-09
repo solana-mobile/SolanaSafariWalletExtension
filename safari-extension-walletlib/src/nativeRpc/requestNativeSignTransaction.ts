@@ -1,5 +1,5 @@
-import { SignTransactionRequestEncoded } from '../messages/walletMessage';
 import { fromUint8Array } from 'js-base64';
+import { SignTransactionRequestEncoded } from '../pageRpc/requests';
 
 type Base58SignedTransaction = string;
 

@@ -1,35 +1,24 @@
-import * as bs58 from 'bs58';
-import { toUint8Array, fromUint8Array } from 'js-base64';
-import {
-  StandardConnectOutputEncoded,
-  SolanaSignMessageOutputEncoded,
-  SolanaSignTransactionOutputEncoded,
-  SolanaSignAndSendTransactionOutputEncoded,
-  BaseWalletResponse,
-  BaseWalletResponseEncoded,
-  WalletRequestMethod,
-  WalletRequestOutputEncoded,
-} from '../messages/walletMessage';
+import { toUint8Array } from 'js-base64';
 import {
   SolanaSignMessageOutput,
   SolanaSignTransactionOutput,
   SolanaSignAndSendTransactionOutput,
 } from '@solana/wallet-standard-features';
 import { StandardConnectOutput } from '@wallet-standard/features';
+import {
+  SolanaSignAndSendTransactionOutputEncoded,
+  SolanaSignMessageOutputEncoded,
+  SolanaSignTransactionOutputEncoded,
+  StandardConnectOutputEncoded,
+  WalletRequestMethod,
+  WalletRequestOutput,
+  WalletRequestOutputEncoded,
+} from './walletRpcRequest';
 
-export function decodeWalletResponse(
-  response: BaseWalletResponseEncoded
-): BaseWalletResponse {
-  return {
-    ...response,
-    output: decodeOutput(response.method, response.output),
-  };
-}
-
-function decodeOutput(
+export function decodeWalletRpcResult(
   method: WalletRequestMethod,
   encodedOutput: WalletRequestOutputEncoded
-): any {
+): WalletRequestOutput {
   switch (method) {
     case WalletRequestMethod.SOLANA_CONNECT:
       return decodeConnectOutput(encodedOutput as StandardConnectOutputEncoded);
@@ -42,8 +31,6 @@ function decodeOutput(
         encodedOutput as SolanaSignTransactionOutputEncoded
       );
     case WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION:
-      console.log('IN DECODE');
-      console.log(encodedOutput);
       return decodeSignAndSendTransactionOutput(
         encodedOutput as SolanaSignAndSendTransactionOutputEncoded
       );
@@ -52,39 +39,39 @@ function decodeOutput(
   }
 }
 
-function decodeConnectOutput(
+export function decodeConnectOutput(
   encodedOutput: StandardConnectOutputEncoded
 ): StandardConnectOutput {
   return {
     accounts: encodedOutput.accounts.map(account => ({
       ...account,
-      publicKey: bs58.decode(account.publicKey),
+      publicKey: toUint8Array(account.publicKey),
     })),
   };
 }
 
-function decodeSignMessageOutput(
+export function decodeSignMessageOutput(
   encodedOutput: SolanaSignMessageOutputEncoded
 ): SolanaSignMessageOutput {
   return {
-    signedMessage: bs58.decode(encodedOutput.signedMessage),
-    signature: bs58.decode(encodedOutput.signature),
+    signedMessage: toUint8Array(encodedOutput.signedMessage),
+    signature: toUint8Array(encodedOutput.signature),
     signatureType: encodedOutput.signatureType,
   };
 }
 
-function decodeSignTransactionOutput(
+export function decodeSignTransactionOutput(
   encodedOutput: SolanaSignTransactionOutputEncoded
 ): SolanaSignTransactionOutput {
   return {
-    signedTransaction: bs58.decode(encodedOutput.signedTransaction),
+    signedTransaction: toUint8Array(encodedOutput.signedTransaction),
   };
 }
 
-function decodeSignAndSendTransactionOutput(
+export function decodeSignAndSendTransactionOutput(
   encodedOutput: SolanaSignAndSendTransactionOutputEncoded
 ): SolanaSignAndSendTransactionOutput {
   return {
-    signature: bs58.decode(encodedOutput.signature),
+    signature: toUint8Array(encodedOutput.signature),
   };
 }

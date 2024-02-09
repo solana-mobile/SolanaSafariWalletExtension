@@ -3,29 +3,26 @@ import {
   SolanaSignTransactionInput,
   SolanaSignAndSendTransactionInput,
 } from '@solana/wallet-standard-features';
-import * as bs58 from 'bs58';
+import { fromUint8Array } from 'js-base64';
+import { StandardConnectInput } from '@wallet-standard/features';
 import {
+  SolanaSignAndSendTransactionInputEncoded,
   SolanaSignMessageInputEncoded,
   SolanaSignTransactionInputEncoded,
-  SolanaSignAndSendTransactionInputEncoded,
-  BaseWalletRequest,
-  BaseWalletRequestEncoded,
-  WalletRequestMethod,
   WalletRequestInput,
   WalletRequestInputEncoded,
-} from '../messages/walletMessage';
-import { StandardConnectInput } from '@wallet-standard/features';
+  WalletRequestMethod,
+  WalletRpcRequest,
+} from './requests';
 
-export function encodeWalletRequest(
-  request: BaseWalletRequest
-): BaseWalletRequestEncoded {
+export function encodeWalletRpcRequest(request: WalletRpcRequest): any {
   return {
     ...request,
-    input: encodeInput(request.method, request.input),
+    params: encodeWalletRpcParams(request.method, request.params),
   };
 }
 
-function encodeInput(
+export function encodeWalletRpcParams(
   method: WalletRequestMethod,
   input: WalletRequestInput
 ): WalletRequestInputEncoded {
@@ -51,9 +48,9 @@ function encodeSignMessageInput(
   return {
     account: {
       ...input.account,
-      publicKey: bs58.encode(input.account.publicKey),
+      publicKey: fromUint8Array(input.account.publicKey), // Changed to Base64 encoding
     },
-    message: bs58.encode(input.message),
+    message: fromUint8Array(input.message), // Changed to Base64 encoding
   };
 }
 
@@ -63,9 +60,9 @@ function encodeSignTransactionInput(
   return {
     account: {
       ...input.account,
-      publicKey: bs58.encode(input.account.publicKey),
+      publicKey: fromUint8Array(input.account.publicKey), // Changed to Base64 encoding
     },
-    transaction: bs58.encode(input.transaction),
+    transaction: fromUint8Array(input.transaction), // Changed to Base64 encoding
     chain: input.chain,
     options: input.options,
   };
@@ -74,6 +71,7 @@ function encodeSignTransactionInput(
 function encodeSignAndSendTransactionInput(
   input: SolanaSignAndSendTransactionInput
 ): SolanaSignAndSendTransactionInputEncoded {
+  // Utilizes the above encodeSignTransactionInput method, assuming it already returns the correct Base64 encoded structure
   return {
     ...encodeSignTransactionInput(input),
     chain: input.chain,

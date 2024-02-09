@@ -14,28 +14,22 @@ import {
   StandardConnectOutput,
 } from '@wallet-standard/features';
 
+export type WalletRpcRequest = {
+  method: WalletRequestMethod;
+  params: WalletRequestInput;
+};
+
+export type RpcResponse<T = WalletRequestOutput> = {
+  id: string;
+  result: T;
+  error: any;
+};
+
 export enum WalletRequestMethod {
   SOLANA_CONNECT = 'SOLANA_CONNECT',
   SOLANA_SIGN_MESSAGE = 'SOLANA_SIGN_MESSAGE',
   SOLANA_SIGN_TRANSACTION = 'SOLANA_SIGN_TRANSACTION',
   SOLANA_SIGN_AND_SEND_TRANSACTION = 'SOLANA_SIGN_AND_SEND_TRANSACTION',
-}
-
-// A request that starts from page script -> content script -> background script -> approval UI
-export class WalletRequestEvent extends CustomEvent<BaseWalletRequestEncoded> {
-  public static readonly EVENT_TYPE = 'wallet-page-request';
-
-  constructor(request: BaseWalletRequestEncoded) {
-    super(WalletRequestEvent.EVENT_TYPE, { detail: request });
-  }
-}
-
-export class WalletResponseEvent extends CustomEvent<BaseWalletResponseEncoded> {
-  public static readonly EVENT_TYPE = 'wallet-response';
-
-  constructor(detail: BaseWalletResponseEncoded) {
-    super(WalletResponseEvent.EVENT_TYPE, { detail });
-  }
 }
 
 export type WalletRequestInput =

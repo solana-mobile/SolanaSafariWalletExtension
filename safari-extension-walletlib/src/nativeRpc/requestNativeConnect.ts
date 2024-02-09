@@ -1,9 +1,10 @@
-import { Base58EncodedAddress } from '../Approval/ApprovalScreen';
 import {
   ConnectRequest,
   StandardConnectOutputEncoded,
   WalletAccountEncoded,
-} from '../messages/walletMessage';
+} from '../pageRpc/requests';
+
+type Base58EncodedAddress = string;
 
 function parseConnectResponse(
   accountsJson: any

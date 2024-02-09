@@ -7,10 +7,7 @@ Script that makes up the extension's background page.
 // Send a message from the Safari Web Extension to the containing app extension.
 // Listens to messages from "content"
 
-import {
-  BaseWalletRequest,
-  WalletRequestEvent,
-} from './messages/walletMessage';
+import { PAGE_WALLET_REQUEST_CHANNEL } from './constants';
 
 async function initializeApprovalTab(): Promise<browser.tabs.Tab> {
   return new Promise<browser.tabs.Tab>((resolve, reject) => {
@@ -41,7 +38,10 @@ async function initializeApprovalTab(): Promise<browser.tabs.Tab> {
   });
 }
 
-async function forwardWalletRequestToApproval(request: BaseWalletRequest) {
+async function forwardWalletRequestToApproval(request: {
+  rpcRequest: any;
+  origin: browser.runtime.MessageSender;
+}) {
   const tabs = await browser.tabs.query({ active: true, currentWindow: true });
   const activeTab = tabs[0];
   const isApprovalUIActive =
@@ -52,10 +52,7 @@ async function forwardWalletRequestToApproval(request: BaseWalletRequest) {
     : await initializeApprovalTab();
 
   if (targetTab.id) {
-    browser.tabs.sendMessage(targetTab.id, {
-      ...request,
-      type: 'approval-tab-request',
-    });
+    browser.tabs.sendMessage(targetTab.id, request);
   } else {
     console.error('Approval tab is missing tab id');
   }
@@ -63,13 +60,13 @@ async function forwardWalletRequestToApproval(request: BaseWalletRequest) {
 
 export function initializeBackgroundScript() {
   browser.runtime.onMessage.addListener(
-    async (request, sender: browser.runtime.MessageSender, _sendResponse) => {
-      if (request.type === WalletRequestEvent.EVENT_TYPE) {
+    async (message, sender: browser.runtime.MessageSender, _sendResponse) => {
+      if (message.type === PAGE_WALLET_REQUEST_CHANNEL) {
         // Attach sender identity metadata before forwarding
         forwardWalletRequestToApproval({
-          ...request,
+          rpcRequest: message,
           origin: sender,
-        } as BaseWalletRequest);
+        });
       }
     }
   );

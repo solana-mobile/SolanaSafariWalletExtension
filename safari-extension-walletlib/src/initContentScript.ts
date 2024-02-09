@@ -1,33 +1,38 @@
 import {
-  BaseWalletRequestEncoded,
-  BaseWalletResponseEncoded,
-  WalletResponseEvent,
-  WalletRequestEvent,
-} from './messages/walletMessage';
+  PAGE_WALLET_REQUEST_CHANNEL,
+  PAGE_WALLET_RESPONSE_CHANNEL,
+} from './constants';
 
-function forwardToBackgroundScript(request: BaseWalletRequestEncoded) {
-  // Overwrite `type` to wallet-approval-request before forwarding
-  browser.runtime.sendMessage({ ...request });
+function forwardToBackgroundScript(message: any) {
+  browser.runtime.sendMessage(message);
 }
 
-function forwardToPageScript(response: BaseWalletResponseEncoded) {
-  window.dispatchEvent(new WalletResponseEvent(response));
+function forwardToPageScript(message: any) {
+  window.postMessage(message);
 }
 
-export function initContentScript(handler: (request: any) => Promise<any>) {
-  // Add listener for events from the page
-  window.addEventListener(WalletRequestEvent.EVENT_TYPE, async event => {
-    console.log('Content Script Received: ', event);
-    const walletRequest = (event as WalletRequestEvent).detail;
-    forwardToBackgroundScript(walletRequest);
+function isValidOrigin(event: MessageEvent<any>) {
+  return event.source === window && event.origin === window.location.origin;
+}
+
+export function initContentScript() {
+  // Forwards page requests to the background script
+  window.addEventListener('message', async event => {
+    if (isValidOrigin(event) && event.data) {
+      if (event.data.type === PAGE_WALLET_REQUEST_CHANNEL) {
+        forwardToBackgroundScript(event.data);
+      }
+    }
   });
 
-  // Add listener for messages from the background script or approval
+  // Forwards responses from background/approval to page
   browser.runtime.onMessage.addListener(
     async (message, _sender, _sendResponse) => {
-      console.log('Content Script Runtime Listener: ', message);
-      if (message.type === WalletResponseEvent.EVENT_TYPE) {
-        forwardToPageScript(message);
+      if (message.type === PAGE_WALLET_RESPONSE_CHANNEL) {
+        forwardToPageScript({
+          ...message,
+          type: PAGE_WALLET_RESPONSE_CHANNEL,
+        });
       }
     }
   );
