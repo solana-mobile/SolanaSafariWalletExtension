@@ -1,8 +1,10 @@
+import { StandardConnectInput } from "@wallet-standard/features";
 import { Base58EncodedAddress } from "../Approval/ApprovalScreen";
 import {
   ConnectRequest,
   StandardConnectOutputEncoded,
-  WalletAccountEncoded
+  WalletAccountEncoded,
+  WalletRequestMethod
 } from "../types/messageTypes";
 
 function parseConnectResponse(
@@ -29,6 +31,41 @@ export async function requestNativeConnect(
   request: ConnectRequest
 ): Promise<StandardConnectOutputEncoded | null> {
   const response = await browser.runtime.sendNativeMessage("id", request);
+  const accounts = parseConnectResponse(response.value);
+
+  if (accounts === null) {
+    return null;
+  }
+
+  const account: WalletAccountEncoded = {
+    address: accounts[0],
+    publicKey: accounts[0],
+    chains: [
+      "solana:mainnet",
+      "solana:devnet",
+      "solana:testnet",
+      "solana:localnet"
+    ],
+    features: [],
+    label: "Sample Safari Extension Wallet"
+  };
+
+  return {
+    accounts: [account]
+  };
+}
+
+export async function nativeConnect({
+  input,
+  method
+}: {
+  input: StandardConnectInput;
+  method: WalletRequestMethod.SOLANA_CONNECT;
+}): Promise<StandardConnectOutputEncoded | null> {
+  const response = await browser.runtime.sendNativeMessage("id", {
+    input,
+    method
+  });
   const accounts = parseConnectResponse(response.value);
 
   if (accounts === null) {

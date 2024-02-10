@@ -4,12 +4,35 @@ import { ConnectRequest, ConnectResponseEncoded } from "../types/messageTypes";
 import WalletDisplay from "./WalletDisplay";
 import ApprovalHeader from "./ApprovalHeader";
 import ApprovalFooter from "./ApprovalFooter";
-import { requestNativeConnect } from "../nativeRequests/requestNativeConnect";
-import { Base58EncodedAddress } from "./ApprovalScreen";
+import {
+  nativeConnect,
+  requestNativeConnect
+} from "../nativeRequests/requestNativeConnect";
+import {
+  Base58EncodedAddress,
+  RpcRequestQueueItem,
+  WalletEvent,
+  WalletRpcRequestWithId
+} from "./ApprovalScreen";
+import {
+  PAGE_WALLET_REQUEST_CHANNEL,
+  PAGE_WALLET_RESPONSE_CHANNEL,
+  RpcResponse,
+  StandardConnectOutputEncoded,
+  WalletRequestMethod
+} from "safari-extension-walletlib";
+import {
+  StandardConnectInput,
+  StandardConnectOutput
+} from "@wallet-standard/features";
 
 type Props = Readonly<{
-  request: ConnectRequest;
-  onComplete: (response: ConnectResponseEncoded) => void;
+  request: RpcRequestQueueItem;
+  onComplete: (
+    response: RpcResponse,
+    originTabId: number,
+    responseChannel: string
+  ) => void;
   selectedAccount: Base58EncodedAddress | null;
 }>;
 
@@ -18,55 +41,55 @@ export default function ConnectScreen({
   onComplete,
   selectedAccount
 }: Props) {
-  const handleConnect = async (request: ConnectRequest) => {
-    if (!request.origin) {
+  const handleConnect = async (request: RpcRequestQueueItem) => {
+    if (!request.origin || !request.origin.tab?.id) {
       throw new Error("Sender origin is missing: " + request);
     }
 
-    const connectResponseOutput = await requestNativeConnect(request);
+    const encodedConnectResponseOutput = await nativeConnect({
+      input: request.rpcRequest.params as StandardConnectInput,
+      method: WalletRequestMethod.SOLANA_CONNECT
+    });
 
-    if (connectResponseOutput === null) {
-      onComplete({
-        type: "wallet-response",
-        method: request.method,
-        requestId: request.requestId,
-        origin: request.origin,
-        output: {
-          accounts: []
+    if (encodedConnectResponseOutput === null) {
+      onComplete(
+        {
+          id: request.rpcRequest.id,
+          error: {
+            value: "An error occured during connect."
+          }
         },
-        error: {
-          value: "An error occured during connect."
-        }
-      });
+        request.origin.tab.id,
+        PAGE_WALLET_RESPONSE_CHANNEL
+      );
       return;
     }
 
-    onComplete({
-      type: "wallet-response",
-      method: request.method,
-      requestId: request.requestId,
-      origin: request.origin,
-      output: connectResponseOutput
-    });
+    onComplete(
+      {
+        id: request.rpcRequest.id,
+        result: encodedConnectResponseOutput
+      },
+      request.origin.tab.id,
+      PAGE_WALLET_RESPONSE_CHANNEL
+    );
   };
 
-  const handleCancel = async (request: ConnectRequest) => {
-    if (!request.origin) {
+  const handleCancel = async (request: RpcRequestQueueItem) => {
+    if (!request.origin || !request.origin.tab?.id) {
       throw new Error("Sender origin is missing: " + request);
     }
 
-    onComplete({
-      type: "wallet-response",
-      method: request.method,
-      requestId: request.requestId,
-      origin: request.origin,
-      output: {
-        accounts: []
+    onComplete(
+      {
+        id: request.rpcRequest.id,
+        error: {
+          value: "User rejected connecting."
+        }
       },
-      error: {
-        value: "User rejected connecting."
-      }
-    });
+      request.origin.tab.id,
+      request.responseChannel
+    );
   };
 
   return (

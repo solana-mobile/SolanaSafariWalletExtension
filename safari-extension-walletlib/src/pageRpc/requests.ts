@@ -19,10 +19,10 @@ export type WalletRpcRequest = {
   params: WalletRequestInput;
 };
 
-export type RpcResponse<T = WalletRequestOutput> = {
+export type RpcResponse<T = WalletRequestOutputEncoded> = {
   id: string;
-  result: T;
-  error: any;
+  result?: T;
+  error?: any;
 };
 
 export enum WalletRequestMethod {

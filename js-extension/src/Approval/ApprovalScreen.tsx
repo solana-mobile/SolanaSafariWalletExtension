@@ -13,19 +13,31 @@ import SignMessageScreen from "./SignMessageScreen";
 import SignTransactionScreen from "./SignTransactionScreen";
 import SignAndSendTransactionScreen from "./SignAndSendTransactionScreen";
 import { requestNativeGetAccounts } from "../nativeRequests/requestNativeGetAccounts";
+import {
+  RpcResponse,
+  WalletRpcRequest
+} from "safari-extension-walletlib/lib/pageRpc/requests";
+import {
+  PAGE_WALLET_REQUEST_CHANNEL,
+  PAGE_WALLET_RESPONSE_CHANNEL
+} from "safari-extension-walletlib";
 
 export type Base58EncodedAddress = string;
 
 function getRequestScreenComponent(
-  request: BaseWalletRequestEncoded,
-  onComplete: (response: BaseWalletResponseEncoded) => void,
+  request: RpcRequestQueueItem,
+  onComplete: (
+    response: RpcResponse,
+    originTabId: number,
+    responseChannel: string
+  ) => void,
   selectedAccount: Base58EncodedAddress | null
 ) {
-  switch (request.method) {
+  switch (request.rpcRequest.method) {
     case WalletRequestMethod.SOLANA_CONNECT:
       return (
         <ConnectScreen
-          request={request as ConnectRequest}
+          request={request}
           onComplete={onComplete}
           selectedAccount={selectedAccount}
         />
@@ -59,10 +71,30 @@ function getRequestScreenComponent(
   }
 }
 
+export type WalletRpcRequestWithId = WalletRpcRequest & { id: string };
+export type RpcRequestQueueItem = {
+  origin: browser.runtime.MessageSender;
+  rpcRequest: WalletRpcRequestWithId;
+  responseChannel: string;
+};
+export type WalletEvent = {
+  origin: browser.runtime.MessageSender;
+  rpcRequest: {
+    detail: WalletRpcRequestWithId;
+    type: string;
+  };
+};
+
+function isValidRpcMethod(method: string): boolean {
+  return Object.values(WalletRequestMethod).includes(
+    method as WalletRequestMethod
+  );
+}
+
 export default function ApprovalScreen() {
-  const [requestQueue, setRequestQueue] = useState<
-    Array<BaseWalletRequestEncoded>
-  >([]);
+  const [requestQueue, setRequestQueue] = useState<Array<RpcRequestQueueItem>>(
+    []
+  );
   const [selectedAccount, setSelectedAccount] =
     useState<Base58EncodedAddress | null>(null);
 
@@ -70,13 +102,28 @@ export default function ApprovalScreen() {
   //    1. Initializes the wallet request listener for the approval tab
   //    2. Signals to background that this listener, and thus the approval tab, is ready to receive requests
   useEffect(() => {
-    function handleWalletRequest(request: BaseWalletRequestEncoded) {
-      console.log("Approval Screen Request Received: ", request);
+    function handleWalletRequest(event: WalletEvent) {
+      console.log("Approval Screen Request Received: ", event);
+      setTimeout(() => {
+        console.log("Approval Screen Request Received: ", event);
+      }, 5000);
 
-      if (request.type === "approval-tab-request") {
-        // Add the new request to the queue
-        setRequestQueue((prevQueue) => [...prevQueue, request]);
-        console.log(request);
+      if (
+        event.rpcRequest.type === PAGE_WALLET_REQUEST_CHANNEL &&
+        isValidRpcMethod(event.rpcRequest.detail.method)
+      ) {
+        // Add the new RPC Request to the queue
+        setTimeout(() => {
+          setRequestQueue((prevQueue) => [
+            ...prevQueue,
+            {
+              origin: event.origin,
+              rpcRequest: event.rpcRequest.detail,
+              responseChannel: PAGE_WALLET_RESPONSE_CHANNEL
+            }
+          ]);
+          console.log(event);
+        }, 5000);
       }
     }
 
@@ -103,16 +150,15 @@ export default function ApprovalScreen() {
     getSelectedAccount();
   }, []);
 
-  const onRequestComplete = (response: BaseWalletResponseEncoded) => {
-    if (!response.origin?.tab?.id) {
-      throw new Error("Request has no origin sender metadata");
-    }
-
-    const originTabId = response.origin.tab.id;
+  const onRequestComplete = (
+    response: RpcResponse,
+    originTabId: number,
+    responseChannel: string
+  ) => {
     // TODO: Only `update` and `close` tab if its the last request in queue
     browser.tabs
       // Sends an approval response to the originTab
-      .sendMessage(originTabId, response)
+      .sendMessage(originTabId, { type: responseChannel, detail: response })
       // Switches active tab back to the dApp (originTab)
       .then(() => browser.tabs.update(originTabId, { active: true }))
       // Closes the Approval UI tab

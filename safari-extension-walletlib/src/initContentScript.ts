@@ -18,6 +18,7 @@ function isValidOrigin(event: MessageEvent<any>) {
 export function initContentScript() {
   // Forwards page requests to the background script
   window.addEventListener('message', async event => {
+    console.log('content event: ' + event);
     if (isValidOrigin(event) && event.data) {
       if (event.data.type === PAGE_WALLET_REQUEST_CHANNEL) {
         forwardToBackgroundScript(event.data);
@@ -28,10 +29,11 @@ export function initContentScript() {
   // Forwards responses from background/approval to page
   browser.runtime.onMessage.addListener(
     async (message, _sender, _sendResponse) => {
+      console.log('content forward: ' + message);
       if (message.type === PAGE_WALLET_RESPONSE_CHANNEL) {
+        console.log('content forward to page script: ' + message);
         forwardToPageScript({
           ...message,
-          type: PAGE_WALLET_RESPONSE_CHANNEL,
         });
       }
     }

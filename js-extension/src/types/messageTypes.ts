@@ -23,7 +23,9 @@ export enum WalletRequestMethod {
 
 export class WalletRequestEvent extends CustomEvent<BaseWalletRequestEncoded> {
   constructor(request: BaseWalletRequestEncoded) {
-    super("page-wallet-request", { detail: request });
+    super("page-wallet-request", {
+      detail: { ...request }
+    });
   }
 }
 

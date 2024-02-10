@@ -87,6 +87,9 @@ export default class SafariPageRequestClient {
         params: input,
       }
     );
+    if (rpcResponse.error || !rpcResponse.result) {
+      throw Error('Error during connect');
+    }
     return decodeConnectOutput(rpcResponse.result);
   }
 
@@ -98,6 +101,9 @@ export default class SafariPageRequestClient {
         method: WalletRequestMethod.SOLANA_SIGN_MESSAGE,
         params: input,
       });
+    if (rpcResponse.error || !rpcResponse.result) {
+      throw Error('Error during signing');
+    }
     return decodeSignMessageOutput(rpcResponse.result);
   }
 
@@ -109,7 +115,9 @@ export default class SafariPageRequestClient {
         method: WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION,
         params: input,
       });
-
+    if (rpcResponse.error || !rpcResponse.result) {
+      throw Error('Error during signing');
+    }
     return decodeSignAndSendTransactionOutput(rpcResponse.result);
   }
 
@@ -121,6 +129,9 @@ export default class SafariPageRequestClient {
         method: WalletRequestMethod.SOLANA_SIGN_TRANSACTION,
         params: input,
       });
+    if (rpcResponse.error || !rpcResponse.result) {
+      throw Error('Error during signing');
+    }
     return decodeSignTransactionOutput(rpcResponse.result);
   }
 
