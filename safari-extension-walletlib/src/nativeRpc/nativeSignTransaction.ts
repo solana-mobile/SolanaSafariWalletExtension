@@ -1,48 +1,44 @@
-import { fromUint8Array } from 'js-base64';
-import { SignTransactionRequestEncoded } from '../pageRpc/requests';
+import { toUint8Array } from 'js-base64';
+import {
+  NativeSignTransactionResult,
+  NativeSignTransactionParams,
+} from './types';
 
-type Base58SignedTransaction = string;
+const NATIVE_SIGN_TRANSACTIONS_RPC_METHOD = 'NATIVE_SIGN_TRANSACTIONS_METHOD';
 
 function parseSignTransactionResponse(
-  response: any
-): Base58SignedTransaction | null {
-  if (!response.value || typeof response.value !== 'string') {
-    return null;
+  rpcResult: any
+): NativeSignTransactionResult {
+  const signTransactionsResult = JSON.parse(rpcResult);
+
+  if (
+    signTransactionsResult?.signed_transactions ||
+    !Array.isArray(signTransactionsResult.signed_transactions) ||
+    !signTransactionsResult.signed_transactions.every(
+      (item: any) => typeof item === 'string'
+    )
+  ) {
+    throw new Error('Invalid SignTransactions result format');
   }
-  return response.value as Base58SignedTransaction;
+
+  const decoded = (signTransactionsResult.signed_transactions as string[]).map(
+    tx => toUint8Array(tx)
+  );
+
+  return { signed_transactions: decoded };
 }
-
-export async function requestNativeSignTransaction(
-  request: SignTransactionRequestEncoded
-): Promise<Base58SignedTransaction | null> {
-  const response = await browser.runtime.sendNativeMessage('id', {
-    method: request.method,
-    input: {
-      // fallback to address if publicKey not provided
-      account: request.input.account.publicKey ?? request.input.account.address,
-      transaction: request.input.transaction,
-    },
-  });
-  console.log('Native Sign Transaction Response: ', response);
-
-  return parseSignTransactionResponse(response);
-}
-
-type NativeSignTransactionParams = {
-  account: Uint8Array;
-  transaction: Uint8Array;
-};
 
 export async function nativeSignTransaction({
-  account,
+  address,
   transaction,
-}: NativeSignTransactionParams): Promise<Base58SignedTransaction | null> {
+  extra_data,
+}: NativeSignTransactionParams): Promise<NativeSignTransactionResult> {
   const response = await browser.runtime.sendNativeMessage('id', {
-    method: 'NATIVE_SIGN_TRANSACTION',
-    input: {
-      // fallback to address if publicKey not provided
-      account: fromUint8Array(account),
-      transaction: fromUint8Array(transaction),
+    method: NATIVE_SIGN_TRANSACTIONS_RPC_METHOD,
+    params: {
+      address,
+      transaction,
+      extra_data,
     },
   });
   console.log('Native Sign Transaction Response: ', response);

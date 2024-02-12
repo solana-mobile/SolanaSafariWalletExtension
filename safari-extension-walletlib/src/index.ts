@@ -5,5 +5,5 @@ export * from './constants';
 export * from './pageRpc/requests';
 export * from './nativeRpc/nativeGetAccounts';
 export * from './nativeRpc/nativeConnect';
-export * from './nativeRpc/nativeSignMessage';
+export * from './nativeRpc/nativeSignMessages';
 export * from './nativeRpc/nativeSignTransaction';

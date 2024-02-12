@@ -1,39 +1,34 @@
-type Base58EncodedAddress = string;
+import { NativeGetAccountsResult, NativeGetAccountsParams } from './types';
 
-function parseGetAccountsResponse(
-  accountsJson: any
-): Base58EncodedAddress[] | null {
-  try {
-    const accounts = JSON.parse(accountsJson);
+function parseGetAccountsRpcResponse(rpcResult: any): NativeGetAccountsResult {
+  const getAccountsResult = JSON.parse(rpcResult);
 
-    if (
-      !Array.isArray(accounts) ||
-      !accounts.every(item => typeof item === 'string')
-    ) {
-      throw new Error('Invalid format');
-    }
-
-    return accounts as Base58EncodedAddress[];
-  } catch (err: any) {
-    console.error('Error parsing get accounts response: ', err);
-    return null;
+  if (
+    getAccountsResult?.addresses ||
+    !Array.isArray(getAccountsResult.addresses) ||
+    !getAccountsResult.addresses.every((item: any) => typeof item === 'string')
+  ) {
+    throw new Error('Invalid GetAccounts result format');
   }
+
+  return { addresses: getAccountsResult.addresses };
 }
 
-export async function requestNativeGetAccounts(): Promise<{
-  accounts: Base58EncodedAddress[];
-} | null> {
+const NATIVE_GET_ACCOUNTS_RPC_METHOD = 'NATIVE_GET_ACCOUNTS';
+
+export async function requestNativeGetAccounts({
+  extra_data,
+}: NativeGetAccountsParams): Promise<NativeGetAccountsResult> {
   const response = await browser.runtime.sendNativeMessage('id', {
-    method: 'GET_ACCOUNTS',
+    method: NATIVE_GET_ACCOUNTS_RPC_METHOD,
+    params: {
+      extra_data,
+    },
   });
 
-  const accounts = parseGetAccountsResponse(response.value);
-
-  if (accounts === null) {
-    return null;
+  if (response?.error) {
+    throw new Error(response.error.message);
   }
 
-  return {
-    accounts,
-  };
+  return parseGetAccountsRpcResponse(response.result);
 }
