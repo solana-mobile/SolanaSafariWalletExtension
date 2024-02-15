@@ -32,7 +32,12 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
     }
     
     func handleGetAccountsRequest(context: NSExtensionContext) {
-        context.completeRpcRequestWith(result: GetAccountsResult(addresses: ["test"]))
+        let signer = SharedSolanaSigner()
+        if let address = signer.fetchWalletPubkey() {
+            context.completeRpcRequestWith(result: GetAccountsResult(addresses: [address]))
+        } else {
+            context.completeRpcRequestWith(errorMessage: "Failed to fetch account")
+        }
     }
     
     func handleSignPayloadsRequest(context: NSExtensionContext) {
@@ -41,7 +46,13 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
             context.completeRpcRequestWith(errorMessage: "Error parsing Sign Payloads request")
             return
         }
+        
         let signer = SharedSolanaSigner()
+        guard signer.fetchWalletPubkey() == params.address else {
+            context.completeRpcRequestWith(errorMessage: "Mismatched wallet account address")
+            return
+        }
+        
         if let signedPayload = signer.signPayload(base64EncodedPayload: params.payloads[0], forAddress: params.address) {
             context.completeRpcRequestWith(result: SignPayloadsResult(signed_payloads: [signedPayload]))
         } else {

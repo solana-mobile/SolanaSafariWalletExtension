@@ -9,6 +9,13 @@ import Foundation
 
 class SharedSolanaSigner {
     
+    func fetchWalletPubkey() -> String? {
+        guard let keypair = fetchStoredKeypair() else {
+            return nil
+        }
+        return keypair.publicKey.data.base64EncodedString()
+    }
+    
     func signPayload(base64EncodedPayload: String, forAddress: String) -> String? {
         guard let keypair = fetchStoredKeypair() else {
             return nil
@@ -19,6 +26,6 @@ class SharedSolanaSigner {
         }
         
         let signedMessageBytes = keypair.sign(messageBytes)
-        return signedMessageBytes.bytes.data.base64EncodedString()
+        return signedMessageBytes.data.base64EncodedString()
     }
 }
