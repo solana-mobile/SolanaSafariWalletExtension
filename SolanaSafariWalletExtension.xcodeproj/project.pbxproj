@@ -7,19 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00EE1F0D9B9621B90620E0BC /* Pods_SolanaSafariWalletExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2027D3676EED1A976E102ED0 /* Pods_SolanaSafariWalletExtension.framework */; };
+		4DA1452D428547CCFDC54613 /* Pods_SolanaSafariWalletExtension_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2799DF2CA1207868471253 /* Pods_SolanaSafariWalletExtension_Extension.framework */; };
+		72649955DEBEB783C9B1E713 /* Pods_SolanaSafariWalletExtensionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D502D71A417DD10743016619 /* Pods_SolanaSafariWalletExtensionTests.framework */; };
+		903093E0933D15DDF30B15B6 /* Pods_SolanaSafariWalletExtension_SolanaSafariWalletExtensionUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0EAF700D84EE4929FF6873 /* Pods_SolanaSafariWalletExtension_SolanaSafariWalletExtensionUITests.framework */; };
 		FB46E4BD2AE3BC4B00879F4F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46E4BC2AE3BC4B00879F4F /* SettingsView.swift */; };
-		FB4C431A2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43192B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift */; };
-		FB4C431B2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43192B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift */; };
-		FB4C431F2B1D69B9002E74E8 /* SafariExtensionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C431E2B1D69B9002E74E8 /* SafariExtensionRequest.swift */; };
-		FB4C43202B1D69B9002E74E8 /* SafariExtensionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C431E2B1D69B9002E74E8 /* SafariExtensionRequest.swift */; };
-		FB4C43222B1D7478002E74E8 /* ConnectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */; };
-		FB4C43232B1D7478002E74E8 /* ConnectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */; };
-		FB4C43252B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43242B1D7BEE002E74E8 /* SignTransactionRequest.swift */; };
-		FB4C43262B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43242B1D7BEE002E74E8 /* SignTransactionRequest.swift */; };
-		FB4C43292B1D9145002E74E8 /* SignMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */; };
-		FB4C432A2B1D9145002E74E8 /* SignMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */; };
-		FB4C432C2B1E7219002E74E8 /* GetAccountsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C432B2B1E7219002E74E8 /* GetAccountsRequest.swift */; };
-		FB4C432D2B1E7219002E74E8 /* GetAccountsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4C432B2B1E7219002E74E8 /* GetAccountsRequest.swift */; };
 		FB54E87A2ACD07D200A6E21D /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = FB54E8782ACD07D200A6E21D /* Main.html */; };
 		FB54E87C2ACD07D200A6E21D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FB54E87B2ACD07D200A6E21D /* Icon.png */; };
 		FB54E87E2ACD07D200A6E21D /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = FB54E87D2ACD07D200A6E21D /* Style.css */; };
@@ -37,8 +29,6 @@
 		FB54E8E52ACD0FB600A6E21D /* injected.js in Resources */ = {isa = PBXBuildFile; fileRef = FB54E8E12ACD0FB600A6E21D /* injected.js */; };
 		FB54E8E62ACD0FB600A6E21D /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = FB54E8E22ACD0FB600A6E21D /* content.js */; };
 		FB94F7412B1EC0C50065A675 /* CodeServices in Frameworks */ = {isa = PBXBuildFile; productRef = FB94F7402B1EC0C50065A675 /* CodeServices */; };
-		FB94F7522B1F069E0065A675 /* SignTransactionParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB94F7512B1F069E0065A675 /* SignTransactionParams.swift */; };
-		FB94F7532B1F069E0065A675 /* SignTransactionParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB94F7512B1F069E0065A675 /* SignTransactionParams.swift */; };
 		FBC93F562B1EAB7B0098826B /* CodeServices in Frameworks */ = {isa = PBXBuildFile; productRef = FBC93F552B1EAB7B0098826B /* CodeServices */; };
 		FBC93F582B1EBBB30098826B /* KeypairStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC93F572B1EBBB30098826B /* KeypairStorage.swift */; };
 		FBC93F592B1EBBB30098826B /* KeypairStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC93F572B1EBBB30098826B /* KeypairStorage.swift */; };
@@ -55,6 +45,7 @@
 		FBD745602AE334DE003D5E6B /* TokenRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD7455F2AE334DE003D5E6B /* TokenRowView.swift */; };
 		FBD745622AE39546003D5E6B /* WalletTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD745612AE39546003D5E6B /* WalletTabItemView.swift */; };
 		FBD745652AE39738003D5E6B /* WalletTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD745642AE39738003D5E6B /* WalletTabView.swift */; };
+		FBF927FC2B7D89190015FC47 /* SharedSolanaSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF927FB2B7D89190015FC47 /* SharedSolanaSigner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,15 +107,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2027D3676EED1A976E102ED0 /* Pods_SolanaSafariWalletExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SolanaSafariWalletExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E2799DF2CA1207868471253 /* Pods_SolanaSafariWalletExtension_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SolanaSafariWalletExtension_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		41B4941EEA23DFCCB54FE94D /* Pods-SolanaSafariWalletExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolanaSafariWalletExtension.debug.xcconfig"; path = "Target Support Files/Pods-SolanaSafariWalletExtension/Pods-SolanaSafariWalletExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		7823FD822D0C4BDE0A981B15 /* Pods-SolanaSafariWalletExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolanaSafariWalletExtension.release.xcconfig"; path = "Target Support Files/Pods-SolanaSafariWalletExtension/Pods-SolanaSafariWalletExtension.release.xcconfig"; sourceTree = "<group>"; };
+		7C33502DDC9560EF6E02A8F0 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.debug.xcconfig"; path = "Target Support Files/Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests/Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		7CB945AD1A3B95E19B90427A /* Pods-SolanaSafariWalletExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolanaSafariWalletExtensionTests.debug.xcconfig"; path = "Target Support Files/Pods-SolanaSafariWalletExtensionTests/Pods-SolanaSafariWalletExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
+		90337BE49435EC34457B5F9C /* Pods-SolanaSafariWalletExtensionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolanaSafariWalletExtensionTests.release.xcconfig"; path = "Target Support Files/Pods-SolanaSafariWalletExtensionTests/Pods-SolanaSafariWalletExtensionTests.release.xcconfig"; sourceTree = "<group>"; };
+		A40CB16DB23887DFFDC66A01 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.release.xcconfig"; path = "Target Support Files/Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests/Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.release.xcconfig"; sourceTree = "<group>"; };
+		A8576D0676947B93D92833EA /* Pods-SolanaSafariWalletExtension Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolanaSafariWalletExtension Extension.release.xcconfig"; path = "Target Support Files/Pods-SolanaSafariWalletExtension Extension/Pods-SolanaSafariWalletExtension Extension.release.xcconfig"; sourceTree = "<group>"; };
+		BA0EAF700D84EE4929FF6873 /* Pods_SolanaSafariWalletExtension_SolanaSafariWalletExtensionUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SolanaSafariWalletExtension_SolanaSafariWalletExtensionUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC06A72E24E6C8E2BD5B0DDF /* Pods-SolanaSafariWalletExtension Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SolanaSafariWalletExtension Extension.debug.xcconfig"; path = "Target Support Files/Pods-SolanaSafariWalletExtension Extension/Pods-SolanaSafariWalletExtension Extension.debug.xcconfig"; sourceTree = "<group>"; };
+		D502D71A417DD10743016619 /* Pods_SolanaSafariWalletExtensionTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SolanaSafariWalletExtensionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB46E4BC2AE3BC4B00879F4F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FB46E4F02AE7229F00879F4F /* SolanaSafariWalletExtension Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SolanaSafariWalletExtension Extension.entitlements"; sourceTree = "<group>"; };
 		FB46E4F12AE8650300879F4F /* SolanaSafariWalletExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SolanaSafariWalletExtension.entitlements; sourceTree = "<group>"; };
-		FB4C43192B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSExtensionContext+SafariRequestType.swift"; sourceTree = "<group>"; };
-		FB4C431E2B1D69B9002E74E8 /* SafariExtensionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariExtensionRequest.swift; sourceTree = "<group>"; };
-		FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequest.swift; sourceTree = "<group>"; };
-		FB4C43242B1D7BEE002E74E8 /* SignTransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTransactionRequest.swift; sourceTree = "<group>"; };
-		FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignMessageRequest.swift; sourceTree = "<group>"; };
-		FB4C432B2B1E7219002E74E8 /* GetAccountsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountsRequest.swift; sourceTree = "<group>"; };
 		FB54E8722ACD07D200A6E21D /* SolanaSafariWalletExtension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolanaSafariWalletExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB54E8792ACD07D200A6E21D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = ../Base.lproj/Main.html; sourceTree = "<group>"; };
 		FB54E87B2ACD07D200A6E21D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -145,7 +142,6 @@
 		FB54E8E02ACD0FB600A6E21D /* background.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = background.js; sourceTree = "<group>"; };
 		FB54E8E12ACD0FB600A6E21D /* injected.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = injected.js; sourceTree = "<group>"; };
 		FB54E8E22ACD0FB600A6E21D /* content.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = content.js; sourceTree = "<group>"; };
-		FB94F7512B1F069E0065A675 /* SignTransactionParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTransactionParams.swift; sourceTree = "<group>"; };
 		FBC93F542B1EA55A0098826B /* SolanaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SolanaCore; sourceTree = "<group>"; };
 		FBC93F572B1EBBB30098826B /* KeypairStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypairStorage.swift; sourceTree = "<group>"; };
 		FBD7450D2ADA094B003D5E6B /* approval.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = approval.html; sourceTree = "<group>"; };
@@ -159,6 +155,7 @@
 		FBD7455F2AE334DE003D5E6B /* TokenRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRowView.swift; sourceTree = "<group>"; };
 		FBD745612AE39546003D5E6B /* WalletTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTabItemView.swift; sourceTree = "<group>"; };
 		FBD745642AE39738003D5E6B /* WalletTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTabView.swift; sourceTree = "<group>"; };
+		FBF927FB2B7D89190015FC47 /* SharedSolanaSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedSolanaSigner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB94F7412B1EC0C50065A675 /* CodeServices in Frameworks */,
+				00EE1F0D9B9621B90620E0BC /* Pods_SolanaSafariWalletExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +172,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72649955DEBEB783C9B1E713 /* Pods_SolanaSafariWalletExtensionTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +180,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				903093E0933D15DDF30B15B6 /* Pods_SolanaSafariWalletExtension_SolanaSafariWalletExtensionUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,12 +189,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBC93F562B1EAB7B0098826B /* CodeServices in Frameworks */,
+				4DA1452D428547CCFDC54613 /* Pods_SolanaSafariWalletExtension_Extension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B75C3187B104D606D2C73CF5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				41B4941EEA23DFCCB54FE94D /* Pods-SolanaSafariWalletExtension.debug.xcconfig */,
+				7823FD822D0C4BDE0A981B15 /* Pods-SolanaSafariWalletExtension.release.xcconfig */,
+				CC06A72E24E6C8E2BD5B0DDF /* Pods-SolanaSafariWalletExtension Extension.debug.xcconfig */,
+				A8576D0676947B93D92833EA /* Pods-SolanaSafariWalletExtension Extension.release.xcconfig */,
+				7C33502DDC9560EF6E02A8F0 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.debug.xcconfig */,
+				A40CB16DB23887DFFDC66A01 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.release.xcconfig */,
+				7CB945AD1A3B95E19B90427A /* Pods-SolanaSafariWalletExtensionTests.debug.xcconfig */,
+				90337BE49435EC34457B5F9C /* Pods-SolanaSafariWalletExtensionTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		FB46E4BE2AE6F05B00879F4F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,37 +222,12 @@
 		FB46E4ED2AE721CB00879F4F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2027D3676EED1A976E102ED0 /* Pods_SolanaSafariWalletExtension.framework */,
+				3E2799DF2CA1207868471253 /* Pods_SolanaSafariWalletExtension_Extension.framework */,
+				BA0EAF700D84EE4929FF6873 /* Pods_SolanaSafariWalletExtension_SolanaSafariWalletExtensionUITests.framework */,
+				D502D71A417DD10743016619 /* Pods_SolanaSafariWalletExtensionTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		FB4C43182B1D2AD0002E74E8 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				FB4C43192B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		FB4C431C2B1D697E002E74E8 /* requests */ = {
-			isa = PBXGroup;
-			children = (
-				FB94F7502B1F065A0065A675 /* model */,
-				FB4C431D2B1D6993002E74E8 /* protocols */,
-				FB4C43212B1D7478002E74E8 /* ConnectRequest.swift */,
-				FB4C432B2B1E7219002E74E8 /* GetAccountsRequest.swift */,
-				FB4C43242B1D7BEE002E74E8 /* SignTransactionRequest.swift */,
-				FB4C43282B1D9145002E74E8 /* SignMessageRequest.swift */,
-			);
-			path = requests;
-			sourceTree = "<group>";
-		};
-		FB4C431D2B1D6993002E74E8 /* protocols */ = {
-			isa = PBXGroup;
-			children = (
-				FB4C431E2B1D69B9002E74E8 /* SafariExtensionRequest.swift */,
-			);
-			path = protocols;
 			sourceTree = "<group>";
 		};
 		FB54E8692ACD07D200A6E21D = {
@@ -250,6 +241,7 @@
 				FB54E8A92ACD07D300A6E21D /* SolanaSafariWalletExtension Extension */,
 				FB54E8732ACD07D200A6E21D /* Products */,
 				FB46E4ED2AE721CB00879F4F /* Frameworks */,
+				B75C3187B104D606D2C73CF5 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -312,10 +304,9 @@
 		FB54E8A92ACD07D300A6E21D /* SolanaSafariWalletExtension Extension */ = {
 			isa = PBXGroup;
 			children = (
-				FB4C431C2B1D697E002E74E8 /* requests */,
-				FB4C43182B1D2AD0002E74E8 /* Extensions */,
 				FB46E4F02AE7229F00879F4F /* SolanaSafariWalletExtension Extension.entitlements */,
 				FB54E8AA2ACD07D300A6E21D /* SafariWebExtensionHandler.swift */,
+				FBF927FB2B7D89190015FC47 /* SharedSolanaSigner.swift */,
 				FB54E8BD2ACD07D300A6E21D /* Info.plist */,
 				FB54E8AC2ACD07D300A6E21D /* Resources */,
 			);
@@ -348,14 +339,6 @@
 			path = build;
 			sourceTree = "<group>";
 		};
-		FB94F7502B1F065A0065A675 /* model */ = {
-			isa = PBXGroup;
-			children = (
-				FB94F7512B1F069E0065A675 /* SignTransactionParams.swift */,
-			);
-			path = model;
-			sourceTree = "<group>";
-		};
 		FBC93F4F2B1EA3190098826B /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -371,11 +354,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB54E8C52ACD07D300A6E21D /* Build configuration list for PBXNativeTarget "SolanaSafariWalletExtension" */;
 			buildPhases = (
+				CCDB75D461CF6F7B71F4218B /* [CP] Check Pods Manifest.lock */,
 				FB54E86E2ACD07D200A6E21D /* Sources */,
 				FB54E86F2ACD07D200A6E21D /* Frameworks */,
 				FB54E8702ACD07D200A6E21D /* Resources */,
 				FB54E8C42ACD07D300A6E21D /* Embed Foundation Extensions */,
 				FB46E4E32AE71E7500879F4F /* Embed Frameworks */,
+				B538AC7345A0279DC80299C9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -394,6 +379,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB54E8C82ACD07D300A6E21D /* Build configuration list for PBXNativeTarget "SolanaSafariWalletExtensionTests" */;
 			buildPhases = (
+				7313055C05D1621687249A99 /* [CP] Check Pods Manifest.lock */,
 				FB54E88B2ACD07D300A6E21D /* Sources */,
 				FB54E88C2ACD07D300A6E21D /* Frameworks */,
 				FB54E88D2ACD07D300A6E21D /* Resources */,
@@ -412,6 +398,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB54E8CB2ACD07D300A6E21D /* Build configuration list for PBXNativeTarget "SolanaSafariWalletExtensionUITests" */;
 			buildPhases = (
+				AE1FD77EACBE203C35CD6A87 /* [CP] Check Pods Manifest.lock */,
 				FB54E8952ACD07D300A6E21D /* Sources */,
 				FB54E8962ACD07D300A6E21D /* Frameworks */,
 				FB54E8972ACD07D300A6E21D /* Resources */,
@@ -430,6 +417,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB54E8C12ACD07D300A6E21D /* Build configuration list for PBXNativeTarget "SolanaSafariWalletExtension Extension" */;
 			buildPhases = (
+				40B569005DFBC994D83EC6F6 /* [CP] Check Pods Manifest.lock */,
 				FB54E8A12ACD07D300A6E21D /* Sources */,
 				FB54E8A22ACD07D300A6E21D /* Frameworks */,
 				FB54E8A32ACD07D300A6E21D /* Resources */,
@@ -482,8 +470,6 @@
 				Base,
 			);
 			mainGroup = FB54E8692ACD07D200A6E21D;
-			packageReferences = (
-			);
 			productRefGroup = FB54E8732ACD07D200A6E21D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -543,25 +529,126 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		40B569005DFBC994D83EC6F6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SolanaSafariWalletExtension Extension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7313055C05D1621687249A99 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SolanaSafariWalletExtensionTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AE1FD77EACBE203C35CD6A87 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B538AC7345A0279DC80299C9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SolanaSafariWalletExtension/Pods-SolanaSafariWalletExtension-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SolanaSafariWalletExtension/Pods-SolanaSafariWalletExtension-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SolanaSafariWalletExtension/Pods-SolanaSafariWalletExtension-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CCDB75D461CF6F7B71F4218B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SolanaSafariWalletExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		FB54E86E2ACD07D200A6E21D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB94F7522B1F069E0065A675 /* SignTransactionParams.swift in Sources */,
 				FBD745582AE09D2E003D5E6B /* WalletHomeView.swift in Sources */,
-				FB4C431A2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */,
 				FBD745622AE39546003D5E6B /* WalletTabItemView.swift in Sources */,
-				FB4C431F2B1D69B9002E74E8 /* SafariExtensionRequest.swift in Sources */,
-				FB4C432C2B1E7219002E74E8 /* GetAccountsRequest.swift in Sources */,
-				FB4C43252B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */,
 				FBD7455E2AE3304A003D5E6B /* WalletTopBarView.swift in Sources */,
 				FBD745602AE334DE003D5E6B /* TokenRowView.swift in Sources */,
 				FB46E4BD2AE3BC4B00879F4F /* SettingsView.swift in Sources */,
-				FB4C43292B1D9145002E74E8 /* SignMessageRequest.swift in Sources */,
 				FBD745652AE39738003D5E6B /* WalletTabView.swift in Sources */,
 				FBC93F582B1EBBB30098826B /* KeypairStorage.swift in Sources */,
-				FB4C43222B1D7478002E74E8 /* ConnectRequest.swift in Sources */,
 				FBD7454C2AE090C9003D5E6B /* MainApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -589,14 +676,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB4C431B2B1D2AE9002E74E8 /* NSExtensionContext+SafariRequestType.swift in Sources */,
-				FB4C43202B1D69B9002E74E8 /* SafariExtensionRequest.swift in Sources */,
-				FB4C432A2B1D9145002E74E8 /* SignMessageRequest.swift in Sources */,
+				FBF927FC2B7D89190015FC47 /* SharedSolanaSigner.swift in Sources */,
 				FB54E8AB2ACD07D300A6E21D /* SafariWebExtensionHandler.swift in Sources */,
-				FB4C43262B1D7BEE002E74E8 /* SignTransactionRequest.swift in Sources */,
-				FB4C432D2B1E7219002E74E8 /* GetAccountsRequest.swift in Sources */,
-				FB94F7532B1F069E0065A675 /* SignTransactionParams.swift in Sources */,
-				FB4C43232B1D7478002E74E8 /* ConnectRequest.swift in Sources */,
 				FBC93F5B2B1EBBB30098826B /* KeypairStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -749,6 +830,7 @@
 		};
 		FB54E8C22ACD07D300A6E21D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC06A72E24E6C8E2BD5B0DDF /* Pods-SolanaSafariWalletExtension Extension.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "SolanaSafariWalletExtension Extension/SolanaSafariWalletExtension Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -780,6 +862,7 @@
 		};
 		FB54E8C32ACD07D300A6E21D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A8576D0676947B93D92833EA /* Pods-SolanaSafariWalletExtension Extension.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "SolanaSafariWalletExtension Extension/SolanaSafariWalletExtension Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -811,6 +894,7 @@
 		};
 		FB54E8C62ACD07D300A6E21D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41B4941EEA23DFCCB54FE94D /* Pods-SolanaSafariWalletExtension.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -850,6 +934,7 @@
 		};
 		FB54E8C72ACD07D300A6E21D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7823FD822D0C4BDE0A981B15 /* Pods-SolanaSafariWalletExtension.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -889,6 +974,7 @@
 		};
 		FB54E8C92ACD07D300A6E21D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CB945AD1A3B95E19B90427A /* Pods-SolanaSafariWalletExtensionTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -908,6 +994,7 @@
 		};
 		FB54E8CA2ACD07D300A6E21D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90337BE49435EC34457B5F9C /* Pods-SolanaSafariWalletExtensionTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -927,6 +1014,7 @@
 		};
 		FB54E8CC2ACD07D300A6E21D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C33502DDC9560EF6E02A8F0 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -944,6 +1032,7 @@
 		};
 		FB54E8CD2ACD07D300A6E21D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A40CB16DB23887DFFDC66A01 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

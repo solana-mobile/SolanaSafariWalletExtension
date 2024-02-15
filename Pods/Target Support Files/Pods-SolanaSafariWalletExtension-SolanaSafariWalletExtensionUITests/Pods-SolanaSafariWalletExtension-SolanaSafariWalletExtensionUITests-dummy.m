@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_SolanaSafariWalletExtension_SolanaSafariWalletExtensionUITests : NSObject
+@end
+@implementation PodsDummy_Pods_SolanaSafariWalletExtension_SolanaSafariWalletExtensionUITests
+@end

@@ -1,0 +1,6 @@
+framework module Pods_SafariExtensionWalletlibSwift_Example {
+  umbrella header "Pods-SafariExtensionWalletlibSwift_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

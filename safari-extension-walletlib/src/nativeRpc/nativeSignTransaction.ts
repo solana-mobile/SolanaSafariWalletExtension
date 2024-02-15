@@ -41,6 +41,7 @@ export async function nativeSignTransaction({
       extra_data,
     },
   });
+
   console.log('Native Sign Transaction Response: ', response);
 
   return parseSignTransactionResponse(response);
