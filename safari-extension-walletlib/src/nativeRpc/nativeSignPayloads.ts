@@ -1,46 +1,61 @@
-import { toUint8Array } from 'js-base64';
-import { NativeSignPayloadsResult, NativeSignPayloadsParams } from './types';
+import { sendNativeRpcRequest } from './sendNativeRpcRequest';
+import {
+  Base64EncodedAddress,
+  Base64EncodedPayload,
+  Base64EncodedSignedPayload,
+  JSONObject,
+  NativeRpcResponse,
+} from './types';
 
-const NATIVE_SIGN_PAYLOADS_RPC_METHOD = 'NATIVE_SIGN_PAYLOADS';
+/* Sign Payloads */
+export type NativeSignPayloadsParams = {
+  address: Base64EncodedAddress;
+  payloads: Base64EncodedPayload[];
+  extra_data?: Record<string, JSONObject>;
+};
 
-function parseSignPayloadsResponse(rpcResult: any): NativeSignPayloadsResult {
-  const signPayloadsResult = JSON.parse(rpcResult);
+export type NativeSignPayloadsResult = {
+  signed_payloads: Base64EncodedSignedPayload[];
+};
 
-  if (
-    signPayloadsResult?.signedPayloads ||
-    !Array.isArray(signPayloadsResult.signedPayloads) ||
-    !signPayloadsResult.signedPayloads.every(
-      (item: any) => typeof item === 'string'
+// Basic JSON schema validation
+function isValidSignPayloadsResult(
+  resultObj: any
+): resultObj is NativeSignPayloadsResult {
+  return (
+    Array.isArray(resultObj.signed_payloads) &&
+    resultObj.signed_payloads.every(
+      (payload: any) => typeof payload === 'string'
     )
-  ) {
-    throw new Error('Invalid SignPayloads result format');
-  }
-
-  const decoded = (signPayloadsResult.signedPayloads as string[]).map(message =>
-    toUint8Array(message)
   );
-
-  return { signed_payloads: decoded };
 }
 
-export async function nativeSignPayloads({
+export const NATIVE_SIGN_PAYLOADS_RPC_METHOD = 'NATIVE_SIGN_PAYLOADS_METHOD';
+
+export async function sendNativeSignPayloadsRequest({
   address,
   payloads,
   extra_data,
 }: NativeSignPayloadsParams): Promise<NativeSignPayloadsResult> {
-  const response = await browser.runtime.sendNativeMessage('id', {
+  const nativeResponse: NativeRpcResponse = await sendNativeRpcRequest({
     method: NATIVE_SIGN_PAYLOADS_RPC_METHOD,
     params: {
       address,
       payloads,
-      extra_data,
+      extra_data: extra_data ?? {},
     },
   });
-  console.log('Native Sign Payloads Response: ', response);
 
-  if (response?.error) {
-    throw new Error(response.error.message);
+  if (nativeResponse.result) {
+    const resultObj = JSON.parse(nativeResponse.result);
+    if (isValidSignPayloadsResult(resultObj)) {
+      return resultObj;
+    } else {
+      throw new Error(
+        'Response does not match the NativeSignPayloadsResult structure.'
+      );
+    }
+  } else {
+    throw new Error(nativeResponse.error?.message ?? 'Invalid RPC Response');
   }
-
-  return parseSignPayloadsResponse(response.result);
 }

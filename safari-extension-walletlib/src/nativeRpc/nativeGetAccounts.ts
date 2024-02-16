@@ -1,34 +1,47 @@
-import { NativeGetAccountsResult, NativeGetAccountsParams } from './types';
+import { sendNativeRpcRequest } from './sendNativeRpcRequest';
+import { Base58EncodedAddress, JSONObject, NativeRpcResponse } from './types';
 
-function parseGetAccountsRpcResponse(rpcResult: any): NativeGetAccountsResult {
-  const getAccountsResult = JSON.parse(rpcResult);
+/* Get Accounts */
+export type NativeGetAccountsParams = {
+  extra_data?: Record<string, JSONObject>;
+};
 
-  if (
-    getAccountsResult?.addresses ||
-    !Array.isArray(getAccountsResult.addresses) ||
-    !getAccountsResult.addresses.every((item: any) => typeof item === 'string')
-  ) {
-    throw new Error('Invalid GetAccounts result format');
-  }
+export type NativeGetAccountsResult = {
+  addresses: Base58EncodedAddress[];
+};
 
-  return { addresses: getAccountsResult.addresses };
+export const NATIVE_GET_ACCOUNTS_RPC_METHOD = 'NATIVE_GET_ACCOUNTS_METHOD';
+
+// Basic JSON schema validation
+function isValidNativeGetAccountsResult(
+  obj: any
+): obj is NativeGetAccountsResult {
+  return (
+    Array.isArray(obj.addresses) &&
+    obj.addresses.every((addr: any) => typeof addr === 'string')
+  );
 }
 
-const NATIVE_GET_ACCOUNTS_RPC_METHOD = 'NATIVE_GET_ACCOUNTS';
-
-export async function requestNativeGetAccounts({
+export async function sendNativeGetAccountsRequest({
   extra_data,
 }: NativeGetAccountsParams): Promise<NativeGetAccountsResult> {
-  const response = await browser.runtime.sendNativeMessage('id', {
+  const nativeResponse: NativeRpcResponse = await sendNativeRpcRequest({
     method: NATIVE_GET_ACCOUNTS_RPC_METHOD,
     params: {
-      extra_data,
+      extra_data: extra_data ?? {},
     },
   });
 
-  if (response?.error) {
-    throw new Error(response.error.message);
+  if (nativeResponse.result) {
+    const resultObj = JSON.parse(nativeResponse.result);
+    if (isValidNativeGetAccountsResult(resultObj)) {
+      return resultObj;
+    } else {
+      throw new Error(
+        'Response does not match the NativeGetAccountsResult structure.'
+      );
+    }
+  } else {
+    throw new Error(nativeResponse.error?.message ?? 'Invalid RPC Response');
   }
-
-  return parseGetAccountsRpcResponse(response.result);
 }

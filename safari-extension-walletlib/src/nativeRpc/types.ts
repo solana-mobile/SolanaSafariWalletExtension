@@ -5,42 +5,29 @@ export type Base58EncodedAddress = string;
 export type Base64EncodedPayload = string;
 export type Base64EncodedSignedPayload = string;
 
-/* Get Accounts */
-export type NativeGetAccountsParams = {
-  extra_data?: any;
-};
-export type NativeGetAccountsResult = {
-  addresses: Base58EncodedAddress[];
-};
+export type JSONValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JSONArray
+  | JSONObject;
 
-/* Sign Transaction */
-export type NativeSignTransactionParams = {
-  address: Base64EncodedAddress;
-  transaction: Base64EncodedTransaction;
-  extra_data?: any;
-};
-export type NativeSignTransactionResult = {
-  signed_transactions: Uint8Array[];
-};
+export interface JSONArray extends Array<JSONValue> {}
 
-/* Sign Messages */
-export type NativeSignMessagesParams = {
-  address: Base64EncodedAddress;
-  messages: Base64EncodedMessage[];
-  extra_data?: any;
-};
+export interface JSONObject {
+  [key: string]: JSONValue;
+}
 
-export type NativeSignMessagesResult = {
-  signed_messages: Uint8Array[];
-};
+export interface NativeRpcRequest {
+  method: string;
+  params: JSONObject;
+}
 
-/* Sign Payloads */
-export type NativeSignPayloadsParams = {
-  address: Base64EncodedAddress;
-  payloads: Base64EncodedPayload[];
-  extra_data?: any;
-};
-
-export type NativeSignPayloadsResult = {
-  signed_payloads: Uint8Array[];
-};
+export interface NativeRpcResponse {
+  result?: string;
+  error?: {
+    code: number;
+    message: string;
+  };
+}
