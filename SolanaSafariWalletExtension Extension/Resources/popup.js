@@ -7085,6 +7085,1678 @@
     }
   });
 
+  // ../safari-extension-walletlib/node_modules/uuid/dist/rng-browser.js
+  var require_rng_browser = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = rng;
+    var getRandomValues;
+    var rnds8 = new Uint8Array(16);
+    function rng() {
+      if (!getRandomValues) {
+        getRandomValues = typeof crypto !== "undefined" && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
+        if (!getRandomValues) {
+          throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");
+        }
+      }
+      return getRandomValues(rnds8);
+    }
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/regex.js
+  var require_regex = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _default = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/validate.js
+  var require_validate = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _regex = _interopRequireDefault(require_regex());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function validate(uuid) {
+      return typeof uuid === "string" && _regex.default.test(uuid);
+    }
+    var _default = validate;
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/stringify.js
+  var require_stringify = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    exports.unsafeStringify = unsafeStringify;
+    var _validate = _interopRequireDefault(require_validate());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var byteToHex = [];
+    for (let i = 0; i < 256; ++i) {
+      byteToHex.push((i + 256).toString(16).slice(1));
+    }
+    function unsafeStringify(arr, offset = 0) {
+      return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
+    }
+    function stringify(arr, offset = 0) {
+      const uuid = unsafeStringify(arr, offset);
+      if (!(0, _validate.default)(uuid)) {
+        throw TypeError("Stringified UUID is invalid");
+      }
+      return uuid;
+    }
+    var _default = stringify;
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/v1.js
+  var require_v1 = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _rng = _interopRequireDefault(require_rng_browser());
+    var _stringify = require_stringify();
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var _nodeId;
+    var _clockseq;
+    var _lastMSecs = 0;
+    var _lastNSecs = 0;
+    function v1(options, buf, offset) {
+      let i = buf && offset || 0;
+      const b = buf || new Array(16);
+      options = options || {};
+      let node = options.node || _nodeId;
+      let clockseq = options.clockseq !== void 0 ? options.clockseq : _clockseq;
+      if (node == null || clockseq == null) {
+        const seedBytes = options.random || (options.rng || _rng.default)();
+        if (node == null) {
+          node = _nodeId = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
+        }
+        if (clockseq == null) {
+          clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
+        }
+      }
+      let msecs = options.msecs !== void 0 ? options.msecs : Date.now();
+      let nsecs = options.nsecs !== void 0 ? options.nsecs : _lastNSecs + 1;
+      const dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
+      if (dt < 0 && options.clockseq === void 0) {
+        clockseq = clockseq + 1 & 16383;
+      }
+      if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === void 0) {
+        nsecs = 0;
+      }
+      if (nsecs >= 1e4) {
+        throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
+      }
+      _lastMSecs = msecs;
+      _lastNSecs = nsecs;
+      _clockseq = clockseq;
+      msecs += 122192928e5;
+      const tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
+      b[i++] = tl >>> 24 & 255;
+      b[i++] = tl >>> 16 & 255;
+      b[i++] = tl >>> 8 & 255;
+      b[i++] = tl & 255;
+      const tmh = msecs / 4294967296 * 1e4 & 268435455;
+      b[i++] = tmh >>> 8 & 255;
+      b[i++] = tmh & 255;
+      b[i++] = tmh >>> 24 & 15 | 16;
+      b[i++] = tmh >>> 16 & 255;
+      b[i++] = clockseq >>> 8 | 128;
+      b[i++] = clockseq & 255;
+      for (let n = 0; n < 6; ++n) {
+        b[i + n] = node[n];
+      }
+      return buf || (0, _stringify.unsafeStringify)(b);
+    }
+    var _default = v1;
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/parse.js
+  var require_parse = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _validate = _interopRequireDefault(require_validate());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function parse(uuid) {
+      if (!(0, _validate.default)(uuid)) {
+        throw TypeError("Invalid UUID");
+      }
+      let v;
+      const arr = new Uint8Array(16);
+      arr[0] = (v = parseInt(uuid.slice(0, 8), 16)) >>> 24;
+      arr[1] = v >>> 16 & 255;
+      arr[2] = v >>> 8 & 255;
+      arr[3] = v & 255;
+      arr[4] = (v = parseInt(uuid.slice(9, 13), 16)) >>> 8;
+      arr[5] = v & 255;
+      arr[6] = (v = parseInt(uuid.slice(14, 18), 16)) >>> 8;
+      arr[7] = v & 255;
+      arr[8] = (v = parseInt(uuid.slice(19, 23), 16)) >>> 8;
+      arr[9] = v & 255;
+      arr[10] = (v = parseInt(uuid.slice(24, 36), 16)) / 1099511627776 & 255;
+      arr[11] = v / 4294967296 & 255;
+      arr[12] = v >>> 24 & 255;
+      arr[13] = v >>> 16 & 255;
+      arr[14] = v >>> 8 & 255;
+      arr[15] = v & 255;
+      return arr;
+    }
+    var _default = parse;
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/v35.js
+  var require_v35 = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.URL = exports.DNS = void 0;
+    exports.default = v35;
+    var _stringify = require_stringify();
+    var _parse = _interopRequireDefault(require_parse());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function stringToBytes(str) {
+      str = unescape(encodeURIComponent(str));
+      const bytes = [];
+      for (let i = 0; i < str.length; ++i) {
+        bytes.push(str.charCodeAt(i));
+      }
+      return bytes;
+    }
+    var DNS = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
+    exports.DNS = DNS;
+    var URL = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
+    exports.URL = URL;
+    function v35(name, version, hashfunc) {
+      function generateUUID(value, namespace, buf, offset) {
+        var _namespace;
+        if (typeof value === "string") {
+          value = stringToBytes(value);
+        }
+        if (typeof namespace === "string") {
+          namespace = (0, _parse.default)(namespace);
+        }
+        if (((_namespace = namespace) === null || _namespace === void 0 ? void 0 : _namespace.length) !== 16) {
+          throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
+        }
+        let bytes = new Uint8Array(16 + value.length);
+        bytes.set(namespace);
+        bytes.set(value, namespace.length);
+        bytes = hashfunc(bytes);
+        bytes[6] = bytes[6] & 15 | version;
+        bytes[8] = bytes[8] & 63 | 128;
+        if (buf) {
+          offset = offset || 0;
+          for (let i = 0; i < 16; ++i) {
+            buf[offset + i] = bytes[i];
+          }
+          return buf;
+        }
+        return (0, _stringify.unsafeStringify)(bytes);
+      }
+      try {
+        generateUUID.name = name;
+      } catch (err) {
+      }
+      generateUUID.DNS = DNS;
+      generateUUID.URL = URL;
+      return generateUUID;
+    }
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/md5-browser.js
+  var require_md5_browser = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    function md5(bytes) {
+      if (typeof bytes === "string") {
+        const msg = unescape(encodeURIComponent(bytes));
+        bytes = new Uint8Array(msg.length);
+        for (let i = 0; i < msg.length; ++i) {
+          bytes[i] = msg.charCodeAt(i);
+        }
+      }
+      return md5ToHexEncodedArray(wordsToMd5(bytesToWords(bytes), bytes.length * 8));
+    }
+    function md5ToHexEncodedArray(input) {
+      const output = [];
+      const length32 = input.length * 32;
+      const hexTab = "0123456789abcdef";
+      for (let i = 0; i < length32; i += 8) {
+        const x = input[i >> 5] >>> i % 32 & 255;
+        const hex = parseInt(hexTab.charAt(x >>> 4 & 15) + hexTab.charAt(x & 15), 16);
+        output.push(hex);
+      }
+      return output;
+    }
+    function getOutputLength(inputLength8) {
+      return (inputLength8 + 64 >>> 9 << 4) + 14 + 1;
+    }
+    function wordsToMd5(x, len) {
+      x[len >> 5] |= 128 << len % 32;
+      x[getOutputLength(len) - 1] = len;
+      let a = 1732584193;
+      let b = -271733879;
+      let c = -1732584194;
+      let d = 271733878;
+      for (let i = 0; i < x.length; i += 16) {
+        const olda = a;
+        const oldb = b;
+        const oldc = c;
+        const oldd = d;
+        a = md5ff(a, b, c, d, x[i], 7, -680876936);
+        d = md5ff(d, a, b, c, x[i + 1], 12, -389564586);
+        c = md5ff(c, d, a, b, x[i + 2], 17, 606105819);
+        b = md5ff(b, c, d, a, x[i + 3], 22, -1044525330);
+        a = md5ff(a, b, c, d, x[i + 4], 7, -176418897);
+        d = md5ff(d, a, b, c, x[i + 5], 12, 1200080426);
+        c = md5ff(c, d, a, b, x[i + 6], 17, -1473231341);
+        b = md5ff(b, c, d, a, x[i + 7], 22, -45705983);
+        a = md5ff(a, b, c, d, x[i + 8], 7, 1770035416);
+        d = md5ff(d, a, b, c, x[i + 9], 12, -1958414417);
+        c = md5ff(c, d, a, b, x[i + 10], 17, -42063);
+        b = md5ff(b, c, d, a, x[i + 11], 22, -1990404162);
+        a = md5ff(a, b, c, d, x[i + 12], 7, 1804603682);
+        d = md5ff(d, a, b, c, x[i + 13], 12, -40341101);
+        c = md5ff(c, d, a, b, x[i + 14], 17, -1502002290);
+        b = md5ff(b, c, d, a, x[i + 15], 22, 1236535329);
+        a = md5gg(a, b, c, d, x[i + 1], 5, -165796510);
+        d = md5gg(d, a, b, c, x[i + 6], 9, -1069501632);
+        c = md5gg(c, d, a, b, x[i + 11], 14, 643717713);
+        b = md5gg(b, c, d, a, x[i], 20, -373897302);
+        a = md5gg(a, b, c, d, x[i + 5], 5, -701558691);
+        d = md5gg(d, a, b, c, x[i + 10], 9, 38016083);
+        c = md5gg(c, d, a, b, x[i + 15], 14, -660478335);
+        b = md5gg(b, c, d, a, x[i + 4], 20, -405537848);
+        a = md5gg(a, b, c, d, x[i + 9], 5, 568446438);
+        d = md5gg(d, a, b, c, x[i + 14], 9, -1019803690);
+        c = md5gg(c, d, a, b, x[i + 3], 14, -187363961);
+        b = md5gg(b, c, d, a, x[i + 8], 20, 1163531501);
+        a = md5gg(a, b, c, d, x[i + 13], 5, -1444681467);
+        d = md5gg(d, a, b, c, x[i + 2], 9, -51403784);
+        c = md5gg(c, d, a, b, x[i + 7], 14, 1735328473);
+        b = md5gg(b, c, d, a, x[i + 12], 20, -1926607734);
+        a = md5hh(a, b, c, d, x[i + 5], 4, -378558);
+        d = md5hh(d, a, b, c, x[i + 8], 11, -2022574463);
+        c = md5hh(c, d, a, b, x[i + 11], 16, 1839030562);
+        b = md5hh(b, c, d, a, x[i + 14], 23, -35309556);
+        a = md5hh(a, b, c, d, x[i + 1], 4, -1530992060);
+        d = md5hh(d, a, b, c, x[i + 4], 11, 1272893353);
+        c = md5hh(c, d, a, b, x[i + 7], 16, -155497632);
+        b = md5hh(b, c, d, a, x[i + 10], 23, -1094730640);
+        a = md5hh(a, b, c, d, x[i + 13], 4, 681279174);
+        d = md5hh(d, a, b, c, x[i], 11, -358537222);
+        c = md5hh(c, d, a, b, x[i + 3], 16, -722521979);
+        b = md5hh(b, c, d, a, x[i + 6], 23, 76029189);
+        a = md5hh(a, b, c, d, x[i + 9], 4, -640364487);
+        d = md5hh(d, a, b, c, x[i + 12], 11, -421815835);
+        c = md5hh(c, d, a, b, x[i + 15], 16, 530742520);
+        b = md5hh(b, c, d, a, x[i + 2], 23, -995338651);
+        a = md5ii(a, b, c, d, x[i], 6, -198630844);
+        d = md5ii(d, a, b, c, x[i + 7], 10, 1126891415);
+        c = md5ii(c, d, a, b, x[i + 14], 15, -1416354905);
+        b = md5ii(b, c, d, a, x[i + 5], 21, -57434055);
+        a = md5ii(a, b, c, d, x[i + 12], 6, 1700485571);
+        d = md5ii(d, a, b, c, x[i + 3], 10, -1894986606);
+        c = md5ii(c, d, a, b, x[i + 10], 15, -1051523);
+        b = md5ii(b, c, d, a, x[i + 1], 21, -2054922799);
+        a = md5ii(a, b, c, d, x[i + 8], 6, 1873313359);
+        d = md5ii(d, a, b, c, x[i + 15], 10, -30611744);
+        c = md5ii(c, d, a, b, x[i + 6], 15, -1560198380);
+        b = md5ii(b, c, d, a, x[i + 13], 21, 1309151649);
+        a = md5ii(a, b, c, d, x[i + 4], 6, -145523070);
+        d = md5ii(d, a, b, c, x[i + 11], 10, -1120210379);
+        c = md5ii(c, d, a, b, x[i + 2], 15, 718787259);
+        b = md5ii(b, c, d, a, x[i + 9], 21, -343485551);
+        a = safeAdd(a, olda);
+        b = safeAdd(b, oldb);
+        c = safeAdd(c, oldc);
+        d = safeAdd(d, oldd);
+      }
+      return [a, b, c, d];
+    }
+    function bytesToWords(input) {
+      if (input.length === 0) {
+        return [];
+      }
+      const length8 = input.length * 8;
+      const output = new Uint32Array(getOutputLength(length8));
+      for (let i = 0; i < length8; i += 8) {
+        output[i >> 5] |= (input[i / 8] & 255) << i % 32;
+      }
+      return output;
+    }
+    function safeAdd(x, y) {
+      const lsw = (x & 65535) + (y & 65535);
+      const msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+      return msw << 16 | lsw & 65535;
+    }
+    function bitRotateLeft(num, cnt) {
+      return num << cnt | num >>> 32 - cnt;
+    }
+    function md5cmn(q, a, b, x, s, t) {
+      return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b);
+    }
+    function md5ff(a, b, c, d, x, s, t) {
+      return md5cmn(b & c | ~b & d, a, b, x, s, t);
+    }
+    function md5gg(a, b, c, d, x, s, t) {
+      return md5cmn(b & d | c & ~d, a, b, x, s, t);
+    }
+    function md5hh(a, b, c, d, x, s, t) {
+      return md5cmn(b ^ c ^ d, a, b, x, s, t);
+    }
+    function md5ii(a, b, c, d, x, s, t) {
+      return md5cmn(c ^ (b | ~d), a, b, x, s, t);
+    }
+    var _default = md5;
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/v3.js
+  var require_v3 = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _v = _interopRequireDefault(require_v35());
+    var _md = _interopRequireDefault(require_md5_browser());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var v3 = (0, _v.default)("v3", 48, _md.default);
+    var _default = v3;
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/native-browser.js
+  var require_native_browser = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var randomUUID = typeof crypto !== "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+    var _default = {
+      randomUUID
+    };
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/v4.js
+  var require_v4 = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _native = _interopRequireDefault(require_native_browser());
+    var _rng = _interopRequireDefault(require_rng_browser());
+    var _stringify = require_stringify();
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function v4(options, buf, offset) {
+      if (_native.default.randomUUID && !buf && !options) {
+        return _native.default.randomUUID();
+      }
+      options = options || {};
+      const rnds = options.random || (options.rng || _rng.default)();
+      rnds[6] = rnds[6] & 15 | 64;
+      rnds[8] = rnds[8] & 63 | 128;
+      if (buf) {
+        offset = offset || 0;
+        for (let i = 0; i < 16; ++i) {
+          buf[offset + i] = rnds[i];
+        }
+        return buf;
+      }
+      return (0, _stringify.unsafeStringify)(rnds);
+    }
+    var _default = v4;
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/sha1-browser.js
+  var require_sha1_browser = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    function f(s, x, y, z) {
+      switch (s) {
+        case 0:
+          return x & y ^ ~x & z;
+        case 1:
+          return x ^ y ^ z;
+        case 2:
+          return x & y ^ x & z ^ y & z;
+        case 3:
+          return x ^ y ^ z;
+      }
+    }
+    function ROTL(x, n) {
+      return x << n | x >>> 32 - n;
+    }
+    function sha1(bytes) {
+      const K = [1518500249, 1859775393, 2400959708, 3395469782];
+      const H = [1732584193, 4023233417, 2562383102, 271733878, 3285377520];
+      if (typeof bytes === "string") {
+        const msg = unescape(encodeURIComponent(bytes));
+        bytes = [];
+        for (let i = 0; i < msg.length; ++i) {
+          bytes.push(msg.charCodeAt(i));
+        }
+      } else if (!Array.isArray(bytes)) {
+        bytes = Array.prototype.slice.call(bytes);
+      }
+      bytes.push(128);
+      const l = bytes.length / 4 + 2;
+      const N = Math.ceil(l / 16);
+      const M = new Array(N);
+      for (let i = 0; i < N; ++i) {
+        const arr = new Uint32Array(16);
+        for (let j = 0; j < 16; ++j) {
+          arr[j] = bytes[i * 64 + j * 4] << 24 | bytes[i * 64 + j * 4 + 1] << 16 | bytes[i * 64 + j * 4 + 2] << 8 | bytes[i * 64 + j * 4 + 3];
+        }
+        M[i] = arr;
+      }
+      M[N - 1][14] = (bytes.length - 1) * 8 / Math.pow(2, 32);
+      M[N - 1][14] = Math.floor(M[N - 1][14]);
+      M[N - 1][15] = (bytes.length - 1) * 8 & 4294967295;
+      for (let i = 0; i < N; ++i) {
+        const W = new Uint32Array(80);
+        for (let t = 0; t < 16; ++t) {
+          W[t] = M[i][t];
+        }
+        for (let t = 16; t < 80; ++t) {
+          W[t] = ROTL(W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16], 1);
+        }
+        let a = H[0];
+        let b = H[1];
+        let c = H[2];
+        let d = H[3];
+        let e = H[4];
+        for (let t = 0; t < 80; ++t) {
+          const s = Math.floor(t / 20);
+          const T = ROTL(a, 5) + f(s, b, c, d) + e + K[s] + W[t] >>> 0;
+          e = d;
+          d = c;
+          c = ROTL(b, 30) >>> 0;
+          b = a;
+          a = T;
+        }
+        H[0] = H[0] + a >>> 0;
+        H[1] = H[1] + b >>> 0;
+        H[2] = H[2] + c >>> 0;
+        H[3] = H[3] + d >>> 0;
+        H[4] = H[4] + e >>> 0;
+      }
+      return [H[0] >> 24 & 255, H[0] >> 16 & 255, H[0] >> 8 & 255, H[0] & 255, H[1] >> 24 & 255, H[1] >> 16 & 255, H[1] >> 8 & 255, H[1] & 255, H[2] >> 24 & 255, H[2] >> 16 & 255, H[2] >> 8 & 255, H[2] & 255, H[3] >> 24 & 255, H[3] >> 16 & 255, H[3] >> 8 & 255, H[3] & 255, H[4] >> 24 & 255, H[4] >> 16 & 255, H[4] >> 8 & 255, H[4] & 255];
+    }
+    var _default = sha1;
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/v5.js
+  var require_v5 = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _v = _interopRequireDefault(require_v35());
+    var _sha = _interopRequireDefault(require_sha1_browser());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    var v5 = (0, _v.default)("v5", 80, _sha.default);
+    var _default = v5;
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/nil.js
+  var require_nil = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _default = "00000000-0000-0000-0000-000000000000";
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/version.js
+  var require_version = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _validate = _interopRequireDefault(require_validate());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+    function version(uuid) {
+      if (!(0, _validate.default)(uuid)) {
+        throw TypeError("Invalid UUID");
+      }
+      return parseInt(uuid.slice(14, 15), 16);
+    }
+    var _default = version;
+    exports.default = _default;
+  });
+
+  // ../safari-extension-walletlib/node_modules/uuid/dist/index.js
+  var require_dist = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    Object.defineProperty(exports, "NIL", {
+      enumerable: true,
+      get: function() {
+        return _nil.default;
+      }
+    });
+    Object.defineProperty(exports, "parse", {
+      enumerable: true,
+      get: function() {
+        return _parse.default;
+      }
+    });
+    Object.defineProperty(exports, "stringify", {
+      enumerable: true,
+      get: function() {
+        return _stringify.default;
+      }
+    });
+    Object.defineProperty(exports, "v1", {
+      enumerable: true,
+      get: function() {
+        return _v.default;
+      }
+    });
+    Object.defineProperty(exports, "v3", {
+      enumerable: true,
+      get: function() {
+        return _v2.default;
+      }
+    });
+    Object.defineProperty(exports, "v4", {
+      enumerable: true,
+      get: function() {
+        return _v3.default;
+      }
+    });
+    Object.defineProperty(exports, "v5", {
+      enumerable: true,
+      get: function() {
+        return _v4.default;
+      }
+    });
+    Object.defineProperty(exports, "validate", {
+      enumerable: true,
+      get: function() {
+        return _validate.default;
+      }
+    });
+    Object.defineProperty(exports, "version", {
+      enumerable: true,
+      get: function() {
+        return _version.default;
+      }
+    });
+    var _v = _interopRequireDefault(require_v1());
+    var _v2 = _interopRequireDefault(require_v3());
+    var _v3 = _interopRequireDefault(require_v4());
+    var _v4 = _interopRequireDefault(require_v5());
+    var _nil = _interopRequireDefault(require_nil());
+    var _version = _interopRequireDefault(require_version());
+    var _validate = _interopRequireDefault(require_validate());
+    var _stringify = _interopRequireDefault(require_stringify());
+    var _parse = _interopRequireDefault(require_parse());
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {default: obj};
+    }
+  });
+
+  // ../safari-extension-walletlib/lib/pageRpc/requests.js
+  var require_requests = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {value: true});
+    exports.WalletRequestMethod = void 0;
+    var WalletRequestMethod2;
+    (function(WalletRequestMethod3) {
+      WalletRequestMethod3["SOLANA_CONNECT"] = "SOLANA_CONNECT";
+      WalletRequestMethod3["SOLANA_SIGN_MESSAGE"] = "SOLANA_SIGN_MESSAGE";
+      WalletRequestMethod3["SOLANA_SIGN_TRANSACTION"] = "SOLANA_SIGN_TRANSACTION";
+      WalletRequestMethod3["SOLANA_SIGN_AND_SEND_TRANSACTION"] = "SOLANA_SIGN_AND_SEND_TRANSACTION";
+    })(WalletRequestMethod2 = exports.WalletRequestMethod || (exports.WalletRequestMethod = {}));
+  });
+
+  // ../safari-extension-walletlib/node_modules/js-base64/base64.js
+  var require_base64 = __commonJS((exports, module) => {
+    (function(global2, factory) {
+      typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : function() {
+        var _Base64 = global2.Base64;
+        var gBase64 = factory();
+        gBase64.noConflict = function() {
+          global2.Base64 = _Base64;
+          return gBase64;
+        };
+        if (global2.Meteor) {
+          Base64 = gBase64;
+        }
+        global2.Base64 = gBase64;
+      }();
+    })(typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : exports, function() {
+      "use strict";
+      var version = "3.7.6";
+      var VERSION = version;
+      var _hasatob2 = typeof atob === "function";
+      var _hasbtoa = typeof btoa === "function";
+      var _hasBuffer2 = typeof Buffer === "function";
+      var _TD2 = typeof TextDecoder === "function" ? new TextDecoder() : void 0;
+      var _TE2 = typeof TextEncoder === "function" ? new TextEncoder() : void 0;
+      var b64ch2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+      var b64chs2 = Array.prototype.slice.call(b64ch2);
+      var b64tab2 = function(a) {
+        var tab = {};
+        a.forEach(function(c, i) {
+          return tab[c] = i;
+        });
+        return tab;
+      }(b64chs2);
+      var b64re2 = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/;
+      var _fromCC2 = String.fromCharCode.bind(String);
+      var _U8Afrom2 = typeof Uint8Array.from === "function" ? Uint8Array.from.bind(Uint8Array) : function(it) {
+        return new Uint8Array(Array.prototype.slice.call(it, 0));
+      };
+      var _mkUriSafe = function(src) {
+        return src.replace(/=/g, "").replace(/[+\/]/g, function(m0) {
+          return m0 == "+" ? "-" : "_";
+        });
+      };
+      var _tidyB642 = function(s) {
+        return s.replace(/[^A-Za-z0-9\+\/]/g, "");
+      };
+      var btoaPolyfill = function(bin) {
+        var u32, c0, c1, c2, asc = "";
+        var pad = bin.length % 3;
+        for (var i = 0; i < bin.length; ) {
+          if ((c0 = bin.charCodeAt(i++)) > 255 || (c1 = bin.charCodeAt(i++)) > 255 || (c2 = bin.charCodeAt(i++)) > 255)
+            throw new TypeError("invalid character found");
+          u32 = c0 << 16 | c1 << 8 | c2;
+          asc += b64chs2[u32 >> 18 & 63] + b64chs2[u32 >> 12 & 63] + b64chs2[u32 >> 6 & 63] + b64chs2[u32 & 63];
+        }
+        return pad ? asc.slice(0, pad - 3) + "===".substring(pad) : asc;
+      };
+      var _btoa = _hasbtoa ? function(bin) {
+        return btoa(bin);
+      } : _hasBuffer2 ? function(bin) {
+        return Buffer.from(bin, "binary").toString("base64");
+      } : btoaPolyfill;
+      var _fromUint8Array = _hasBuffer2 ? function(u8a) {
+        return Buffer.from(u8a).toString("base64");
+      } : function(u8a) {
+        var maxargs = 4096;
+        var strs = [];
+        for (var i = 0, l = u8a.length; i < l; i += maxargs) {
+          strs.push(_fromCC2.apply(null, u8a.subarray(i, i + maxargs)));
+        }
+        return _btoa(strs.join(""));
+      };
+      var fromUint8Array = function(u8a, urlsafe) {
+        if (urlsafe === void 0) {
+          urlsafe = false;
+        }
+        return urlsafe ? _mkUriSafe(_fromUint8Array(u8a)) : _fromUint8Array(u8a);
+      };
+      var cb_utob = function(c) {
+        if (c.length < 2) {
+          var cc = c.charCodeAt(0);
+          return cc < 128 ? c : cc < 2048 ? _fromCC2(192 | cc >>> 6) + _fromCC2(128 | cc & 63) : _fromCC2(224 | cc >>> 12 & 15) + _fromCC2(128 | cc >>> 6 & 63) + _fromCC2(128 | cc & 63);
+        } else {
+          var cc = 65536 + (c.charCodeAt(0) - 55296) * 1024 + (c.charCodeAt(1) - 56320);
+          return _fromCC2(240 | cc >>> 18 & 7) + _fromCC2(128 | cc >>> 12 & 63) + _fromCC2(128 | cc >>> 6 & 63) + _fromCC2(128 | cc & 63);
+        }
+      };
+      var re_utob = /[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g;
+      var utob = function(u) {
+        return u.replace(re_utob, cb_utob);
+      };
+      var _encode = _hasBuffer2 ? function(s) {
+        return Buffer.from(s, "utf8").toString("base64");
+      } : _TE2 ? function(s) {
+        return _fromUint8Array(_TE2.encode(s));
+      } : function(s) {
+        return _btoa(utob(s));
+      };
+      var encode = function(src, urlsafe) {
+        if (urlsafe === void 0) {
+          urlsafe = false;
+        }
+        return urlsafe ? _mkUriSafe(_encode(src)) : _encode(src);
+      };
+      var encodeURI = function(src) {
+        return encode(src, true);
+      };
+      var re_btou = /[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3}/g;
+      var cb_btou = function(cccc) {
+        switch (cccc.length) {
+          case 4:
+            var cp = (7 & cccc.charCodeAt(0)) << 18 | (63 & cccc.charCodeAt(1)) << 12 | (63 & cccc.charCodeAt(2)) << 6 | 63 & cccc.charCodeAt(3), offset = cp - 65536;
+            return _fromCC2((offset >>> 10) + 55296) + _fromCC2((offset & 1023) + 56320);
+          case 3:
+            return _fromCC2((15 & cccc.charCodeAt(0)) << 12 | (63 & cccc.charCodeAt(1)) << 6 | 63 & cccc.charCodeAt(2));
+          default:
+            return _fromCC2((31 & cccc.charCodeAt(0)) << 6 | 63 & cccc.charCodeAt(1));
+        }
+      };
+      var btou = function(b) {
+        return b.replace(re_btou, cb_btou);
+      };
+      var atobPolyfill2 = function(asc) {
+        asc = asc.replace(/\s+/g, "");
+        if (!b64re2.test(asc))
+          throw new TypeError("malformed base64.");
+        asc += "==".slice(2 - (asc.length & 3));
+        var u24, bin = "", r1, r2;
+        for (var i = 0; i < asc.length; ) {
+          u24 = b64tab2[asc.charAt(i++)] << 18 | b64tab2[asc.charAt(i++)] << 12 | (r1 = b64tab2[asc.charAt(i++)]) << 6 | (r2 = b64tab2[asc.charAt(i++)]);
+          bin += r1 === 64 ? _fromCC2(u24 >> 16 & 255) : r2 === 64 ? _fromCC2(u24 >> 16 & 255, u24 >> 8 & 255) : _fromCC2(u24 >> 16 & 255, u24 >> 8 & 255, u24 & 255);
+        }
+        return bin;
+      };
+      var _atob2 = _hasatob2 ? function(asc) {
+        return atob(_tidyB642(asc));
+      } : _hasBuffer2 ? function(asc) {
+        return Buffer.from(asc, "base64").toString("binary");
+      } : atobPolyfill2;
+      var _toUint8Array2 = _hasBuffer2 ? function(a) {
+        return _U8Afrom2(Buffer.from(a, "base64"));
+      } : function(a) {
+        return _U8Afrom2(_atob2(a).split("").map(function(c) {
+          return c.charCodeAt(0);
+        }));
+      };
+      var toUint8Array2 = function(a) {
+        return _toUint8Array2(_unURI2(a));
+      };
+      var _decode = _hasBuffer2 ? function(a) {
+        return Buffer.from(a, "base64").toString("utf8");
+      } : _TD2 ? function(a) {
+        return _TD2.decode(_toUint8Array2(a));
+      } : function(a) {
+        return btou(_atob2(a));
+      };
+      var _unURI2 = function(a) {
+        return _tidyB642(a.replace(/[-_]/g, function(m0) {
+          return m0 == "-" ? "+" : "/";
+        }));
+      };
+      var decode = function(src) {
+        return _decode(_unURI2(src));
+      };
+      var isValid = function(src) {
+        if (typeof src !== "string")
+          return false;
+        var s = src.replace(/\s+/g, "").replace(/={0,2}$/, "");
+        return !/[^\s0-9a-zA-Z\+/]/.test(s) || !/[^\s0-9a-zA-Z\-_]/.test(s);
+      };
+      var _noEnum = function(v) {
+        return {
+          value: v,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        };
+      };
+      var extendString = function() {
+        var _add = function(name, body) {
+          return Object.defineProperty(String.prototype, name, _noEnum(body));
+        };
+        _add("fromBase64", function() {
+          return decode(this);
+        });
+        _add("toBase64", function(urlsafe) {
+          return encode(this, urlsafe);
+        });
+        _add("toBase64URI", function() {
+          return encode(this, true);
+        });
+        _add("toBase64URL", function() {
+          return encode(this, true);
+        });
+        _add("toUint8Array", function() {
+          return toUint8Array2(this);
+        });
+      };
+      var extendUint8Array = function() {
+        var _add = function(name, body) {
+          return Object.defineProperty(Uint8Array.prototype, name, _noEnum(body));
+        };
+        _add("toBase64", function(urlsafe) {
+          return fromUint8Array(this, urlsafe);
+        });
+        _add("toBase64URI", function() {
+          return fromUint8Array(this, true);
+        });
+        _add("toBase64URL", function() {
+          return fromUint8Array(this, true);
+        });
+      };
+      var extendBuiltins = function() {
+        extendString();
+        extendUint8Array();
+      };
+      var gBase64 = {
+        version,
+        VERSION,
+        atob: _atob2,
+        atobPolyfill: atobPolyfill2,
+        btoa: _btoa,
+        btoaPolyfill,
+        fromBase64: decode,
+        toBase64: encode,
+        encode,
+        encodeURI,
+        encodeURL: encodeURI,
+        utob,
+        btou,
+        decode,
+        isValid,
+        fromUint8Array,
+        toUint8Array: toUint8Array2,
+        extendString,
+        extendUint8Array,
+        extendBuiltins
+      };
+      gBase64.Base64 = {};
+      Object.keys(gBase64).forEach(function(k) {
+        return gBase64.Base64[k] = gBase64[k];
+      });
+      return gBase64;
+    });
+  });
+
+  // ../safari-extension-walletlib/lib/pageRpc/encodeRpcRequest.js
+  var require_encodeRpcRequest = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {value: true});
+    exports.encodeWalletRpcParams = exports.encodeWalletRpcRequest = void 0;
+    var js_base64_1 = require_base64();
+    var requests_1 = require_requests();
+    function encodeWalletRpcRequest(request) {
+      return Object.assign(Object.assign({}, request), {params: encodeWalletRpcParams(request.method, request.params)});
+    }
+    exports.encodeWalletRpcRequest = encodeWalletRpcRequest;
+    function encodeWalletRpcParams(method, input) {
+      switch (method) {
+        case requests_1.WalletRequestMethod.SOLANA_CONNECT:
+          return input;
+        case requests_1.WalletRequestMethod.SOLANA_SIGN_MESSAGE:
+          return encodeSignMessageInput(input);
+        case requests_1.WalletRequestMethod.SOLANA_SIGN_TRANSACTION:
+          return encodeSignTransactionInput(input);
+        case requests_1.WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION:
+          return encodeSignAndSendTransactionInput(input);
+        default:
+          throw new Error(`Unsupported method: ${method}`);
+      }
+    }
+    exports.encodeWalletRpcParams = encodeWalletRpcParams;
+    function encodeSignMessageInput(input) {
+      return {
+        account: Object.assign(Object.assign({}, input.account), {publicKey: (0, js_base64_1.fromUint8Array)(input.account.publicKey)}),
+        message: (0, js_base64_1.fromUint8Array)(input.message)
+      };
+    }
+    function encodeSignTransactionInput(input) {
+      return {
+        account: Object.assign(Object.assign({}, input.account), {publicKey: (0, js_base64_1.fromUint8Array)(input.account.publicKey)}),
+        transaction: (0, js_base64_1.fromUint8Array)(input.transaction),
+        chain: input.chain,
+        options: input.options
+      };
+    }
+    function encodeSignAndSendTransactionInput(input) {
+      return Object.assign(Object.assign({}, encodeSignTransactionInput(input)), {chain: input.chain, options: input.options});
+    }
+  });
+
+  // ../safari-extension-walletlib/lib/constants.js
+  var require_constants = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {value: true});
+    exports.PAGE_WALLET_RESPONSE_CHANNEL = exports.PAGE_WALLET_REQUEST_CHANNEL = void 0;
+    exports.PAGE_WALLET_REQUEST_CHANNEL = "page-wallet-request-channel";
+    exports.PAGE_WALLET_RESPONSE_CHANNEL = "page-wallet-response-channel";
+  });
+
+  // ../safari-extension-walletlib/lib/pageRpc/decodeRpcResponse.js
+  var require_decodeRpcResponse = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {value: true});
+    exports.decodeSignAndSendTransactionOutput = exports.decodeSignTransactionOutput = exports.decodeSignMessageOutput = exports.decodeConnectOutput = exports.decodeWalletRpcResult = void 0;
+    var js_base64_1 = require_base64();
+    var requests_1 = require_requests();
+    function decodeWalletRpcResult(method, encodedOutput) {
+      switch (method) {
+        case requests_1.WalletRequestMethod.SOLANA_CONNECT:
+          return decodeConnectOutput(encodedOutput);
+        case requests_1.WalletRequestMethod.SOLANA_SIGN_MESSAGE:
+          return decodeSignMessageOutput(encodedOutput);
+        case requests_1.WalletRequestMethod.SOLANA_SIGN_TRANSACTION:
+          return decodeSignTransactionOutput(encodedOutput);
+        case requests_1.WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION:
+          return decodeSignAndSendTransactionOutput(encodedOutput);
+        default:
+          throw new Error(`Unsupported method: ${method}`);
+      }
+    }
+    exports.decodeWalletRpcResult = decodeWalletRpcResult;
+    function decodeConnectOutput(encodedOutput) {
+      return {
+        accounts: encodedOutput.accounts.map((account) => Object.assign(Object.assign({}, account), {publicKey: (0, js_base64_1.toUint8Array)(account.publicKey)}))
+      };
+    }
+    exports.decodeConnectOutput = decodeConnectOutput;
+    function decodeSignMessageOutput(encodedOutput) {
+      return {
+        signedMessage: (0, js_base64_1.toUint8Array)(encodedOutput.signedMessage),
+        signature: (0, js_base64_1.toUint8Array)(encodedOutput.signature),
+        signatureType: encodedOutput.signatureType
+      };
+    }
+    exports.decodeSignMessageOutput = decodeSignMessageOutput;
+    function decodeSignTransactionOutput(encodedOutput) {
+      return {
+        signedTransaction: (0, js_base64_1.toUint8Array)(encodedOutput.signedTransaction)
+      };
+    }
+    exports.decodeSignTransactionOutput = decodeSignTransactionOutput;
+    function decodeSignAndSendTransactionOutput(encodedOutput) {
+      return {
+        signature: (0, js_base64_1.toUint8Array)(encodedOutput.signature)
+      };
+    }
+    exports.decodeSignAndSendTransactionOutput = decodeSignAndSendTransactionOutput;
+  });
+
+  // ../safari-extension-walletlib/lib/safari-page-request-client.js
+  var require_safari_page_request_client = __commonJS((exports) => {
+    "use strict";
+    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+      function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+          resolve(value);
+        });
+      }
+      return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+          try {
+            step(generator.next(value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function rejected(value) {
+          try {
+            step(generator["throw"](value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function step(result) {
+          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+      });
+    };
+    var __classPrivateFieldGet = exports && exports.__classPrivateFieldGet || function(receiver, state, kind, f) {
+      if (kind === "a" && !f)
+        throw new TypeError("Private accessor was defined without a getter");
+      if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+        throw new TypeError("Cannot read private member from an object whose class did not declare it");
+      return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+    };
+    var _SafariPageRequestClient_instances;
+    var _SafariPageRequestClient_resolveHandler;
+    var _SafariPageRequestClient_handleResponse;
+    Object.defineProperty(exports, "__esModule", {value: true});
+    var uuid_1 = require_dist();
+    var requests_1 = require_requests();
+    var encodeRpcRequest_1 = require_encodeRpcRequest();
+    var constants_1 = require_constants();
+    var decodeRpcResponse_1 = require_decodeRpcResponse();
+    function isValidOrigin(event) {
+      return event.source === window && event.origin === window.location.origin;
+    }
+    var SafariPageRequestClient = class {
+      constructor() {
+        _SafariPageRequestClient_instances.add(this);
+        _SafariPageRequestClient_resolveHandler.set(this, {});
+        window.addEventListener("message", __classPrivateFieldGet(this, _SafariPageRequestClient_instances, "m", _SafariPageRequestClient_handleResponse).bind(this));
+      }
+      sendConnectRequest(input) {
+        return __awaiter(this, void 0, void 0, function* () {
+          const rpcResponse = yield this.sendRpcRequest({
+            method: requests_1.WalletRequestMethod.SOLANA_CONNECT,
+            params: input
+          });
+          return (0, decodeRpcResponse_1.decodeConnectOutput)(rpcResponse);
+        });
+      }
+      sendSignMessageRequest(input) {
+        return __awaiter(this, void 0, void 0, function* () {
+          const rpcResponse = yield this.sendRpcRequest({
+            method: requests_1.WalletRequestMethod.SOLANA_SIGN_MESSAGE,
+            params: input
+          });
+          if (rpcResponse.error) {
+            throw Error("Error during signing");
+          }
+          return (0, decodeRpcResponse_1.decodeSignMessageOutput)(rpcResponse.result);
+        });
+      }
+      sendSignAndSendTransactionRequest(input) {
+        return __awaiter(this, void 0, void 0, function* () {
+          const rpcResponse = yield this.sendRpcRequest({
+            method: requests_1.WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION,
+            params: input
+          });
+          if (rpcResponse.error) {
+            throw Error("Error during signing");
+          }
+          return (0, decodeRpcResponse_1.decodeSignAndSendTransactionOutput)(rpcResponse.result);
+        });
+      }
+      sendSignTransactionRequest(input) {
+        return __awaiter(this, void 0, void 0, function* () {
+          const rpcResponse = yield this.sendRpcRequest({
+            method: requests_1.WalletRequestMethod.SOLANA_SIGN_TRANSACTION,
+            params: input
+          });
+          if (rpcResponse.error) {
+            throw Error("Error during signing");
+          }
+          return (0, decodeRpcResponse_1.decodeSignTransactionOutput)(rpcResponse.result);
+        });
+      }
+      sendRpcRequest({method, params}) {
+        return __awaiter(this, void 0, void 0, function* () {
+          return new Promise((resolve, reject) => {
+            const id = (0, uuid_1.v4)();
+            __classPrivateFieldGet(this, _SafariPageRequestClient_resolveHandler, "f")[id] = {
+              resolve,
+              reject
+            };
+            window.postMessage({
+              type: constants_1.PAGE_WALLET_REQUEST_CHANNEL,
+              detail: {
+                id,
+                method,
+                params: (0, encodeRpcRequest_1.encodeWalletRpcParams)(method, params)
+              }
+            });
+          });
+        });
+      }
+    };
+    exports.default = SafariPageRequestClient;
+    _SafariPageRequestClient_resolveHandler = new WeakMap(), _SafariPageRequestClient_instances = new WeakSet(), _SafariPageRequestClient_handleResponse = function _SafariPageRequestClient_handleResponse2(event) {
+      console.log("Page Request Client received response:");
+      console.log(event);
+      if (!isValidOrigin(event))
+        return;
+      if (event.data.type !== constants_1.PAGE_WALLET_RESPONSE_CHANNEL)
+        return;
+      const {id, result, error} = event.data.detail;
+      const resolver = __classPrivateFieldGet(this, _SafariPageRequestClient_resolveHandler, "f")[id];
+      if (!resolver) {
+        console.error("unexpected event", event);
+        return;
+      }
+      const {resolve, reject} = resolver;
+      delete __classPrivateFieldGet(this, _SafariPageRequestClient_resolveHandler, "f")[id];
+      if (error) {
+        console.log("In error");
+        reject(new Error(error));
+      } else {
+        console.log("In resolve");
+        resolve(result);
+      }
+    };
+  });
+
+  // ../safari-extension-walletlib/lib/initBackgroundScript.js
+  var require_initBackgroundScript = __commonJS((exports) => {
+    "use strict";
+    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+      function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+          resolve(value);
+        });
+      }
+      return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+          try {
+            step(generator.next(value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function rejected(value) {
+          try {
+            step(generator["throw"](value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function step(result) {
+          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+      });
+    };
+    Object.defineProperty(exports, "__esModule", {value: true});
+    exports.initializeBackgroundScript = void 0;
+    var constants_1 = require_constants();
+    function initializeApprovalTab() {
+      return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => {
+          const onApproveTabReady = (_tabId, changeInfo, tab) => {
+            if (tab.url === browser.runtime.getURL("approval.html") && changeInfo.status === "complete") {
+              browser.tabs.onUpdated.removeListener(onApproveTabReady);
+              resolve(tab);
+            }
+          };
+          browser.tabs.onUpdated.addListener(onApproveTabReady);
+          browser.tabs.create({
+            url: browser.runtime.getURL("approval.html")
+          }).catch((error) => {
+            browser.tabs.onUpdated.removeListener(onApproveTabReady);
+            reject(error);
+          });
+        });
+      });
+    }
+    function forwardWalletRequestToApproval(request) {
+      return __awaiter(this, void 0, void 0, function* () {
+        const tabs = yield browser.tabs.query({active: true, currentWindow: true});
+        const activeTab = tabs[0];
+        const isApprovalUIActive = browser.runtime.getURL("approval.html") === activeTab.url;
+        const targetTab = isApprovalUIActive ? activeTab : yield initializeApprovalTab();
+        if (targetTab.id) {
+          browser.tabs.sendMessage(targetTab.id, request);
+        } else {
+          console.error("Approval tab is missing tab id");
+        }
+      });
+    }
+    function initializeBackgroundScript() {
+      browser.runtime.onMessage.addListener((message, sender, _sendResponse) => __awaiter(this, void 0, void 0, function* () {
+        if (message.type === constants_1.PAGE_WALLET_REQUEST_CHANNEL) {
+          forwardWalletRequestToApproval({
+            rpcRequest: message,
+            origin: sender
+          });
+        }
+      }));
+    }
+    exports.initializeBackgroundScript = initializeBackgroundScript;
+  });
+
+  // ../safari-extension-walletlib/lib/initContentScript.js
+  var require_initContentScript = __commonJS((exports) => {
+    "use strict";
+    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+      function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+          resolve(value);
+        });
+      }
+      return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+          try {
+            step(generator.next(value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function rejected(value) {
+          try {
+            step(generator["throw"](value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function step(result) {
+          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+      });
+    };
+    Object.defineProperty(exports, "__esModule", {value: true});
+    exports.initContentScript = void 0;
+    var constants_1 = require_constants();
+    function forwardToBackgroundScript(message) {
+      browser.runtime.sendMessage(message);
+    }
+    function forwardToPageScript(message) {
+      window.postMessage(message);
+    }
+    function isValidOrigin(event) {
+      return event.source === window && event.origin === window.location.origin;
+    }
+    function initContentScript() {
+      window.addEventListener("message", (event) => __awaiter(this, void 0, void 0, function* () {
+        console.log("content event data: " + event.data);
+        if (isValidOrigin(event) && event.data) {
+          if (event.data.type === constants_1.PAGE_WALLET_REQUEST_CHANNEL) {
+            forwardToBackgroundScript(event.data);
+          }
+        }
+      }));
+      browser.runtime.onMessage.addListener((message, _sender, _sendResponse) => __awaiter(this, void 0, void 0, function* () {
+        console.log("content forward: " + message);
+        if (message.type === constants_1.PAGE_WALLET_RESPONSE_CHANNEL) {
+          console.log("content forward to page script: ");
+          console.log(message);
+          forwardToPageScript(Object.assign({}, message));
+        }
+      }));
+    }
+    exports.initContentScript = initContentScript;
+  });
+
+  // ../safari-extension-walletlib/lib/nativeRpc/sendNativeRpcRequest.js
+  var require_sendNativeRpcRequest = __commonJS((exports) => {
+    "use strict";
+    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+      function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+          resolve(value);
+        });
+      }
+      return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+          try {
+            step(generator.next(value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function rejected(value) {
+          try {
+            step(generator["throw"](value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function step(result) {
+          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+      });
+    };
+    Object.defineProperty(exports, "__esModule", {value: true});
+    exports.sendNativeRpcRequest = void 0;
+    function sendNativeRpcRequest({method, params}) {
+      return __awaiter(this, void 0, void 0, function* () {
+        const request = {
+          method,
+          params: JSON.stringify(params)
+        };
+        try {
+          return yield browser.runtime.sendNativeMessage("id", request);
+        } catch (error) {
+          console.error("RPC request failed:", error);
+          throw error;
+        }
+      });
+    }
+    exports.sendNativeRpcRequest = sendNativeRpcRequest;
+  });
+
+  // ../safari-extension-walletlib/lib/nativeRpc/nativeGetAccounts.js
+  var require_nativeGetAccounts = __commonJS((exports) => {
+    "use strict";
+    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+      function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+          resolve(value);
+        });
+      }
+      return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+          try {
+            step(generator.next(value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function rejected(value) {
+          try {
+            step(generator["throw"](value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function step(result) {
+          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+      });
+    };
+    Object.defineProperty(exports, "__esModule", {value: true});
+    exports.sendNativeGetAccountsRequest = exports.NATIVE_GET_ACCOUNTS_RPC_METHOD = void 0;
+    var sendNativeRpcRequest_1 = require_sendNativeRpcRequest();
+    exports.NATIVE_GET_ACCOUNTS_RPC_METHOD = "NATIVE_GET_ACCOUNTS_METHOD";
+    function isValidNativeGetAccountsResult(obj) {
+      return Array.isArray(obj.addresses) && obj.addresses.every((addr) => typeof addr === "string");
+    }
+    function sendNativeGetAccountsRequest2({extra_data = {}} = {}) {
+      var _a, _b;
+      return __awaiter(this, void 0, void 0, function* () {
+        const nativeResponse = yield (0, sendNativeRpcRequest_1.sendNativeRpcRequest)({
+          method: exports.NATIVE_GET_ACCOUNTS_RPC_METHOD,
+          params: {
+            extra_data
+          }
+        });
+        if (nativeResponse.result) {
+          const resultObj = JSON.parse(nativeResponse.result);
+          if (isValidNativeGetAccountsResult(resultObj)) {
+            return resultObj;
+          } else {
+            throw new Error("Response does not match the NativeGetAccountsResult structure.");
+          }
+        } else {
+          throw new Error((_b = (_a = nativeResponse.error) === null || _a === void 0 ? void 0 : _a.message) !== null && _b !== void 0 ? _b : "Invalid RPC Response");
+        }
+      });
+    }
+    exports.sendNativeGetAccountsRequest = sendNativeGetAccountsRequest2;
+  });
+
+  // ../safari-extension-walletlib/lib/nativeRpc/nativeSignPayloads.js
+  var require_nativeSignPayloads = __commonJS((exports) => {
+    "use strict";
+    var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+      function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+          resolve(value);
+        });
+      }
+      return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+          try {
+            step(generator.next(value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function rejected(value) {
+          try {
+            step(generator["throw"](value));
+          } catch (e) {
+            reject(e);
+          }
+        }
+        function step(result) {
+          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+      });
+    };
+    Object.defineProperty(exports, "__esModule", {value: true});
+    exports.sendNativeSignPayloadsRequest = exports.NATIVE_SIGN_PAYLOADS_RPC_METHOD = void 0;
+    var sendNativeRpcRequest_1 = require_sendNativeRpcRequest();
+    function isValidSignPayloadsResult(resultObj) {
+      return Array.isArray(resultObj.signed_payloads) && resultObj.signed_payloads.every((payload) => typeof payload === "string");
+    }
+    exports.NATIVE_SIGN_PAYLOADS_RPC_METHOD = "NATIVE_SIGN_PAYLOADS_METHOD";
+    function sendNativeSignPayloadsRequest({address, payloads, extra_data}) {
+      var _a, _b;
+      return __awaiter(this, void 0, void 0, function* () {
+        const nativeResponse = yield (0, sendNativeRpcRequest_1.sendNativeRpcRequest)({
+          method: exports.NATIVE_SIGN_PAYLOADS_RPC_METHOD,
+          params: {
+            address,
+            payloads,
+            extra_data: extra_data !== null && extra_data !== void 0 ? extra_data : {}
+          }
+        });
+        if (nativeResponse.result) {
+          const resultObj = JSON.parse(nativeResponse.result);
+          if (isValidSignPayloadsResult(resultObj)) {
+            return resultObj;
+          } else {
+            throw new Error("Response does not match the NativeSignPayloadsResult structure.");
+          }
+        } else {
+          throw new Error((_b = (_a = nativeResponse.error) === null || _a === void 0 ? void 0 : _a.message) !== null && _b !== void 0 ? _b : "Invalid RPC Response");
+        }
+      });
+    }
+    exports.sendNativeSignPayloadsRequest = sendNativeSignPayloadsRequest;
+  });
+
+  // ../safari-extension-walletlib/lib/nativeRpc/types.js
+  var require_types = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {value: true});
+  });
+
+  // ../safari-extension-walletlib/lib/index.js
+  var require_lib = __commonJS((exports) => {
+    "use strict";
+    var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      var desc = Object.getOwnPropertyDescriptor(m, k);
+      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = {enumerable: true, get: function() {
+          return m[k];
+        }};
+      }
+      Object.defineProperty(o, k2, desc);
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __exportStar2 = exports && exports.__exportStar || function(m, exports2) {
+      for (var p in m)
+        if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p))
+          __createBinding(exports2, m, p);
+    };
+    Object.defineProperty(exports, "__esModule", {value: true});
+    __exportStar2(require_safari_page_request_client(), exports);
+    __exportStar2(require_initBackgroundScript(), exports);
+    __exportStar2(require_initContentScript(), exports);
+    __exportStar2(require_constants(), exports);
+    __exportStar2(require_requests(), exports);
+    __exportStar2(require_nativeGetAccounts(), exports);
+    __exportStar2(require_nativeSignPayloads(), exports);
+    __exportStar2(require_sendNativeRpcRequest(), exports);
+    __exportStar2(require_types(), exports);
+  });
+
+  // node_modules/base-x/src/index.js
+  var require_src = __commonJS((exports, module) => {
+    "use strict";
+    function base(ALPHABET) {
+      if (ALPHABET.length >= 255) {
+        throw new TypeError("Alphabet too long");
+      }
+      var BASE_MAP = new Uint8Array(256);
+      for (var j = 0; j < BASE_MAP.length; j++) {
+        BASE_MAP[j] = 255;
+      }
+      for (var i = 0; i < ALPHABET.length; i++) {
+        var x = ALPHABET.charAt(i);
+        var xc = x.charCodeAt(0);
+        if (BASE_MAP[xc] !== 255) {
+          throw new TypeError(x + " is ambiguous");
+        }
+        BASE_MAP[xc] = i;
+      }
+      var BASE = ALPHABET.length;
+      var LEADER = ALPHABET.charAt(0);
+      var FACTOR = Math.log(BASE) / Math.log(256);
+      var iFACTOR = Math.log(256) / Math.log(BASE);
+      function encode(source) {
+        if (source instanceof Uint8Array) {
+        } else if (ArrayBuffer.isView(source)) {
+          source = new Uint8Array(source.buffer, source.byteOffset, source.byteLength);
+        } else if (Array.isArray(source)) {
+          source = Uint8Array.from(source);
+        }
+        if (!(source instanceof Uint8Array)) {
+          throw new TypeError("Expected Uint8Array");
+        }
+        if (source.length === 0) {
+          return "";
+        }
+        var zeroes = 0;
+        var length = 0;
+        var pbegin = 0;
+        var pend = source.length;
+        while (pbegin !== pend && source[pbegin] === 0) {
+          pbegin++;
+          zeroes++;
+        }
+        var size = (pend - pbegin) * iFACTOR + 1 >>> 0;
+        var b58 = new Uint8Array(size);
+        while (pbegin !== pend) {
+          var carry = source[pbegin];
+          var i2 = 0;
+          for (var it1 = size - 1; (carry !== 0 || i2 < length) && it1 !== -1; it1--, i2++) {
+            carry += 256 * b58[it1] >>> 0;
+            b58[it1] = carry % BASE >>> 0;
+            carry = carry / BASE >>> 0;
+          }
+          if (carry !== 0) {
+            throw new Error("Non-zero carry");
+          }
+          length = i2;
+          pbegin++;
+        }
+        var it2 = size - length;
+        while (it2 !== size && b58[it2] === 0) {
+          it2++;
+        }
+        var str = LEADER.repeat(zeroes);
+        for (; it2 < size; ++it2) {
+          str += ALPHABET.charAt(b58[it2]);
+        }
+        return str;
+      }
+      function decodeUnsafe(source) {
+        if (typeof source !== "string") {
+          throw new TypeError("Expected String");
+        }
+        if (source.length === 0) {
+          return new Uint8Array();
+        }
+        var psz = 0;
+        var zeroes = 0;
+        var length = 0;
+        while (source[psz] === LEADER) {
+          zeroes++;
+          psz++;
+        }
+        var size = (source.length - psz) * FACTOR + 1 >>> 0;
+        var b256 = new Uint8Array(size);
+        while (source[psz]) {
+          var carry = BASE_MAP[source.charCodeAt(psz)];
+          if (carry === 255) {
+            return;
+          }
+          var i2 = 0;
+          for (var it3 = size - 1; (carry !== 0 || i2 < length) && it3 !== -1; it3--, i2++) {
+            carry += BASE * b256[it3] >>> 0;
+            b256[it3] = carry % 256 >>> 0;
+            carry = carry / 256 >>> 0;
+          }
+          if (carry !== 0) {
+            throw new Error("Non-zero carry");
+          }
+          length = i2;
+          psz++;
+        }
+        var it4 = size - length;
+        while (it4 !== size && b256[it4] === 0) {
+          it4++;
+        }
+        var vch = new Uint8Array(zeroes + (size - it4));
+        var j2 = zeroes;
+        while (it4 !== size) {
+          vch[j2++] = b256[it4++];
+        }
+        return vch;
+      }
+      function decode(string) {
+        var buffer = decodeUnsafe(string);
+        if (buffer) {
+          return buffer;
+        }
+        throw new Error("Non-base" + BASE + " character");
+      }
+      return {
+        encode,
+        decodeUnsafe,
+        decode
+      };
+    }
+    module.exports = base;
+  });
+
+  // node_modules/bs58/index.js
+  var require_bs58 = __commonJS((exports, module) => {
+    var basex = require_src();
+    var ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+    module.exports = basex(ALPHABET);
+  });
+
   // src/popup.tsx
   var import_react2 = __toModule(require_react());
   var import_react_dom = __toModule(require_react_dom());
@@ -7137,30 +8809,50 @@
     WalletRequestMethod2["SOLANA_SIGN_AND_SEND_TRANSACTION"] = "SOLANA_SIGN_AND_SEND_TRANSACTION";
   })(WalletRequestMethod || (WalletRequestMethod = {}));
 
-  // src/nativeRequests/requestNativeGetAccounts.ts
-  function parseGetAccountsResponse(accountsJson) {
-    try {
-      const accounts = JSON.parse(accountsJson);
-      if (!Array.isArray(accounts) || !accounts.every((item) => typeof item === "string")) {
-        throw new Error("Invalid format");
-      }
-      return accounts;
-    } catch (err) {
-      console.error("Error parsing get accounts response: ", err);
-      return null;
+  // src/nativeRequests/nativeGetAccounts.ts
+  var import_safari_extension_walletlib = __toModule(require_lib());
+
+  // node_modules/js-base64/base64.mjs
+  var _hasatob = typeof atob === "function";
+  var _hasBuffer = typeof Buffer === "function";
+  var _TD = typeof TextDecoder === "function" ? new TextDecoder() : void 0;
+  var _TE = typeof TextEncoder === "function" ? new TextEncoder() : void 0;
+  var b64ch = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+  var b64chs = Array.prototype.slice.call(b64ch);
+  var b64tab = ((a) => {
+    let tab = {};
+    a.forEach((c, i) => tab[c] = i);
+    return tab;
+  })(b64chs);
+  var b64re = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/;
+  var _fromCC = String.fromCharCode.bind(String);
+  var _U8Afrom = typeof Uint8Array.from === "function" ? Uint8Array.from.bind(Uint8Array) : (it) => new Uint8Array(Array.prototype.slice.call(it, 0));
+  var _tidyB64 = (s) => s.replace(/[^A-Za-z0-9\+\/]/g, "");
+  var atobPolyfill = (asc) => {
+    asc = asc.replace(/\s+/g, "");
+    if (!b64re.test(asc))
+      throw new TypeError("malformed base64.");
+    asc += "==".slice(2 - (asc.length & 3));
+    let u24, bin = "", r1, r2;
+    for (let i = 0; i < asc.length; ) {
+      u24 = b64tab[asc.charAt(i++)] << 18 | b64tab[asc.charAt(i++)] << 12 | (r1 = b64tab[asc.charAt(i++)]) << 6 | (r2 = b64tab[asc.charAt(i++)]);
+      bin += r1 === 64 ? _fromCC(u24 >> 16 & 255) : r2 === 64 ? _fromCC(u24 >> 16 & 255, u24 >> 8 & 255) : _fromCC(u24 >> 16 & 255, u24 >> 8 & 255, u24 & 255);
     }
-  }
-  async function requestNativeGetAccounts() {
-    const response = await browser.runtime.sendNativeMessage("id", {
-      method: "GET_ACCOUNTS"
+    return bin;
+  };
+  var _atob = _hasatob ? (asc) => atob(_tidyB64(asc)) : _hasBuffer ? (asc) => Buffer.from(asc, "base64").toString("binary") : atobPolyfill;
+  var _toUint8Array = _hasBuffer ? (a) => _U8Afrom(Buffer.from(a, "base64")) : (a) => _U8Afrom(_atob(a).split("").map((c) => c.charCodeAt(0)));
+  var toUint8Array = (a) => _toUint8Array(_unURI(a));
+  var _unURI = (a) => _tidyB64(a.replace(/[-_]/g, (m0) => m0 == "-" ? "+" : "/"));
+
+  // src/nativeRequests/nativeGetAccounts.ts
+  var import_bs58 = __toModule(require_bs58());
+  async function nativeGetAccounts() {
+    const result = await (0, import_safari_extension_walletlib.sendNativeGetAccountsRequest)();
+    return result.addresses.map((bs64EncodedAddress) => {
+      const bytes = toUint8Array(bs64EncodedAddress);
+      return import_bs58.default.encode(bytes);
     });
-    const accounts = parseGetAccountsResponse(response.value);
-    if (accounts === null) {
-      return null;
-    }
-    return {
-      accounts
-    };
   }
 
   // src/Popup/App.tsx
@@ -7183,7 +8875,7 @@
       });
     };
     const simulateGetAccountsRequest = async () => {
-      const response = await requestNativeGetAccounts();
+      const response = await nativeGetAccounts();
       console.log(response);
     };
     const simulateNativeConnectRequest = async () => {

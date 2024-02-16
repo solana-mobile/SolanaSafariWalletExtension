@@ -48,14 +48,13 @@ export default class SafariPageRequestClient {
   } = {};
 
   constructor() {
-    window.addEventListener(
-      PAGE_WALLET_RESPONSE_CHANNEL,
-      this.#handleResponse.bind(this)
-    );
+    window.addEventListener('message', this.#handleResponse.bind(this));
   }
 
   // Handles wallet responses from content script.
   #handleResponse(event: any) {
+    console.log('Page Request Client received response:');
+    console.log(event);
     if (!isValidOrigin(event)) return;
 
     if (event.data.type !== PAGE_WALLET_RESPONSE_CHANNEL) return;
@@ -68,12 +67,15 @@ export default class SafariPageRequestClient {
       return;
     }
 
+    const { resolve, reject } = resolver;
+
     delete this.#resolveHandler[id];
 
-    const { resolve, reject } = resolver;
     if (error) {
+      console.log('In error');
       reject(new Error(error));
     } else {
+      console.log('In resolve');
       resolve(result);
     }
   }
@@ -81,27 +83,22 @@ export default class SafariPageRequestClient {
   async sendConnectRequest(
     input: StandardConnectInput
   ): Promise<StandardConnectOutput> {
-    const rpcResponse = await this.sendRpcRequest<StandardConnectOutputEncoded>(
-      {
-        method: WalletRequestMethod.SOLANA_CONNECT,
-        params: input,
-      }
-    );
-    if (rpcResponse.error || !rpcResponse.result) {
-      throw Error('Error during connect');
-    }
-    return decodeConnectOutput(rpcResponse.result);
+    const rpcResponse = await this.sendRpcRequest({
+      method: WalletRequestMethod.SOLANA_CONNECT,
+      params: input,
+    });
+
+    return decodeConnectOutput(rpcResponse);
   }
 
   async sendSignMessageRequest(
     input: SolanaSignMessageInput
   ): Promise<SolanaSignMessageOutput> {
-    const rpcResponse =
-      await this.sendRpcRequest<SolanaSignMessageOutputEncoded>({
-        method: WalletRequestMethod.SOLANA_SIGN_MESSAGE,
-        params: input,
-      });
-    if (rpcResponse.error || !rpcResponse.result) {
+    const rpcResponse = await this.sendRpcRequest({
+      method: WalletRequestMethod.SOLANA_SIGN_MESSAGE,
+      params: input,
+    });
+    if (rpcResponse.error) {
       throw Error('Error during signing');
     }
     return decodeSignMessageOutput(rpcResponse.result);
@@ -110,12 +107,11 @@ export default class SafariPageRequestClient {
   async sendSignAndSendTransactionRequest(
     input: SolanaSignAndSendTransactionInput
   ): Promise<SolanaSignAndSendTransactionOutput> {
-    const rpcResponse =
-      await this.sendRpcRequest<SolanaSignAndSendTransactionOutputEncoded>({
-        method: WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION,
-        params: input,
-      });
-    if (rpcResponse.error || !rpcResponse.result) {
+    const rpcResponse = await this.sendRpcRequest({
+      method: WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION,
+      params: input,
+    });
+    if (rpcResponse.error) {
       throw Error('Error during signing');
     }
     return decodeSignAndSendTransactionOutput(rpcResponse.result);
@@ -124,22 +120,19 @@ export default class SafariPageRequestClient {
   async sendSignTransactionRequest(
     input: SolanaSignTransactionInput
   ): Promise<SolanaSignTransactionOutput> {
-    const rpcResponse =
-      await this.sendRpcRequest<SolanaSignTransactionOutputEncoded>({
-        method: WalletRequestMethod.SOLANA_SIGN_TRANSACTION,
-        params: input,
-      });
-    if (rpcResponse.error || !rpcResponse.result) {
+    const rpcResponse = await this.sendRpcRequest({
+      method: WalletRequestMethod.SOLANA_SIGN_TRANSACTION,
+      params: input,
+    });
+
+    if (rpcResponse.error) {
       throw Error('Error during signing');
     }
     return decodeSignTransactionOutput(rpcResponse.result);
   }
 
-  async sendRpcRequest<T extends WalletRequestOutputEncoded = any>({
-    method,
-    params,
-  }: WalletRpcRequest): Promise<RpcResponse<T>> {
-    return new Promise<RpcResponse<T>>((resolve, reject) => {
+  async sendRpcRequest({ method, params }: WalletRpcRequest): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
       const id = v4();
       this.#resolveHandler[id] = {
         resolve,

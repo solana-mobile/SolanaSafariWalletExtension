@@ -198,19 +198,8 @@ class SafariExtensionDemoWallet implements Wallet {
   #standardConnect: StandardConnectMethod = async (input) => {
     console.log("In connect");
     if (!this.#accounts.length || !input?.silent) {
-      // const response = await this.#messageClient.sendWalletRequest({
-      //   type: "page-wallet-request",
-      //   requestId: Math.random().toString(36),
-      //   method: WalletRequestMethod.SOLANA_CONNECT,
-      //   input: input ?? { silent: false }
-      // });
-
       const connectResponse =
         await this.#extensionRequestClient.sendConnectRequest(input ?? {});
-
-      // if (response?.error) {
-      //   throw new Error(response.error.value);
-      // }
 
       this.#connected(connectResponse.accounts);
     }

@@ -12,7 +12,7 @@ import ConnectScreen from "./ConnectScreen";
 import SignMessageScreen from "./SignMessageScreen";
 import SignTransactionScreen from "./SignTransactionScreen";
 import SignAndSendTransactionScreen from "./SignAndSendTransactionScreen";
-import { requestNativeGetAccounts } from "../nativeRequests/requestNativeGetAccounts";
+import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
 import {
   RpcResponse,
   WalletRpcRequest
@@ -113,17 +113,14 @@ export default function ApprovalScreen() {
         isValidRpcMethod(event.rpcRequest.detail.method)
       ) {
         // Add the new RPC Request to the queue
-        setTimeout(() => {
-          setRequestQueue((prevQueue) => [
-            ...prevQueue,
-            {
-              origin: event.origin,
-              rpcRequest: event.rpcRequest.detail,
-              responseChannel: PAGE_WALLET_RESPONSE_CHANNEL
-            }
-          ]);
-          console.log(event);
-        }, 5000);
+        setRequestQueue((prevQueue) => [
+          ...prevQueue,
+          {
+            origin: event.origin,
+            rpcRequest: event.rpcRequest.detail,
+            responseChannel: PAGE_WALLET_RESPONSE_CHANNEL
+          }
+        ]);
       }
     }
 
@@ -142,9 +139,9 @@ export default function ApprovalScreen() {
   // Fetch the address of the selected account
   useEffect(() => {
     async function getSelectedAccount() {
-      const response = await requestNativeGetAccounts();
-      if (response && response.accounts.length > 0) {
-        setSelectedAccount(response.accounts[0]);
+      const accounts = await nativeGetAccounts();
+      if (accounts && accounts.length > 0) {
+        setSelectedAccount(accounts[0]);
       }
     }
     getSelectedAccount();

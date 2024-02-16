@@ -41,15 +41,23 @@ public extension NSExtensionContext {
         }
     }
     
-    func completeRpcRequestWith(result: Encodable) -> Void {
-        let response = NSExtensionItem()
-        response.userInfo = [
-            SFExtensionMessageKey: [
-                "result": result,
-                "error": nil
+    func completeRpcRequestWith(result: Encodable) {
+        do {
+            let encoder = JSONEncoder()
+            let resultJsonData = try encoder.encode(result)
+            let resultJsonString = String(data: resultJsonData, encoding: .utf8)
+            
+            let response = NSExtensionItem()
+            response.userInfo = [
+                SFExtensionMessageKey: [
+                    "result": resultJsonString, // Pass jsonString here
+                    "error": nil
+                ]
             ]
-        ]
-        self.completeRequest(returningItems: [response])
+            self.completeRequest(returningItems: [response])
+        } catch {
+            self.completeRpcRequestWith(errorMessage: "Failed to encode result to JSON")
+        }
     }
     
     func completeRpcRequestWith(errorMessage: String) -> Void {

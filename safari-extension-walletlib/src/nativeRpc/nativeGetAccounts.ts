@@ -23,12 +23,12 @@ function isValidNativeGetAccountsResult(
 }
 
 export async function sendNativeGetAccountsRequest({
-  extra_data,
-}: NativeGetAccountsParams): Promise<NativeGetAccountsResult> {
+  extra_data = {},
+}: NativeGetAccountsParams = {}): Promise<NativeGetAccountsResult> {
   const nativeResponse: NativeRpcResponse = await sendNativeRpcRequest({
     method: NATIVE_GET_ACCOUNTS_RPC_METHOD,
     params: {
-      extra_data: extra_data ?? {},
+      extra_data,
     },
   });
 

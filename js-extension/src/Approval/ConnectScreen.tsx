@@ -1,5 +1,9 @@
 import React from "react";
-import { ConnectRequest, ConnectResponseEncoded } from "../types/messageTypes";
+import {
+  ConnectRequest,
+  ConnectResponseEncoded,
+  WalletAccountEncoded
+} from "../types/messageTypes";
 
 import WalletDisplay from "./WalletDisplay";
 import ApprovalHeader from "./ApprovalHeader";
@@ -25,6 +29,7 @@ import {
   StandardConnectInput,
   StandardConnectOutput
 } from "@wallet-standard/features";
+import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
 
 type Props = Readonly<{
   request: RpcRequestQueueItem;
@@ -46,12 +51,35 @@ export default function ConnectScreen({
       throw new Error("Sender origin is missing: " + request);
     }
 
-    const encodedConnectResponseOutput = await nativeConnect({
-      input: request.rpcRequest.params as StandardConnectInput,
-      method: WalletRequestMethod.SOLANA_CONNECT
-    });
+    try {
+      const connectedAccounts = await nativeGetAccounts();
 
-    if (encodedConnectResponseOutput === null) {
+      const account: WalletAccountEncoded = {
+        address: connectedAccounts[0],
+        publicKey: connectedAccounts[0],
+        chains: [
+          "solana:mainnet",
+          "solana:devnet",
+          "solana:testnet",
+          "solana:localnet"
+        ],
+        features: [],
+        label: "Sample Safari Extension Wallet"
+      };
+
+      const encodedResult: StandardConnectOutputEncoded = {
+        accounts: [account]
+      };
+
+      onComplete(
+        {
+          id: request.rpcRequest.id,
+          result: encodedResult
+        },
+        request.origin.tab.id,
+        PAGE_WALLET_RESPONSE_CHANNEL
+      );
+    } catch (e: any) {
       onComplete(
         {
           id: request.rpcRequest.id,
@@ -64,15 +92,6 @@ export default function ConnectScreen({
       );
       return;
     }
-
-    onComplete(
-      {
-        id: request.rpcRequest.id,
-        result: encodedConnectResponseOutput
-      },
-      request.origin.tab.id,
-      PAGE_WALLET_RESPONSE_CHANNEL
-    );
   };
 
   const handleCancel = async (request: RpcRequestQueueItem) => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { requestNativeConnect } from "../nativeRequests/requestNativeConnect";
 import { WalletRequestMethod } from "../types/messageTypes";
-import { requestNativeGetAccounts } from "../nativeRequests/requestNativeGetAccounts";
+import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
 
 export default function App() {
   const popupContainer = {
@@ -29,7 +29,7 @@ export default function App() {
   };
 
   const simulateGetAccountsRequest = async () => {
-    const response = await requestNativeGetAccounts();
+    const response = await nativeGetAccounts();
     console.log(response);
   };
 

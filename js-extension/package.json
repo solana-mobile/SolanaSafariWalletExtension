@@ -23,10 +23,11 @@
     "bs58": "^5.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "js-base64": "^3.7.6",
     "lucide-react": "^0.287.0",
+    "safari-extension-walletlib": "file:../safari-extension-walletlib",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.7",
-    "safari-extension-walletlib": "file:../safari-extension-walletlib"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",

@@ -16,6 +16,7 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
     private var context: NSExtensionContext?
     
     func beginRequest(with context: NSExtensionContext) {
+        os_log("DEBUGLOG: beginRequest start")
         guard let method = context.requestMethod() else {
             context.completeRpcRequestWith(errorMessage: "Unsupported method")
             return
