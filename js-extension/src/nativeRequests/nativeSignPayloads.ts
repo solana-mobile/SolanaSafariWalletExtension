@@ -11,8 +11,6 @@ export async function nativeSignPayload(
     payloads: [fromUint8Array(payload)]
   });
 
-  console.log("SIGN PAYLOADS RPC RESULT: " + result);
-
   const bs64EncodedSignedPayload = result.signed_payloads[0];
 
   if (!bs64EncodedSignedPayload) {

@@ -2,6 +2,8 @@ import React from "react";
 import { requestNativeConnect } from "../nativeRequests/requestNativeConnect";
 import { WalletRequestMethod } from "../types/messageTypes";
 import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
+import { toUint8Array } from "js-base64";
+import base58 from "bs58";
 
 export default function App() {
   const popupContainer = {
@@ -64,6 +66,9 @@ export default function App() {
           Simulate Native Sign Message Request
         </button>
         <button onClick={simulateNativeSignTransactionRequest}>
+          Simulate Native Sign Transaction Request
+        </button>
+        <button onClick={simulateDecode}>
           Simulate Native Sign Transaction Request
         </button>
       </div>

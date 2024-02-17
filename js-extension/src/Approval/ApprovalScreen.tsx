@@ -18,11 +18,10 @@ import {
   WalletRpcRequest
 } from "safari-extension-walletlib/lib/pageRpc/requests";
 import {
+  Base58EncodedAddress,
   PAGE_WALLET_REQUEST_CHANNEL,
   PAGE_WALLET_RESPONSE_CHANNEL
 } from "safari-extension-walletlib";
-
-export type Base58EncodedAddress = string;
 
 function getRequestScreenComponent(
   request: RpcRequestQueueItem,
@@ -45,7 +44,7 @@ function getRequestScreenComponent(
     case WalletRequestMethod.SOLANA_SIGN_MESSAGE:
       return (
         <SignMessageScreen
-          request={request as SignMessageRequestEncoded}
+          request={request}
           onComplete={onComplete}
           selectedAccount={selectedAccount}
         />
@@ -53,7 +52,7 @@ function getRequestScreenComponent(
     case WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION:
       return (
         <SignAndSendTransactionScreen
-          request={request as SignAndSendTransactionRequestEncoded}
+          request={request}
           onComplete={onComplete}
           selectedAccount={selectedAccount}
         />
@@ -141,7 +140,7 @@ export default function ApprovalScreen() {
     async function getSelectedAccount() {
       const accounts = await nativeGetAccounts();
       if (accounts && accounts.length > 0) {
-        setSelectedAccount(accounts[0]);
+        setSelectedAccount(accounts[0].toBase58());
       }
     }
     getSelectedAccount();

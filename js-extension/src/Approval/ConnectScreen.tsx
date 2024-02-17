@@ -13,12 +13,12 @@ import {
   requestNativeConnect
 } from "../nativeRequests/requestNativeConnect";
 import {
-  Base58EncodedAddress,
   RpcRequestQueueItem,
   WalletEvent,
   WalletRpcRequestWithId
 } from "./ApprovalScreen";
 import {
+  Base58EncodedAddress,
   PAGE_WALLET_REQUEST_CHANNEL,
   PAGE_WALLET_RESPONSE_CHANNEL,
   RpcResponse,
@@ -30,6 +30,7 @@ import {
   StandardConnectOutput
 } from "@wallet-standard/features";
 import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
+import { fromUint8Array } from "js-base64";
 
 type Props = Readonly<{
   request: RpcRequestQueueItem;
@@ -55,8 +56,8 @@ export default function ConnectScreen({
       const connectedAccounts = await nativeGetAccounts();
 
       const account: WalletAccountEncoded = {
-        address: connectedAccounts[0],
-        publicKey: connectedAccounts[0],
+        address: connectedAccounts[0].toBase58(),
+        publicKey: fromUint8Array(connectedAccounts[0].toBytes()),
         chains: [
           "solana:mainnet",
           "solana:devnet",

@@ -44,8 +44,12 @@ export function decodeConnectOutput(
 ): StandardConnectOutput {
   return {
     accounts: encodedOutput.accounts.map(account => ({
-      ...account,
-      publicKey: toUint8Array(account.publicKey),
+      address: account.address,
+      publicKey: toUint8Array(account.publicKey), // Changed to Base64 encoding
+      chains: account.chains,
+      features: account.features,
+      label: account.label,
+      icon: account.icon,
     })),
   };
 }

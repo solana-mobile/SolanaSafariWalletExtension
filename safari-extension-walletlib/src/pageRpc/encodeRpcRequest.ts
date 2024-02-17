@@ -9,11 +9,13 @@ import {
   SolanaSignAndSendTransactionInputEncoded,
   SolanaSignMessageInputEncoded,
   SolanaSignTransactionInputEncoded,
+  WalletAccountEncoded,
   WalletRequestInput,
   WalletRequestInputEncoded,
   WalletRequestMethod,
   WalletRpcRequest,
 } from './requests';
+import { WalletAccount } from '@wallet-standard/base';
 
 export function encodeWalletRpcRequest(request: WalletRpcRequest): any {
   return {
@@ -46,10 +48,7 @@ function encodeSignMessageInput(
   input: SolanaSignMessageInput
 ): SolanaSignMessageInputEncoded {
   return {
-    account: {
-      ...input.account,
-      publicKey: fromUint8Array(input.account.publicKey), // Changed to Base64 encoding
-    },
+    account: encodeWalletAccount(input.account),
     message: fromUint8Array(input.message), // Changed to Base64 encoding
   };
 }
@@ -58,10 +57,7 @@ function encodeSignTransactionInput(
   input: SolanaSignTransactionInput
 ): SolanaSignTransactionInputEncoded {
   return {
-    account: {
-      ...input.account,
-      publicKey: fromUint8Array(input.account.publicKey), // Changed to Base64 encoding
-    },
+    account: encodeWalletAccount(input.account),
     transaction: fromUint8Array(input.transaction), // Changed to Base64 encoding
     chain: input.chain,
     options: input.options,
@@ -76,5 +72,16 @@ function encodeSignAndSendTransactionInput(
     ...encodeSignTransactionInput(input),
     chain: input.chain,
     options: input.options,
+  };
+}
+
+function encodeWalletAccount(account: WalletAccount): WalletAccountEncoded {
+  return {
+    address: account.address,
+    publicKey: fromUint8Array(account.publicKey), // Changed to Base64 encoding
+    chains: account.chains,
+    features: account.features,
+    label: account.label,
+    icon: account.icon,
   };
 }

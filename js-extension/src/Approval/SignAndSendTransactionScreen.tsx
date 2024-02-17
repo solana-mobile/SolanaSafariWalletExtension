@@ -13,10 +13,17 @@ import { Separator } from "@radix-ui/react-separator";
 import ApprovalFooter from "./ApprovalFooter";
 import ApprovalHeader from "./ApprovalHeader";
 import WalletDisplay from "./WalletDisplay";
+import { RpcResponse, Base58EncodedAddress } from "safari-extension-walletlib";
+import { RpcRequestQueueItem } from "./ApprovalScreen";
 
 type Props = Readonly<{
-  request: SignAndSendTransactionRequestEncoded;
-  onComplete: (response: SignAndSendTransactionResponseEncoded) => void;
+  request: RpcRequestQueueItem;
+  onComplete: (
+    response: RpcResponse,
+    originTabId: number,
+    responseChannel: string
+  ) => void;
+  selectedAccount: Base58EncodedAddress | null;
 }>;
 
 export default function SignAndSendTransactionScreen({

@@ -43,12 +43,12 @@ async function forwardWalletRequestToApproval(request: {
   origin: browser.runtime.MessageSender;
 }) {
   const tabs = await browser.tabs.query({ active: true, currentWindow: true });
-  const activeTab = tabs[0];
+
   const isApprovalUIActive =
-    browser.runtime.getURL('approval.html') === activeTab.url;
+    tabs && tabs[0].url === browser.runtime.getURL('approval.html');
 
   const targetTab = isApprovalUIActive
-    ? activeTab
+    ? tabs[0]
     : await initializeApprovalTab();
 
   if (targetTab.id) {
@@ -63,6 +63,8 @@ export function initializeBackgroundScript() {
     async (message, sender: browser.runtime.MessageSender, _sendResponse) => {
       if (message.type === PAGE_WALLET_REQUEST_CHANNEL) {
         // Attach sender identity metadata before forwarding
+        console.log('Forwarding request to approval');
+        console.log(message);
         forwardWalletRequestToApproval({
           rpcRequest: message,
           origin: sender,

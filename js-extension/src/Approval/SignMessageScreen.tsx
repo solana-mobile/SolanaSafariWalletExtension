@@ -1,7 +1,9 @@
 import React from "react";
 import {
   SignMessageRequestEncoded,
-  SignMessageResponseEncoded
+  SignMessageResponseEncoded,
+  SolanaSignMessageInputEncoded,
+  SolanaSignMessageOutputEncoded
 } from "../types/messageTypes";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -9,12 +11,24 @@ import WalletDisplay from "./WalletDisplay";
 import ApprovalHeader from "./ApprovalHeader";
 import ApprovalFooter from "./ApprovalFooter";
 import { requestNativeSignMessage } from "../nativeRequests/requestNativeSignMessage";
-import { Base58EncodedAddress } from "./ApprovalScreen";
+import { RpcRequestQueueItem } from "./ApprovalScreen";
+import {
+  Base58EncodedAddress,
+  PAGE_WALLET_RESPONSE_CHANNEL,
+  RpcResponse
+} from "safari-extension-walletlib";
+import { nativeSignPayload } from "../nativeRequests/nativeSignPayloads";
+import { fromUint8Array, toUint8Array } from "js-base64";
+import { PublicKey } from "@solana/web3.js";
 
 type Props = Readonly<{
-  request: SignMessageRequestEncoded;
-  onComplete: (response: SignMessageResponseEncoded) => void;
-  selectedAccount: Base58EncodedAddress;
+  request: RpcRequestQueueItem;
+  onComplete: (
+    response: RpcResponse,
+    originTabId: number,
+    responseChannel: string
+  ) => void;
+  selectedAccount: Base58EncodedAddress | null;
 }>;
 
 export default function SignMessageScreen({
@@ -22,68 +36,52 @@ export default function SignMessageScreen({
   onComplete,
   selectedAccount
 }: Props) {
-  const handleSignMessage = async (request: SignMessageRequestEncoded) => {
-    if (!selectedAccount) {
-      return;
-    }
-
-    if (!request.origin) {
+  const handleSignMessage = async (request: RpcRequestQueueItem) => {
+    if (!request.origin || !request.origin.tab?.id) {
       throw new Error("Sender origin is missing: " + request);
     }
 
-    const signedMessage = await requestNativeSignMessage(request);
+    const requestedAccount = (
+      request.rpcRequest.params as SolanaSignMessageInputEncoded
+    ).account;
+    const message = (request.rpcRequest.params as SolanaSignMessageInputEncoded)
+      .message;
 
-    if (!signedMessage) {
-      onComplete({
-        type: "wallet-response",
-        method: request.method,
-        requestId: request.requestId,
-        origin: request.origin,
-        output: {
-          signedMessage: "",
-          signature: ""
-        },
-        error: {
-          value: "An error occured during signing."
-        }
-      });
-      return;
-    }
+    const signature = await nativeSignPayload(
+      new PublicKey(requestedAccount.publicKey),
+      toUint8Array(message)
+    );
 
-    onComplete({
-      type: "wallet-response",
-      method: request.method,
-      requestId: request.requestId,
-      origin: request.origin,
-      output: {
-        signedMessage: request.input.message,
-        signature: signedMessage
-      }
-    });
+    const encodedResult: SolanaSignMessageOutputEncoded = {
+      signedMessage: message,
+      signature: fromUint8Array(signature)
+    };
+
+    onComplete(
+      {
+        id: request.rpcRequest.id,
+        result: encodedResult
+      },
+      request.origin.tab.id,
+      PAGE_WALLET_RESPONSE_CHANNEL
+    );
   };
 
-  const handleCancel = async (request: SignMessageRequestEncoded) => {
-    if (!selectedAccount) {
-      return;
-    }
-
-    if (!request.origin) {
+  const handleCancel = async (request: RpcRequestQueueItem) => {
+    if (!request.origin || !request.origin.tab?.id) {
       throw new Error("Sender origin is missing: " + request);
     }
 
-    onComplete({
-      type: "wallet-response",
-      method: request.method,
-      requestId: request.requestId,
-      origin: request.origin,
-      output: {
-        signedMessage: "",
-        signature: ""
+    onComplete(
+      {
+        id: request.rpcRequest.id,
+        error: {
+          value: "User rejected signing."
+        }
       },
-      error: {
-        value: "User rejected signing."
-      }
-    });
+      request.origin.tab.id,
+      PAGE_WALLET_RESPONSE_CHANNEL
+    );
   };
 
   return (
@@ -120,19 +118,16 @@ export default function SignMessageScreen({
             await handleSignMessage(request);
           } catch (err: any) {
             const error = err as Error;
-            onComplete({
-              type: "wallet-response",
-              method: request.method,
-              requestId: request.requestId,
-              origin: request.origin!,
-              output: {
-                signedMessage: "",
-                signature: ""
+            onComplete(
+              {
+                id: request.rpcRequest.id,
+                error: {
+                  value: "An error occured during signing message."
+                }
               },
-              error: {
-                value: `${error.name}: ${error.message}`
-              }
-            });
+              request.origin.tab!.id!,
+              PAGE_WALLET_RESPONSE_CHANNEL
+            );
           }
         }}
         confirmText={"Sign Message"}

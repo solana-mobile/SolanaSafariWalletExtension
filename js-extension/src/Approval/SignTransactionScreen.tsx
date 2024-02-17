@@ -1,11 +1,15 @@
 import React from "react";
 import {
   SignTransactionRequestEncoded,
-  SignTransactionResponseEncoded
+  SignTransactionResponseEncoded,
+  SolanaSignMessageInputEncoded,
+  SolanaSignMessageOutputEncoded,
+  SolanaSignTransactionInputEncoded,
+  SolanaSignTransactionOutputEncoded
 } from "../types/messageTypes";
 import getDummyKeypair from "../util/getDummyKeypair";
 import bs58 from "bs58";
-import { VersionedTransaction } from "@solana/web3.js";
+import { PublicKey, Transaction, VersionedTransaction } from "@solana/web3.js";
 import { Separator } from "@/components/ui/separator";
 import ApprovalFooter from "./ApprovalFooter";
 import ApprovalHeader from "./ApprovalHeader";
@@ -14,12 +18,24 @@ import { Download, SendHorizontal } from "lucide-react";
 import signVersionedTransaction from "../util/signVersionedTransaction";
 import useDummyKeypair from "./useDummyKeypair";
 import { requestNativeSignTransaction } from "../nativeRequests/requestNativeSignTransaction";
-import { Base58EncodedAddress } from "./ApprovalScreen";
+import { toUint8Array, fromUint8Array } from "js-base64";
+import {
+  RpcResponse,
+  Base58EncodedAddress,
+  PAGE_WALLET_RESPONSE_CHANNEL
+} from "safari-extension-walletlib";
+import { nativeSignPayload } from "../nativeRequests/nativeSignPayloads";
+import { RpcRequestQueueItem } from "./ApprovalScreen";
+import { Buffer } from "buffer";
 
 type Props = Readonly<{
-  request: SignTransactionRequestEncoded;
-  onComplete: (response: SignTransactionResponseEncoded) => void;
-  selectedAccount: Base58EncodedAddress;
+  request: RpcRequestQueueItem;
+  onComplete: (
+    response: RpcResponse,
+    originTabId: number,
+    responseChannel: string
+  ) => void;
+  selectedAccount: Base58EncodedAddress | null;
 }>;
 
 export default function SignTransactionScreen({
@@ -27,63 +43,64 @@ export default function SignTransactionScreen({
   onComplete,
   selectedAccount
 }: Props) {
-  const handleSignTransaction = async (
-    request: SignTransactionRequestEncoded
-  ) => {
-    if (!selectedAccount) {
-      return;
-    }
-
-    if (!request.origin) {
+  const handleSignTransaction = async (request: RpcRequestQueueItem) => {
+    if (!request.origin || !request.origin.tab?.id) {
       throw new Error("Sender origin is missing: " + request);
     }
 
-    const signedTx = await requestNativeSignTransaction(request);
+    const encodedWalletAccount = (
+      request.rpcRequest.params as SolanaSignTransactionInputEncoded
+    ).account;
 
-    if (!signedTx) {
-      onComplete({
-        type: "wallet-response",
-        method: request.method,
-        requestId: request.requestId,
-        origin: request.origin,
-        output: {
-          signedTransaction: ""
-        },
-        error: {
-          value: "An error occured during signing."
-        }
-      });
-      return;
-    }
+    console.log("SIGN TX");
+    console.log(encodedWalletAccount.publicKey); // HvL...
+    console.log(toUint8Array(encodedWalletAccount.publicKey));
+    console.log(bs58.encode(toUint8Array(encodedWalletAccount.publicKey))); // should be HvL
 
-    onComplete({
-      type: "wallet-response",
-      method: request.method,
-      requestId: request.requestId,
-      origin: request.origin,
-      output: {
-        signedTransaction: signedTx
-      }
-    });
+    const requestedPubkey = new PublicKey(
+      toUint8Array(encodedWalletAccount.publicKey)
+    );
+
+    const encodedTx = (
+      request.rpcRequest.params as SolanaSignTransactionInputEncoded
+    ).transaction;
+
+    const tx = Transaction.from(toUint8Array(encodedTx));
+    const txMessageBody = tx.serializeMessage();
+
+    const txSignature = await nativeSignPayload(requestedPubkey, txMessageBody);
+
+    tx.addSignature(requestedPubkey, Buffer.from(txSignature.buffer));
+
+    const encodedResult: SolanaSignTransactionOutputEncoded = {
+      signedTransaction: fromUint8Array(tx.serialize())
+    };
+
+    onComplete(
+      {
+        id: request.rpcRequest.id,
+        result: encodedResult
+      },
+      request.origin.tab.id,
+      PAGE_WALLET_RESPONSE_CHANNEL
+    );
   };
 
-  const handleCancel = async (request: SignTransactionRequestEncoded) => {
-    if (!request.origin) {
+  const handleCancel = async (request: RpcRequestQueueItem) => {
+    if (!request.origin || !request.origin.tab?.id) {
       throw new Error("Sender origin is missing: " + request);
     }
 
-    onComplete({
-      type: "wallet-response",
-      method: request.method,
-      requestId: request.requestId,
-      origin: request.origin,
-      output: {
-        signedTransaction: ""
+    onComplete(
+      {
+        id: request.rpcRequest.id,
+        error: {
+          value: "User rejected signing."
+        }
       },
-      error: {
-        value: "User rejected signing."
-      }
-    });
+      request.origin.tab.id,
+      PAGE_WALLET_RESPONSE_CHANNEL
+    );
   };
 
   return (
@@ -140,19 +157,17 @@ export default function SignTransactionScreen({
           try {
             await handleSignTransaction(request);
           } catch (err: any) {
-            const error = err as Error;
-            onComplete({
-              type: "wallet-response",
-              method: request.method,
-              requestId: request.requestId,
-              origin: request.origin!,
-              output: {
-                signedTransaction: ""
+            console.log(err);
+            onComplete(
+              {
+                id: request.rpcRequest.id,
+                error: {
+                  value: "Error during signing: " + (err as Error).message
+                }
               },
-              error: {
-                value: `${error.name}: ${error.message}`
-              }
-            });
+              request.origin.tab!.id!,
+              PAGE_WALLET_RESPONSE_CHANNEL
+            );
           }
         }}
         confirmText={"Confirm"}

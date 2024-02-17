@@ -98,10 +98,8 @@ export default class SafariPageRequestClient {
       method: WalletRequestMethod.SOLANA_SIGN_MESSAGE,
       params: input,
     });
-    if (rpcResponse.error) {
-      throw Error('Error during signing');
-    }
-    return decodeSignMessageOutput(rpcResponse.result);
+
+    return decodeSignMessageOutput(rpcResponse);
   }
 
   async sendSignAndSendTransactionRequest(
@@ -111,10 +109,8 @@ export default class SafariPageRequestClient {
       method: WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION,
       params: input,
     });
-    if (rpcResponse.error) {
-      throw Error('Error during signing');
-    }
-    return decodeSignAndSendTransactionOutput(rpcResponse.result);
+
+    return decodeSignAndSendTransactionOutput(rpcResponse);
   }
 
   async sendSignTransactionRequest(
@@ -125,10 +121,7 @@ export default class SafariPageRequestClient {
       params: input,
     });
 
-    if (rpcResponse.error) {
-      throw Error('Error during signing');
-    }
-    return decodeSignTransactionOutput(rpcResponse.result);
+    return decodeSignTransactionOutput(rpcResponse);
   }
 
   async sendRpcRequest({ method, params }: WalletRpcRequest): Promise<any> {
@@ -138,6 +131,9 @@ export default class SafariPageRequestClient {
         resolve,
         reject,
       };
+      const encodedParams = encodeWalletRpcParams(method, params);
+      console.log('encodedParams: ');
+      console.log(encodedParams);
       window.postMessage({
         type: PAGE_WALLET_REQUEST_CHANNEL,
         detail: {

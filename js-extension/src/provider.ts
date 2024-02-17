@@ -38,6 +38,8 @@ import { WalletRequestMethod } from "./types/messageTypes";
 import { SafariExtensionDemoWalletAccount } from "./wallet/account";
 import { icon } from "./wallet/icon";
 import SafariPageRequestClient from "safari-extension-walletlib/lib/safari-page-request-client";
+import { toUint8Array } from "js-base64";
+import base58 from "bs58";
 let wallet: SafariExtensionDemoWallet;
 let registered = false;
 
@@ -312,17 +314,6 @@ class SafariExtensionDemoWallet implements Wallet {
       }
 
       if (chain && !isSolanaChain(chain)) throw new Error("invalid chain");
-
-      // const response = await this.#messageClient.sendWalletRequest({
-      //   type: "page-wallet-request",
-      //   requestId: Math.random().toString(36),
-      //   method: WalletRequestMethod.SOLANA_SIGN_TRANSACTION,
-      //   input: inputs[0]
-      // });
-
-      // if (response?.error) {
-      //   throw new Error(response.error.value);
-      // }
 
       const signTransactionResponse =
         await this.#extensionRequestClient.sendSignTransactionRequest(
