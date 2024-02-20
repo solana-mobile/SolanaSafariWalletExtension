@@ -2,7 +2,7 @@
 // Listens to messages from "content"
 
 import { BaseWalletRequest } from "./types/messageTypes";
-import { initializeBackgroundScript } from "safari-extension-walletlib";
+import { initializeBackgroundScript } from "./util/initBackgroundScript";
 
 async function initializeApprovalTab(): Promise<browser.tabs.Tab> {
   return new Promise<browser.tabs.Tab>((resolve, reject) => {

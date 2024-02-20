@@ -33,13 +33,9 @@ import {
   StandardEventsOnMethod
 } from "@wallet-standard/features";
 import { SolanaChain, isSolanaChain } from "./wallet/solana";
-import MessageClient from "./wallet/message-client";
-import { WalletRequestMethod } from "./types/messageTypes";
 import { SafariExtensionDemoWalletAccount } from "./wallet/account";
 import { icon } from "./wallet/icon";
-import SafariPageRequestClient from "safari-extension-walletlib/lib/safari-page-request-client";
-import { toUint8Array } from "js-base64";
-import base58 from "bs58";
+import SafariPageRequestClient from "./pageRpc/safari-page-request-client";
 let wallet: SafariExtensionDemoWallet;
 let registered = false;
 

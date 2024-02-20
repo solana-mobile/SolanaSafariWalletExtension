@@ -1,38 +1,28 @@
-import { v4 } from 'uuid';
-import {
-  RpcResponse,
-  SolanaSignAndSendTransactionOutputEncoded,
-  SolanaSignMessageOutputEncoded,
-  SolanaSignTransactionOutputEncoded,
-  StandardConnectOutputEncoded,
-  WalletRequestMethod,
-  WalletRequestOutput,
-  WalletRequestOutputEncoded,
-  WalletRpcRequest,
-} from './pageRpc/requests';
-import { encodeWalletRpcParams } from './pageRpc/encodeRpcRequest';
+import { v4 } from "uuid";
+import { WalletRequestMethod, WalletRpcRequest } from "./requests";
+import { encodeWalletRpcParams } from "./encodeRpcRequest";
 import {
   PAGE_WALLET_REQUEST_CHANNEL,
-  PAGE_WALLET_RESPONSE_CHANNEL,
-} from './constants';
+  PAGE_WALLET_RESPONSE_CHANNEL
+} from "./constants";
 import {
   StandardConnectInput,
-  StandardConnectOutput,
-} from '@wallet-standard/features';
+  StandardConnectOutput
+} from "@wallet-standard/features";
 import {
   SolanaSignAndSendTransactionInput,
   SolanaSignAndSendTransactionOutput,
   SolanaSignMessageInput,
   SolanaSignMessageOutput,
   SolanaSignTransactionInput,
-  SolanaSignTransactionOutput,
-} from '@solana/wallet-standard-features';
+  SolanaSignTransactionOutput
+} from "@solana/wallet-standard-features";
 import {
   decodeConnectOutput,
   decodeSignAndSendTransactionOutput,
   decodeSignMessageOutput,
-  decodeSignTransactionOutput,
-} from './pageRpc/decodeRpcResponse';
+  decodeSignTransactionOutput
+} from "./decodeRpcResponse";
 
 function isValidOrigin(event: any) {
   return event.source === window && event.origin === window.location.origin;
@@ -48,12 +38,12 @@ export default class SafariPageRequestClient {
   } = {};
 
   constructor() {
-    window.addEventListener('message', this.#handleResponse.bind(this));
+    window.addEventListener("message", this.#handleResponse.bind(this));
   }
 
   // Handles wallet responses from content script.
   #handleResponse(event: any) {
-    console.log('Page Request Client received response:');
+    console.log("Page Request Client received response:");
     console.log(event);
     if (!isValidOrigin(event)) return;
 
@@ -63,7 +53,7 @@ export default class SafariPageRequestClient {
     const resolver = this.#resolveHandler[id];
 
     if (!resolver) {
-      console.error('unexpected event', event);
+      console.error("unexpected event", event);
       return;
     }
 
@@ -72,10 +62,10 @@ export default class SafariPageRequestClient {
     delete this.#resolveHandler[id];
 
     if (error) {
-      console.log('In error');
+      console.log("In error");
       reject(new Error(error));
     } else {
-      console.log('In resolve');
+      console.log("In resolve");
       resolve(result);
     }
   }
@@ -85,7 +75,7 @@ export default class SafariPageRequestClient {
   ): Promise<StandardConnectOutput> {
     const rpcResponse = await this.sendRpcRequest({
       method: WalletRequestMethod.SOLANA_CONNECT,
-      params: input,
+      params: input
     });
 
     return decodeConnectOutput(rpcResponse);
@@ -96,7 +86,7 @@ export default class SafariPageRequestClient {
   ): Promise<SolanaSignMessageOutput> {
     const rpcResponse = await this.sendRpcRequest({
       method: WalletRequestMethod.SOLANA_SIGN_MESSAGE,
-      params: input,
+      params: input
     });
 
     return decodeSignMessageOutput(rpcResponse);
@@ -107,7 +97,7 @@ export default class SafariPageRequestClient {
   ): Promise<SolanaSignAndSendTransactionOutput> {
     const rpcResponse = await this.sendRpcRequest({
       method: WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION,
-      params: input,
+      params: input
     });
 
     return decodeSignAndSendTransactionOutput(rpcResponse);
@@ -118,7 +108,7 @@ export default class SafariPageRequestClient {
   ): Promise<SolanaSignTransactionOutput> {
     const rpcResponse = await this.sendRpcRequest({
       method: WalletRequestMethod.SOLANA_SIGN_TRANSACTION,
-      params: input,
+      params: input
     });
 
     return decodeSignTransactionOutput(rpcResponse);
@@ -129,18 +119,18 @@ export default class SafariPageRequestClient {
       const id = v4();
       this.#resolveHandler[id] = {
         resolve,
-        reject,
+        reject
       };
       const encodedParams = encodeWalletRpcParams(method, params);
-      console.log('encodedParams: ');
+      console.log("encodedParams: ");
       console.log(encodedParams);
       window.postMessage({
         type: PAGE_WALLET_REQUEST_CHANNEL,
         detail: {
           id,
           method,
-          params: encodeWalletRpcParams(method, params),
-        },
+          params: encodeWalletRpcParams(method, params)
+        }
       });
     });
   }

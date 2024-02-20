@@ -1,36 +1,18 @@
 import React from "react";
 import {
-  ConnectRequest,
-  ConnectResponseEncoded,
+  StandardConnectOutputEncoded,
   WalletAccountEncoded
 } from "../types/messageTypes";
 
 import WalletDisplay from "./WalletDisplay";
 import ApprovalHeader from "./ApprovalHeader";
 import ApprovalFooter from "./ApprovalFooter";
-import {
-  nativeConnect,
-  requestNativeConnect
-} from "../nativeRequests/requestNativeConnect";
-import {
-  RpcRequestQueueItem,
-  WalletEvent,
-  WalletRpcRequestWithId
-} from "./ApprovalScreen";
-import {
-  Base58EncodedAddress,
-  PAGE_WALLET_REQUEST_CHANNEL,
-  PAGE_WALLET_RESPONSE_CHANNEL,
-  RpcResponse,
-  StandardConnectOutputEncoded,
-  WalletRequestMethod
-} from "safari-extension-walletlib";
-import {
-  StandardConnectInput,
-  StandardConnectOutput
-} from "@wallet-standard/features";
+import { RpcRequestQueueItem } from "./ApprovalScreen";
 import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
 import { fromUint8Array } from "js-base64";
+import { Base58EncodedAddress } from "safari-extension-walletlib";
+import { PAGE_WALLET_RESPONSE_CHANNEL } from "../pageRpc/constants";
+import { RpcResponse } from "../pageRpc/requests";
 
 type Props = Readonly<{
   request: RpcRequestQueueItem;

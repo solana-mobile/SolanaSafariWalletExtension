@@ -1,5 +1,4 @@
 import React from "react";
-import { requestNativeConnect } from "../nativeRequests/requestNativeConnect";
 import { WalletRequestMethod } from "../types/messageTypes";
 import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
 import { toUint8Array } from "js-base64";
@@ -35,17 +34,6 @@ export default function App() {
     console.log(response);
   };
 
-  const simulateNativeConnectRequest = async () => {
-    const response = await requestNativeConnect({
-      input: {},
-      method: WalletRequestMethod.SOLANA_CONNECT,
-      type: "native-request",
-      requestId: "testConnectRequestId"
-    });
-
-    console.log(response);
-  };
-
   const simulateNativeSignMessageRequest = () => {};
 
   const simulateNativeSignTransactionRequest = () => {};
@@ -59,16 +47,10 @@ export default function App() {
         <button onClick={simulateGetAccountsRequest}>
           Simulate Get Accounts Request
         </button>
-        <button onClick={simulateNativeConnectRequest}>
-          Simulate Native Connect Request
-        </button>
         <button onClick={simulateNativeSignMessageRequest}>
           Simulate Native Sign Message Request
         </button>
         <button onClick={simulateNativeSignTransactionRequest}>
-          Simulate Native Sign Transaction Request
-        </button>
-        <button onClick={simulateDecode}>
           Simulate Native Sign Transaction Request
         </button>
       </div>

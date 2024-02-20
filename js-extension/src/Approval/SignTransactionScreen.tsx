@@ -1,32 +1,21 @@
 import React from "react";
 import {
-  SignTransactionRequestEncoded,
-  SignTransactionResponseEncoded,
-  SolanaSignMessageInputEncoded,
-  SolanaSignMessageOutputEncoded,
   SolanaSignTransactionInputEncoded,
   SolanaSignTransactionOutputEncoded
 } from "../types/messageTypes";
-import getDummyKeypair from "../util/getDummyKeypair";
-import bs58 from "bs58";
-import { PublicKey, Transaction, VersionedTransaction } from "@solana/web3.js";
+import { PublicKey, Transaction } from "@solana/web3.js";
 import { Separator } from "@/components/ui/separator";
 import ApprovalFooter from "./ApprovalFooter";
 import ApprovalHeader from "./ApprovalHeader";
 import WalletDisplay from "./WalletDisplay";
-import { Download, SendHorizontal } from "lucide-react";
-import signVersionedTransaction from "../util/signVersionedTransaction";
 import useDummyKeypair from "./useDummyKeypair";
-import { requestNativeSignTransaction } from "../nativeRequests/requestNativeSignTransaction";
 import { toUint8Array, fromUint8Array } from "js-base64";
-import {
-  RpcResponse,
-  Base58EncodedAddress,
-  PAGE_WALLET_RESPONSE_CHANNEL
-} from "safari-extension-walletlib";
+import { Base58EncodedAddress } from "safari-extension-walletlib";
 import { nativeSignPayload } from "../nativeRequests/nativeSignPayloads";
 import { RpcRequestQueueItem } from "./ApprovalScreen";
 import { Buffer } from "buffer";
+import { RpcResponse } from "../pageRpc/requests";
+import { PAGE_WALLET_RESPONSE_CHANNEL } from "../pageRpc/constants";
 
 type Props = Readonly<{
   request: RpcRequestQueueItem;
@@ -51,11 +40,6 @@ export default function SignTransactionScreen({
     const encodedWalletAccount = (
       request.rpcRequest.params as SolanaSignTransactionInputEncoded
     ).account;
-
-    console.log("SIGN TX");
-    console.log(encodedWalletAccount.publicKey); // HvL...
-    console.log(toUint8Array(encodedWalletAccount.publicKey));
-    console.log(bs58.encode(toUint8Array(encodedWalletAccount.publicKey))); // should be HvL
 
     const requestedPubkey = new PublicKey(
       toUint8Array(encodedWalletAccount.publicKey)

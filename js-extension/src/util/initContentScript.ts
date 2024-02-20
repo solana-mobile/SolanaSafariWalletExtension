@@ -1,7 +1,7 @@
 import {
   PAGE_WALLET_REQUEST_CHANNEL,
-  PAGE_WALLET_RESPONSE_CHANNEL,
-} from './constants';
+  PAGE_WALLET_RESPONSE_CHANNEL
+} from "../pageRpc/constants";
 
 function forwardToBackgroundScript(message: any) {
   browser.runtime.sendMessage(message);
@@ -17,10 +17,11 @@ function isValidOrigin(event: MessageEvent<any>) {
 
 export function initContentScript() {
   // Forwards page requests to the background script
-  window.addEventListener('message', async event => {
+  window.addEventListener("message", async (event) => {
+    console.log("Forwarding event to background: ");
     if (isValidOrigin(event) && event.data) {
       if (event.data.type === PAGE_WALLET_REQUEST_CHANNEL) {
-        console.log('Forwarding event to background: ');
+        console.log("Forwarding event to background: ");
         console.log(event);
         forwardToBackgroundScript(event.data);
       }
@@ -30,11 +31,13 @@ export function initContentScript() {
   // Forwards responses from background/approval to page
   browser.runtime.onMessage.addListener(
     async (message, _sender, _sendResponse) => {
+      console.log("Content Received bg/approval message: ");
+      console.log(message);
       if (message.type === PAGE_WALLET_RESPONSE_CHANNEL) {
-        console.log('Forwarding message to page script: ');
+        console.log("Forwarding message to page script: ");
         console.log(message);
         forwardToPageScript({
-          ...message,
+          ...message
         });
       }
     }

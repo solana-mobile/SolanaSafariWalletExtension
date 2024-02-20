@@ -7,13 +7,13 @@
  * https://developer.chrome.com/docs/extensions/mv2/content_scripts/
  */
 
-import { initContentScript } from "safari-extension-walletlib";
 import {
   BaseWalletRequestEncoded,
   BaseWalletResponseEncoded,
   WalletRequestEvent,
   WalletResponseEvent
 } from "./types/messageTypes";
+import { initContentScript } from "./util/initContentScript";
 
 export const injectProvider = () => {
   try {

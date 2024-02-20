@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  SignMessageRequestEncoded,
-  SignMessageResponseEncoded,
   SolanaSignMessageInputEncoded,
   SolanaSignMessageOutputEncoded
 } from "../types/messageTypes";
@@ -10,16 +8,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import WalletDisplay from "./WalletDisplay";
 import ApprovalHeader from "./ApprovalHeader";
 import ApprovalFooter from "./ApprovalFooter";
-import { requestNativeSignMessage } from "../nativeRequests/requestNativeSignMessage";
 import { RpcRequestQueueItem } from "./ApprovalScreen";
-import {
-  Base58EncodedAddress,
-  PAGE_WALLET_RESPONSE_CHANNEL,
-  RpcResponse
-} from "safari-extension-walletlib";
 import { nativeSignPayload } from "../nativeRequests/nativeSignPayloads";
 import { fromUint8Array, toUint8Array } from "js-base64";
 import { PublicKey } from "@solana/web3.js";
+import { RpcResponse } from "../pageRpc/requests";
+import { Base58EncodedAddress } from "safari-extension-walletlib";
+import { PAGE_WALLET_RESPONSE_CHANNEL } from "../pageRpc/constants";
 
 type Props = Readonly<{
   request: RpcRequestQueueItem;

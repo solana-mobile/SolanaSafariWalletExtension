@@ -1,27 +1,15 @@
 import React, { useEffect, useState } from "react";
-import {
-  WalletRequestMethod,
-  ConnectRequest,
-  BaseWalletRequestEncoded,
-  BaseWalletResponseEncoded,
-  SignTransactionRequestEncoded,
-  SignMessageRequestEncoded,
-  SignAndSendTransactionRequestEncoded
-} from "../types/messageTypes";
+import { WalletRequestMethod } from "../types/messageTypes";
 import ConnectScreen from "./ConnectScreen";
 import SignMessageScreen from "./SignMessageScreen";
 import SignTransactionScreen from "./SignTransactionScreen";
 import SignAndSendTransactionScreen from "./SignAndSendTransactionScreen";
 import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
 import {
-  RpcResponse,
-  WalletRpcRequest
-} from "safari-extension-walletlib/lib/pageRpc/requests";
-import {
-  Base58EncodedAddress,
   PAGE_WALLET_REQUEST_CHANNEL,
   PAGE_WALLET_RESPONSE_CHANNEL
-} from "safari-extension-walletlib";
+} from "../pageRpc/constants";
+import { RpcResponse, WalletRpcRequest } from "../pageRpc/requests";
 
 function getRequestScreenComponent(
   request: RpcRequestQueueItem,
@@ -60,7 +48,7 @@ function getRequestScreenComponent(
     case WalletRequestMethod.SOLANA_SIGN_TRANSACTION:
       return (
         <SignTransactionScreen
-          request={request as SignTransactionRequestEncoded}
+          request={request}
           onComplete={onComplete}
           selectedAccount={selectedAccount}
         />
@@ -83,6 +71,7 @@ export type WalletEvent = {
     type: string;
   };
 };
+export type Base58EncodedAddress = string;
 
 function isValidRpcMethod(method: string): boolean {
   return Object.values(WalletRequestMethod).includes(
