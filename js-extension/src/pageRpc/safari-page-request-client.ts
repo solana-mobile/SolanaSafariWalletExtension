@@ -70,6 +70,13 @@ export default class SafariPageRequestClient {
     }
   }
 
+  async popupRequest() {
+    const rpcResponse = await this.sendRpcRequest({
+      method: WalletRequestMethod.POPUP,
+      params: {}
+    });
+  }
+
   async sendConnectRequest(
     input: StandardConnectInput
   ): Promise<StandardConnectOutput> {

@@ -6,13 +6,13 @@ import {
   SolanaSignMessageOutput,
   SolanaSignTransactionInput,
   SolanaSignTransactionOptions,
-  SolanaSignTransactionOutput,
-} from '@solana/wallet-standard-features';
-import { IdentifierString, WalletAccount } from '@wallet-standard/base';
+  SolanaSignTransactionOutput
+} from "@solana/wallet-standard-features";
+import { IdentifierString, WalletAccount } from "@wallet-standard/base";
 import {
   StandardConnectInput,
-  StandardConnectOutput,
-} from '@wallet-standard/features';
+  StandardConnectOutput
+} from "@wallet-standard/features";
 
 export type WalletRpcRequest = {
   method: WalletRequestMethod;
@@ -26,10 +26,11 @@ export type RpcResponse<T = WalletRequestOutputEncoded> = {
 };
 
 export enum WalletRequestMethod {
-  SOLANA_CONNECT = 'SOLANA_CONNECT',
-  SOLANA_SIGN_MESSAGE = 'SOLANA_SIGN_MESSAGE',
-  SOLANA_SIGN_TRANSACTION = 'SOLANA_SIGN_TRANSACTION',
-  SOLANA_SIGN_AND_SEND_TRANSACTION = 'SOLANA_SIGN_AND_SEND_TRANSACTION',
+  SOLANA_CONNECT = "SOLANA_CONNECT",
+  SOLANA_SIGN_MESSAGE = "SOLANA_SIGN_MESSAGE",
+  SOLANA_SIGN_TRANSACTION = "SOLANA_SIGN_TRANSACTION",
+  SOLANA_SIGN_AND_SEND_TRANSACTION = "SOLANA_SIGN_AND_SEND_TRANSACTION",
+  POPUP = "POPUP"
 }
 
 export type WalletRequestInput =
@@ -113,7 +114,7 @@ export interface ConnectResponseEncoded extends BaseWalletResponseEncoded {
   method: WalletRequestMethod.SOLANA_CONNECT;
 }
 
-export type WalletAccountEncoded = Omit<WalletAccount, 'publicKey'> & {
+export type WalletAccountEncoded = Omit<WalletAccount, "publicKey"> & {
   publicKey: string;
 };
 
@@ -158,7 +159,7 @@ export interface SignMessageResponse extends BaseWalletResponse {
 export interface SolanaSignMessageOutputEncoded {
   readonly signedMessage: string;
   readonly signature: string;
-  readonly signatureType?: 'ed25519';
+  readonly signatureType?: "ed25519";
 }
 
 /**

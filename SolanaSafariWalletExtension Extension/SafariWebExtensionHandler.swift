@@ -21,6 +21,8 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
             context.completeRpcRequestWith(errorMessage: "Unsupported method")
             return
         }
+
+        
         
         switch method {
         case GET_ACCOUNTS_REQUEST_METHOD:

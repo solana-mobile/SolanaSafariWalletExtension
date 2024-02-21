@@ -1,10 +1,10 @@
 import {
   SolanaSignMessageInput,
   SolanaSignTransactionInput,
-  SolanaSignAndSendTransactionInput,
-} from '@solana/wallet-standard-features';
-import { fromUint8Array } from 'js-base64';
-import { StandardConnectInput } from '@wallet-standard/features';
+  SolanaSignAndSendTransactionInput
+} from "@solana/wallet-standard-features";
+import { fromUint8Array } from "js-base64";
+import { StandardConnectInput } from "@wallet-standard/features";
 import {
   SolanaSignAndSendTransactionInputEncoded,
   SolanaSignMessageInputEncoded,
@@ -13,14 +13,14 @@ import {
   WalletRequestInput,
   WalletRequestInputEncoded,
   WalletRequestMethod,
-  WalletRpcRequest,
-} from './requests';
-import { WalletAccount } from '@wallet-standard/base';
+  WalletRpcRequest
+} from "./requests";
+import { WalletAccount } from "@wallet-standard/base";
 
 export function encodeWalletRpcRequest(request: WalletRpcRequest): any {
   return {
     ...request,
-    params: encodeWalletRpcParams(request.method, request.params),
+    params: encodeWalletRpcParams(request.method, request.params)
   };
 }
 
@@ -39,6 +39,8 @@ export function encodeWalletRpcParams(
       return encodeSignAndSendTransactionInput(
         input as SolanaSignAndSendTransactionInput
       );
+    case WalletRequestMethod.POPUP:
+      return input as StandardConnectInput;
     default:
       throw new Error(`Unsupported method: ${method}`);
   }
@@ -49,7 +51,7 @@ function encodeSignMessageInput(
 ): SolanaSignMessageInputEncoded {
   return {
     account: encodeWalletAccount(input.account),
-    message: fromUint8Array(input.message), // Changed to Base64 encoding
+    message: fromUint8Array(input.message) // Changed to Base64 encoding
   };
 }
 
@@ -60,7 +62,7 @@ function encodeSignTransactionInput(
     account: encodeWalletAccount(input.account),
     transaction: fromUint8Array(input.transaction), // Changed to Base64 encoding
     chain: input.chain,
-    options: input.options,
+    options: input.options
   };
 }
 
@@ -71,7 +73,7 @@ function encodeSignAndSendTransactionInput(
   return {
     ...encodeSignTransactionInput(input),
     chain: input.chain,
-    options: input.options,
+    options: input.options
   };
 }
 
@@ -82,6 +84,6 @@ function encodeWalletAccount(account: WalletAccount): WalletAccountEncoded {
     chains: account.chains,
     features: account.features,
     label: account.label,
-    icon: account.icon,
+    icon: account.icon
   };
 }

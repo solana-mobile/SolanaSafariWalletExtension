@@ -14,4 +14,3 @@ public struct SignPayloadsResult: Encodable {
 }
 
 public let SIGN_PAYLOADS_REQUEST_METHOD = "NATIVE_SIGN_PAYLOADS_METHOD"
-

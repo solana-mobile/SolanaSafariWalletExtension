@@ -27,15 +27,63 @@ async function initializeApprovalTab(): Promise<browser.tabs.Tab> {
 
     browser.tabs.onUpdated.addListener(onApproveTabReady);
 
-    browser.tabs
-      .create({
-        url: browser.runtime.getURL("approval.html")
+    browser.action
+      .setPopup({ popup: browser.runtime.getURL("approval.html") })
+      .then(() => {
+        browser.action.openPopup();
       })
-      .catch((error) => {
-        browser.tabs.onUpdated.removeListener(onApproveTabReady);
-        reject(error);
+      .then(() => {
+        browser.action.setPopup({
+          popup: browser.runtime.getURL("popup.html")
+        });
       });
   });
+}
+
+async function initializeApprovalPopup() {
+  return new Promise<boolean>(async (resolve, reject) => {
+    const onApprovalReady = (
+      message: any,
+      sender: browser.runtime.MessageSender,
+      _sendResponse: any
+    ) => {
+      console.log("BG: approval listener received message");
+      console.log(message);
+      console.log(sender);
+      if (message === "approval-ready") {
+        console.log("Message received, resolving true");
+        browser.runtime.onMessage.removeListener(onApprovalReady);
+        resolve(true);
+      }
+    };
+
+    console.log("BG: initializing approval listener");
+    browser.runtime.onMessage.addListener(onApprovalReady);
+
+    await browser.action.setPopup({
+      popup: browser.runtime.getURL("approval.html")
+    });
+    await browser.action.openPopup();
+    await browser.action.setPopup({
+      popup: browser.runtime.getURL("popup.html")
+    });
+  });
+}
+
+async function isApprovalReady(): Promise<boolean> {
+  // Send message to see if approval is ready
+  return (await browser.runtime.sendMessage("is-approval-ready")) === true;
+}
+
+async function forwardWalletRequestToApprovalPopup(request: {
+  rpcRequest: any;
+  origin: browser.runtime.MessageSender;
+}) {
+  const alreadyActive = await isApprovalReady();
+  if (!alreadyActive) {
+    await initializeApprovalPopup();
+  }
+  browser.runtime.sendMessage(request);
 }
 
 async function forwardWalletRequestToApproval(request: {
@@ -65,7 +113,11 @@ export function initializeBackgroundScript() {
         // Attach sender identity metadata before forwarding
         console.log("Forwarding request to approval");
         console.log(message);
-        forwardWalletRequestToApproval({
+        // forwardWalletRequestToApproval({
+        //   rpcRequest: message,
+        //   origin: sender
+        // });
+        forwardWalletRequestToApprovalPopup({
           rpcRequest: message,
           origin: sender
         });

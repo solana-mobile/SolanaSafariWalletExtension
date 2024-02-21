@@ -80,8 +80,8 @@ function isValidRpcMethod(method: string): boolean {
 }
 
 export default function ApprovalScreen() {
-  const [requestQueue, setRequestQueue] = useState<Array<RpcRequestQueueItem>>(
-    []
+  const [request, setRequest] = useState<RpcRequestQueueItem | undefined>(
+    undefined
   );
   const [selectedAccount, setSelectedAccount] =
     useState<Base58EncodedAddress | null>(null);
@@ -101,14 +101,11 @@ export default function ApprovalScreen() {
         isValidRpcMethod(event.rpcRequest.detail.method)
       ) {
         // Add the new RPC Request to the queue
-        setRequestQueue((prevQueue) => [
-          ...prevQueue,
-          {
-            origin: event.origin,
-            rpcRequest: event.rpcRequest.detail,
-            responseChannel: PAGE_WALLET_RESPONSE_CHANNEL
-          }
-        ]);
+        setRequest({
+          origin: event.origin,
+          rpcRequest: event.rpcRequest.detail,
+          responseChannel: PAGE_WALLET_RESPONSE_CHANNEL
+        });
       }
     }
 
@@ -116,7 +113,7 @@ export default function ApprovalScreen() {
     browser.runtime.onMessage.addListener(handleWalletRequest);
 
     // Signal approval listener is ready
-    browser.runtime.sendMessage("tab-ready");
+    browser.runtime.sendMessage("approval-ready");
 
     // Clean up the listener when the component is unmounted
     return () => {
@@ -146,18 +143,16 @@ export default function ApprovalScreen() {
       .sendMessage(originTabId, { type: responseChannel, detail: response })
       // Switches active tab back to the dApp (originTab)
       .then(() => browser.tabs.update(originTabId, { active: true }))
-      // Closes the Approval UI tab
-      .then(() => window.close());
+      // Closes the popup
+      .then(() => {
+        window.close();
+      });
   };
 
   return (
     <div className="p-6">
-      {requestQueue.length > 0
-        ? getRequestScreenComponent(
-            requestQueue[0],
-            onRequestComplete,
-            selectedAccount
-          )
+      {request
+        ? getRequestScreenComponent(request, onRequestComplete, selectedAccount)
         : null}
     </div>
   );
