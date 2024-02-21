@@ -15,6 +15,7 @@ import { PublicKey } from "@solana/web3.js";
 import { RpcResponse } from "../pageRpc/requests";
 import { Base58EncodedAddress } from "safari-extension-walletlib";
 import { PAGE_WALLET_RESPONSE_CHANNEL } from "../pageRpc/constants";
+import base58 from "bs58";
 
 type Props = Readonly<{
   request: RpcRequestQueueItem;
@@ -42,8 +43,12 @@ export default function SignMessageScreen({
     const message = (request.rpcRequest.params as SolanaSignMessageInputEncoded)
       .message;
 
+    const base58PubKey = base58.encode(
+      toUint8Array(requestedAccount.publicKey)
+    );
+
     const signature = await nativeSignPayload(
-      new PublicKey(requestedAccount.publicKey),
+      new PublicKey(base58PubKey),
       toUint8Array(message)
     );
 
@@ -117,7 +122,8 @@ export default function SignMessageScreen({
               {
                 id: request.rpcRequest.id,
                 error: {
-                  value: "An error occured during signing message."
+                  value:
+                    "An error occured during signing message: " + error.message
                 }
               },
               request.origin.tab!.id!,
