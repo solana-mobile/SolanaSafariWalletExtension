@@ -1,0 +1,6 @@
+framework module Pods_SolanaSafariWalletExtension_SolanaSafariWalletExtensionUITests {
+  umbrella header "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

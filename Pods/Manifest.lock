@@ -1,0 +1,16 @@
+PODS:
+  - SafariExtensionWalletlibSwift (0.1.0)
+
+DEPENDENCIES:
+  - SafariExtensionWalletlibSwift (from `./SafariExtensionWalletlibSwift`)
+
+EXTERNAL SOURCES:
+  SafariExtensionWalletlibSwift:
+    :path: "./SafariExtensionWalletlibSwift"
+
+SPEC CHECKSUMS:
+  SafariExtensionWalletlibSwift: 842a0e2df7dd423b7bf9a3a34f61889fff0b22ff
+
+PODFILE CHECKSUM: 077068de04b62d2de024fbb68563e019b9761b98
+
+COCOAPODS: 1.12.0

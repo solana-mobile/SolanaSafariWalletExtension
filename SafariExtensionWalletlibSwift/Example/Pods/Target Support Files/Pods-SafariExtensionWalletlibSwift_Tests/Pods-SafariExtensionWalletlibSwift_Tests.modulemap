@@ -1,0 +1,6 @@
+framework module Pods_SafariExtensionWalletlibSwift_Tests {
+  umbrella header "Pods-SafariExtensionWalletlibSwift_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

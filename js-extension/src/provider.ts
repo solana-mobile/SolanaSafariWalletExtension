@@ -32,14 +32,10 @@ import {
   StandardEventsNames,
   StandardEventsOnMethod
 } from "@wallet-standard/features";
-import getKeypairForAccount from "./util/getKeypairForAccount";
 import { SolanaChain, isSolanaChain } from "./wallet/solana";
-import { Transaction } from "@solana/web3.js";
-import signAllTransactions from "./util/signAllTransactions";
-import MessageClient from "./wallet/message-client";
-import { WalletRequestMethod } from "./types/messageTypes";
 import { SafariExtensionDemoWalletAccount } from "./wallet/account";
 import { icon } from "./wallet/icon";
+import SafariPageRequestClient from "./pageRpc/safari-page-request-client";
 let wallet: SafariExtensionDemoWallet;
 let registered = false;
 
@@ -64,8 +60,8 @@ export function register(): boolean {
 
 /** @internal */
 class SafariExtensionDemoWallet implements Wallet {
-  // Custom State
-  readonly #messageClient: MessageClient;
+  // Custom Request Manager
+  readonly #extensionRequestClient: SafariPageRequestClient;
 
   // Wallet Standard
   readonly #name = "Safari Web Extension Wallet";
@@ -145,7 +141,7 @@ class SafariExtensionDemoWallet implements Wallet {
   }
 
   constructor() {
-    this.#messageClient = new MessageClient();
+    this.#extensionRequestClient = new SafariPageRequestClient();
     if (new.target === SafariExtensionDemoWallet) {
       Object.freeze(this);
     }
@@ -198,19 +194,12 @@ class SafariExtensionDemoWallet implements Wallet {
   };
 
   #standardConnect: StandardConnectMethod = async (input) => {
+    console.log("In connect");
     if (!this.#accounts.length || !input?.silent) {
-      const response = await this.#messageClient.sendWalletRequest({
-        type: "page-wallet-request",
-        requestId: Math.random().toString(36),
-        method: WalletRequestMethod.SOLANA_CONNECT,
-        input: input ?? { silent: false }
-      });
+      const connectResponse =
+        await this.#extensionRequestClient.sendConnectRequest(input ?? {});
 
-      if (response?.error) {
-        throw new Error(response.error.value);
-      }
-
-      this.#connected(response.output.accounts);
+      this.#connected(connectResponse.accounts);
     }
     return { accounts: this.accounts };
   };
@@ -238,18 +227,23 @@ class SafariExtensionDemoWallet implements Wallet {
 
       if (!isSolanaChain(chain)) throw new Error("invalid chain");
 
-      const response = await this.#messageClient.sendWalletRequest({
-        type: "page-wallet-request",
-        requestId: Math.random().toString(36),
-        method: WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION,
-        input: inputs[0]
-      });
+      // const response = await this.#messageClient.sendWalletRequest({
+      //   type: "page-wallet-request",
+      //   requestId: Math.random().toString(36),
+      //   method: WalletRequestMethod.SOLANA_SIGN_AND_SEND_TRANSACTION,
+      //   input: inputs[0]
+      // });
 
-      if (response?.error) {
-        throw new Error(response.error.value);
-      }
+      // if (response?.error) {
+      //   throw new Error(response.error.value);
+      // }
 
-      outputs.push(response.output);
+      const signAndSendResponse =
+        await this.#extensionRequestClient.sendSignAndSendTransactionRequest(
+          inputs[0]
+        );
+
+      outputs.push(signAndSendResponse);
     } else if (inputs.length > 1) {
       for (const input of inputs) {
         outputs.push(...(await this.#solanaSignAndSendTransaction(input)));
@@ -278,18 +272,21 @@ class SafariExtensionDemoWallet implements Wallet {
         throw new Error("invalid account");
       }
 
-      const response = await this.#messageClient.sendWalletRequest({
-        type: "page-wallet-request",
-        requestId: Math.random().toString(36),
-        method: WalletRequestMethod.SOLANA_SIGN_MESSAGE,
-        input: inputs[0]
-      });
+      // const response = await this.#messageClient.sendWalletRequest({
+      //   type: "page-wallet-request",
+      //   requestId: Math.random().toString(36),
+      //   method: WalletRequestMethod.SOLANA_SIGN_MESSAGE,
+      //   input: inputs[0]
+      // });
 
-      if (response?.error) {
-        throw new Error(response.error.value);
-      }
+      // if (response?.error) {
+      //   throw new Error(response.error.value);
+      // }
 
-      outputs.push(response.output);
+      const signMessageResponse =
+        await this.#extensionRequestClient.sendSignMessageRequest(inputs[0]);
+
+      outputs.push(signMessageResponse);
     } else if (inputs.length > 1) {
       for (const input of inputs) {
         outputs.push(...(await this.#solanaSignMessage(input)));
@@ -314,18 +311,12 @@ class SafariExtensionDemoWallet implements Wallet {
 
       if (chain && !isSolanaChain(chain)) throw new Error("invalid chain");
 
-      const response = await this.#messageClient.sendWalletRequest({
-        type: "page-wallet-request",
-        requestId: Math.random().toString(36),
-        method: WalletRequestMethod.SOLANA_SIGN_TRANSACTION,
-        input: inputs[0]
-      });
+      const signTransactionResponse =
+        await this.#extensionRequestClient.sendSignTransactionRequest(
+          inputs[0]
+        );
 
-      if (response?.error) {
-        throw new Error(response.error.value);
-      }
-
-      outputs.push(response.output);
+      outputs.push(signTransactionResponse);
     } else if (inputs.length > 1) {
       let chain: SolanaChain | undefined = undefined;
       for (const input of inputs) {

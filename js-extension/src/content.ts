@@ -13,6 +13,7 @@ import {
   WalletRequestEvent,
   WalletResponseEvent
 } from "./types/messageTypes";
+import { initContentScript } from "./util/initContentScript";
 
 export const injectProvider = () => {
   try {
@@ -39,19 +40,20 @@ function forwardToPageScript(response: BaseWalletResponseEncoded) {
   window.dispatchEvent(new WalletResponseEvent(response));
 }
 
-window.addEventListener("page-wallet-request", async (event) => {
-  console.log("Content Script Received: ", event);
-  const walletRequest = (event as WalletRequestEvent).detail;
-  forwardToBackgroundScript(walletRequest);
-});
+// window.addEventListener("page-wallet-request", async (event) => {
+//   console.log("Content Script Received: ", event);
+//   const walletRequest = (event as WalletRequestEvent).detail;
+//   forwardToBackgroundScript(walletRequest);
+// });
 
-browser.runtime.onMessage.addListener(
-  async (message, _sender, _sendResponse) => {
-    console.log("Content Script Runtime Listener: ", message);
-    if (message.type === "wallet-response") {
-      forwardToPageScript(message);
-    }
-  }
-);
+// browser.runtime.onMessage.addListener(
+//   async (message, _sender, _sendResponse) => {
+//     console.log("Content Script Runtime Listener: ", message);
+//     if (message.type === "wallet-response") {
+//       forwardToPageScript(message);
+//     }
+//   }
+// );
 
+initContentScript();
 injectProvider();

@@ -1,7 +1,8 @@
-import React from "react";
-import { requestNativeConnect } from "../nativeRequests/requestNativeConnect";
+import React, { useEffect } from "react";
 import { WalletRequestMethod } from "../types/messageTypes";
-import { requestNativeGetAccounts } from "../nativeRequests/requestNativeGetAccounts";
+import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
+import { toUint8Array } from "js-base64";
+import base58 from "bs58";
 
 export default function App() {
   const popupContainer = {
@@ -17,55 +18,41 @@ export default function App() {
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" // some shadow for the floating effect
   };
 
-  const fetchKeypair = () => {
-    browser.runtime.sendNativeMessage(
-      "id",
-      "fetch-keypair",
-      function (response: any) {
-        console.log("Received sendNativeMessage response:");
-        console.log(response);
+  useEffect(() => {
+    browser.runtime.onMessage.addListener(
+      async (message, sender: browser.runtime.MessageSender, _sendResponse) => {
+        console.log("Popup message received ");
+        console.log(message);
+        console.log(sender);
       }
     );
-  };
+  }, []);
 
   const simulateGetAccountsRequest = async () => {
-    const response = await requestNativeGetAccounts();
+    const response = await nativeGetAccounts();
     console.log(response);
   };
 
-  const simulateNativeConnectRequest = async () => {
-    const response = await requestNativeConnect({
-      input: {},
-      method: WalletRequestMethod.SOLANA_CONNECT,
-      type: "native-request",
-      requestId: "testConnectRequestId"
-    });
-
-    console.log(response);
+  const simulatePrintWindow = async () => {
+    console.log(window);
+    const views = await browser.extension.getViews({});
+    console.log(views);
   };
 
-  const simulateNativeSignMessageRequest = () => {};
-
-  const simulateNativeSignTransactionRequest = () => {};
+  const simulateWindowClose = () => {
+    window.close();
+  };
 
   return (
     <div style={popupContainer}>
       <div style={contentStyle}>
         <h1>Solana Safari Extension Wallet Pop Up</h1>
         <p>This Popup UI is currently used for a debugging tool</p>
-        <button onClick={fetchKeypair}>Fetch Keypair</button>
         <button onClick={simulateGetAccountsRequest}>
           Simulate Get Accounts Request
         </button>
-        <button onClick={simulateNativeConnectRequest}>
-          Simulate Native Connect Request
-        </button>
-        <button onClick={simulateNativeSignMessageRequest}>
-          Simulate Native Sign Message Request
-        </button>
-        <button onClick={simulateNativeSignTransactionRequest}>
-          Simulate Native Sign Transaction Request
-        </button>
+        <button onClick={simulatePrintWindow}>Simulate Print Window</button>
+        <button onClick={simulateWindowClose}>Close</button>
       </div>
     </div>
   );

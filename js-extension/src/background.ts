@@ -1,13 +1,8 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Script that makes up the extension's background page.
-*/
 // Send a message from the Safari Web Extension to the containing app extension.
 // Listens to messages from "content"
 
 import { BaseWalletRequest } from "./types/messageTypes";
+import { initializeBackgroundScript } from "./util/initBackgroundScript";
 
 async function initializeApprovalTab(): Promise<browser.tabs.Tab> {
   return new Promise<browser.tabs.Tab>((resolve, reject) => {
@@ -58,14 +53,17 @@ async function forwardWalletRequestToApproval(request: BaseWalletRequest) {
   }
 }
 
-browser.runtime.onMessage.addListener(
-  async (request, sender: browser.runtime.MessageSender, _sendResponse) => {
-    if (request.type === "wallet-approval-request") {
-      // Attach sender identity metadata before forwarding
-      forwardWalletRequestToApproval({
-        ...request,
-        origin: sender
-      } as BaseWalletRequest);
-    }
-  }
-);
+// browser.runtime.onMessage.addListener(
+//   async (request, sender: browser.runtime.MessageSender, _sendResponse) => {
+//     console.log("Background Script Received: " + request);
+//     if (request.type === "wallet-approval-request") {
+//       // Attach sender identity metadata before forwarding
+//       forwardWalletRequestToApproval({
+//         ...request,
+//         origin: sender
+//       } as BaseWalletRequest);
+//     }
+//   }
+// );
+
+initializeBackgroundScript();
