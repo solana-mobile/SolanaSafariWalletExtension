@@ -1,2 +1,2 @@
 ${PODS_ROOT}/Target Support Files/Pods-SolanaSafariWalletExtension/Pods-SolanaSafariWalletExtension-frameworks.sh
-${BUILT_PRODUCTS_DIR}/SafariExtensionWalletlibSwift/SafariExtensionWalletlibSwift.framework
+${BUILT_PRODUCTS_DIR}/safari-extension-walletlib-swift/SafariExtensionWalletlibSwift.framework

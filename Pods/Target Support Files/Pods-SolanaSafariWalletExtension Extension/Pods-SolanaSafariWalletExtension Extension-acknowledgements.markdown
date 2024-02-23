@@ -1,7 +1,7 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
-## SafariExtensionWalletlibSwift
+## safari-extension-walletlib-swift
 
 Copyright (c) 2024 michaelsulistio <michaelsulistio@gmail.com>
 

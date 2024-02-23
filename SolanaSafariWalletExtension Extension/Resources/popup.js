@@ -7104,7 +7104,7 @@
     }
   });
 
-  // ../safari-extension-walletlib/lib/nativeRpc/sendNativeRpcRequest.js
+  // ../../../sms/safari-extension-walletlib/safari-extension-walletlib-js/lib/nativeRpc/sendNativeRpcRequest.js
   var require_sendNativeRpcRequest = __commonJS((exports) => {
     "use strict";
     var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
@@ -7153,7 +7153,7 @@
     exports.sendNativeRpcRequest = sendNativeRpcRequest;
   });
 
-  // ../safari-extension-walletlib/lib/nativeRpc/nativeGetAccounts.js
+  // ../../../sms/safari-extension-walletlib/safari-extension-walletlib-js/lib/nativeRpc/nativeGetAccounts.js
   var require_nativeGetAccounts = __commonJS((exports) => {
     "use strict";
     var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
@@ -7214,7 +7214,7 @@
     exports.sendNativeGetAccountsRequest = sendNativeGetAccountsRequest2;
   });
 
-  // ../safari-extension-walletlib/lib/nativeRpc/nativeSignPayloads.js
+  // ../../../sms/safari-extension-walletlib/safari-extension-walletlib-js/lib/nativeRpc/nativeSignPayloads.js
   var require_nativeSignPayloads = __commonJS((exports) => {
     "use strict";
     var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
@@ -7277,13 +7277,13 @@
     exports.sendNativeSignPayloadsRequest = sendNativeSignPayloadsRequest;
   });
 
-  // ../safari-extension-walletlib/lib/nativeRpc/types.js
+  // ../../../sms/safari-extension-walletlib/safari-extension-walletlib-js/lib/nativeRpc/types.js
   var require_types = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {value: true});
   });
 
-  // ../safari-extension-walletlib/lib/index.js
+  // ../../../sms/safari-extension-walletlib/safari-extension-walletlib-js/lib/index.js
   var require_lib = __commonJS((exports) => {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
@@ -9145,8 +9145,11 @@
         throw new Error(`Expected boolean, not ${b}`);
     }
     exports.bool = bool;
+    function isBytes(a) {
+      return a instanceof Uint8Array || a != null && typeof a === "object" && a.constructor.name === "Uint8Array";
+    }
     function bytes(b, ...lengths) {
-      if (!(b instanceof Uint8Array))
+      if (!isBytes(b))
         throw new Error("Expected Uint8Array");
       if (lengths.length > 0 && !lengths.includes(b.length))
         throw new Error(`Expected Uint8Array of length ${lengths}, not of length=${b.length}`);
@@ -9193,11 +9196,13 @@
     Object.defineProperty(exports, "__esModule", {value: true});
     exports.randomBytes = exports.wrapXOFConstructorWithOpts = exports.wrapConstructorWithOpts = exports.wrapConstructor = exports.checkOpts = exports.Hash = exports.concatBytes = exports.toBytes = exports.utf8ToBytes = exports.asyncLoop = exports.nextTick = exports.hexToBytes = exports.bytesToHex = exports.isLE = exports.rotr = exports.createView = exports.u32 = exports.u8 = void 0;
     var crypto_1 = require_crypto();
-    var u8a = (a) => a instanceof Uint8Array;
     var u82 = (arr) => new Uint8Array(arr.buffer, arr.byteOffset, arr.byteLength);
     exports.u8 = u82;
     var u322 = (arr) => new Uint32Array(arr.buffer, arr.byteOffset, Math.floor(arr.byteLength / 4));
     exports.u32 = u322;
+    function isBytes(a) {
+      return a instanceof Uint8Array || a != null && typeof a === "object" && a.constructor.name === "Uint8Array";
+    }
     var createView = (arr) => new DataView(arr.buffer, arr.byteOffset, arr.byteLength);
     exports.createView = createView;
     var rotr = (word, shift) => word << 32 - shift | word >>> shift;
@@ -9207,7 +9212,7 @@
       throw new Error("Non little-endian hardware is not supported");
     var hexes = /* @__PURE__ */ Array.from({length: 256}, (_, i) => i.toString(16).padStart(2, "0"));
     function bytesToHex(bytes) {
-      if (!u8a(bytes))
+      if (!isBytes(bytes))
         throw new Error("Uint8Array expected");
       let hex = "";
       for (let i = 0; i < bytes.length; i++) {
@@ -9216,20 +9221,32 @@
       return hex;
     }
     exports.bytesToHex = bytesToHex;
+    var asciis = {_0: 48, _9: 57, _A: 65, _F: 70, _a: 97, _f: 102};
+    function asciiToBase16(char) {
+      if (char >= asciis._0 && char <= asciis._9)
+        return char - asciis._0;
+      if (char >= asciis._A && char <= asciis._F)
+        return char - (asciis._A - 10);
+      if (char >= asciis._a && char <= asciis._f)
+        return char - (asciis._a - 10);
+      return;
+    }
     function hexToBytes(hex) {
       if (typeof hex !== "string")
         throw new Error("hex string expected, got " + typeof hex);
-      const len = hex.length;
-      if (len % 2)
-        throw new Error("padded hex string expected, got unpadded hex of length " + len);
-      const array2 = new Uint8Array(len / 2);
-      for (let i = 0; i < array2.length; i++) {
-        const j = i * 2;
-        const hexByte = hex.slice(j, j + 2);
-        const byte = Number.parseInt(hexByte, 16);
-        if (Number.isNaN(byte) || byte < 0)
-          throw new Error("Invalid byte sequence");
-        array2[i] = byte;
+      const hl = hex.length;
+      const al = hl / 2;
+      if (hl % 2)
+        throw new Error("padded hex string expected, got unpadded hex of length " + hl);
+      const array2 = new Uint8Array(al);
+      for (let ai = 0, hi = 0; ai < al; ai++, hi += 2) {
+        const n1 = asciiToBase16(hex.charCodeAt(hi));
+        const n2 = asciiToBase16(hex.charCodeAt(hi + 1));
+        if (n1 === void 0 || n2 === void 0) {
+          const char = hex[hi] + hex[hi + 1];
+          throw new Error('hex string expected, got non-hex character "' + char + '" at index ' + hi);
+        }
+        array2[ai] = n1 * 16 + n2;
       }
       return array2;
     }
@@ -9258,21 +9275,26 @@
     function toBytes(data) {
       if (typeof data === "string")
         data = utf8ToBytes(data);
-      if (!u8a(data))
+      if (!isBytes(data))
         throw new Error(`expected Uint8Array, got ${typeof data}`);
       return data;
     }
     exports.toBytes = toBytes;
     function concatBytes(...arrays) {
-      const r = new Uint8Array(arrays.reduce((sum, a) => sum + a.length, 0));
-      let pad = 0;
-      arrays.forEach((a) => {
-        if (!u8a(a))
+      let sum = 0;
+      for (let i = 0; i < arrays.length; i++) {
+        const a = arrays[i];
+        if (!isBytes(a))
           throw new Error("Uint8Array expected");
-        r.set(a, pad);
+        sum += a.length;
+      }
+      const res = new Uint8Array(sum);
+      for (let i = 0, pad = 0; i < arrays.length; i++) {
+        const a = arrays[i];
+        res.set(a, pad);
         pad += a.length;
-      });
-      return r;
+      }
+      return res;
     }
     exports.concatBytes = concatBytes;
     var Hash = class {
@@ -9805,15 +9827,18 @@
   var require_utils2 = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {value: true});
-    exports.validateObject = exports.createHmacDrbg = exports.bitMask = exports.bitSet = exports.bitGet = exports.bitLen = exports.utf8ToBytes = exports.equalBytes = exports.concatBytes = exports.ensureBytes = exports.numberToVarBytesBE = exports.numberToBytesLE = exports.numberToBytesBE = exports.bytesToNumberLE = exports.bytesToNumberBE = exports.hexToBytes = exports.hexToNumber = exports.numberToHexUnpadded = exports.bytesToHex = void 0;
+    exports.validateObject = exports.createHmacDrbg = exports.bitMask = exports.bitSet = exports.bitGet = exports.bitLen = exports.utf8ToBytes = exports.equalBytes = exports.concatBytes = exports.ensureBytes = exports.numberToVarBytesBE = exports.numberToBytesLE = exports.numberToBytesBE = exports.bytesToNumberLE = exports.bytesToNumberBE = exports.hexToBytes = exports.hexToNumber = exports.numberToHexUnpadded = exports.bytesToHex = exports.isBytes = void 0;
     /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
     var _0n = BigInt(0);
     var _1n = BigInt(1);
     var _2n = BigInt(2);
-    var u8a = (a) => a instanceof Uint8Array;
+    function isBytes(a) {
+      return a instanceof Uint8Array || a != null && typeof a === "object" && a.constructor.name === "Uint8Array";
+    }
+    exports.isBytes = isBytes;
     var hexes = /* @__PURE__ */ Array.from({length: 256}, (_, i) => i.toString(16).padStart(2, "0"));
     function bytesToHex(bytes) {
-      if (!u8a(bytes))
+      if (!isBytes(bytes))
         throw new Error("Uint8Array expected");
       let hex = "";
       for (let i = 0; i < bytes.length; i++) {
@@ -9833,20 +9858,32 @@
       return BigInt(hex === "" ? "0" : `0x${hex}`);
     }
     exports.hexToNumber = hexToNumber;
+    var asciis = {_0: 48, _9: 57, _A: 65, _F: 70, _a: 97, _f: 102};
+    function asciiToBase16(char) {
+      if (char >= asciis._0 && char <= asciis._9)
+        return char - asciis._0;
+      if (char >= asciis._A && char <= asciis._F)
+        return char - (asciis._A - 10);
+      if (char >= asciis._a && char <= asciis._f)
+        return char - (asciis._a - 10);
+      return;
+    }
     function hexToBytes(hex) {
       if (typeof hex !== "string")
         throw new Error("hex string expected, got " + typeof hex);
-      const len = hex.length;
-      if (len % 2)
-        throw new Error("padded hex string expected, got unpadded hex of length " + len);
-      const array2 = new Uint8Array(len / 2);
-      for (let i = 0; i < array2.length; i++) {
-        const j = i * 2;
-        const hexByte = hex.slice(j, j + 2);
-        const byte = Number.parseInt(hexByte, 16);
-        if (Number.isNaN(byte) || byte < 0)
-          throw new Error("Invalid byte sequence");
-        array2[i] = byte;
+      const hl = hex.length;
+      const al = hl / 2;
+      if (hl % 2)
+        throw new Error("padded hex string expected, got unpadded hex of length " + hl);
+      const array2 = new Uint8Array(al);
+      for (let ai = 0, hi = 0; ai < al; ai++, hi += 2) {
+        const n1 = asciiToBase16(hex.charCodeAt(hi));
+        const n2 = asciiToBase16(hex.charCodeAt(hi + 1));
+        if (n1 === void 0 || n2 === void 0) {
+          const char = hex[hi] + hex[hi + 1];
+          throw new Error('hex string expected, got non-hex character "' + char + '" at index ' + hi);
+        }
+        array2[ai] = n1 * 16 + n2;
       }
       return array2;
     }
@@ -9856,7 +9893,7 @@
     }
     exports.bytesToNumberBE = bytesToNumberBE;
     function bytesToNumberLE(bytes) {
-      if (!u8a(bytes))
+      if (!isBytes(bytes))
         throw new Error("Uint8Array expected");
       return hexToNumber(bytesToHex(Uint8Array.from(bytes).reverse()));
     }
@@ -9881,7 +9918,7 @@
         } catch (e) {
           throw new Error(`${title} must be valid hex string, got "${hex}". Cause: ${e}`);
         }
-      } else if (u8a(hex)) {
+      } else if (isBytes(hex)) {
         res = Uint8Array.from(hex);
       } else {
         throw new Error(`${title} must be hex string or Uint8Array`);
@@ -9893,24 +9930,30 @@
     }
     exports.ensureBytes = ensureBytes;
     function concatBytes(...arrays) {
-      const r = new Uint8Array(arrays.reduce((sum, a) => sum + a.length, 0));
-      let pad = 0;
-      arrays.forEach((a) => {
-        if (!u8a(a))
+      let sum = 0;
+      for (let i = 0; i < arrays.length; i++) {
+        const a = arrays[i];
+        if (!isBytes(a))
           throw new Error("Uint8Array expected");
-        r.set(a, pad);
+        sum += a.length;
+      }
+      let res = new Uint8Array(sum);
+      let pad = 0;
+      for (let i = 0; i < arrays.length; i++) {
+        const a = arrays[i];
+        res.set(a, pad);
         pad += a.length;
-      });
-      return r;
+      }
+      return res;
     }
     exports.concatBytes = concatBytes;
-    function equalBytes(b1, b2) {
-      if (b1.length !== b2.length)
+    function equalBytes(a, b) {
+      if (a.length !== b.length)
         return false;
-      for (let i = 0; i < b1.length; i++)
-        if (b1[i] !== b2[i])
-          return false;
-      return true;
+      let diff = 0;
+      for (let i = 0; i < a.length; i++)
+        diff |= a[i] ^ b[i];
+      return diff === 0;
     }
     exports.equalBytes = equalBytes;
     function utf8ToBytes(str) {
@@ -9992,7 +10035,7 @@
       function: (val) => typeof val === "function",
       boolean: (val) => typeof val === "boolean",
       string: (val) => typeof val === "string",
-      stringOrUint8Array: (val) => typeof val === "string" || val instanceof Uint8Array,
+      stringOrUint8Array: (val) => typeof val === "string" || isBytes(val),
       isSafeInteger: (val) => Number.isSafeInteger(val),
       array: (val) => Array.isArray(val),
       field: (val, object) => object.Fp.isValid(val),
@@ -10905,14 +10948,15 @@
       }
       function decodeUCoordinate(uEnc) {
         const u = (0, utils_js_1.ensureBytes)("u coordinate", uEnc, montgomeryBytes);
-        if (fieldLen === montgomeryBytes)
-          u[fieldLen - 1] &= 127;
+        if (fieldLen === 32)
+          u[31] &= 127;
         return (0, utils_js_1.bytesToNumberLE)(u);
       }
       function decodeScalar(n) {
         const bytes = (0, utils_js_1.ensureBytes)("scalar", n);
-        if (bytes.length !== montgomeryBytes && bytes.length !== fieldLen)
-          throw new Error(`Expected ${montgomeryBytes} or ${fieldLen} bytes, got ${bytes.length}`);
+        const len = bytes.length;
+        if (len !== montgomeryBytes && len !== fieldLen)
+          throw new Error(`Expected ${montgomeryBytes} or ${fieldLen} bytes, got ${len}`);
         return (0, utils_js_1.bytesToNumberLE)(adjustScalarBytes(bytes));
       }
       function scalarMult(scalar, u) {
@@ -10947,7 +10991,7 @@
     var modular_js_1 = require_modular();
     var utils_js_1 = require_utils2();
     function validateDST(dst) {
-      if (dst instanceof Uint8Array)
+      if ((0, utils_js_1.isBytes)(dst))
         return dst;
       if (typeof dst === "string")
         return (0, utils_js_1.utf8ToBytes)(dst);
@@ -10972,8 +11016,8 @@
       }
       return arr;
     }
-    function isBytes(item) {
-      if (!(item instanceof Uint8Array))
+    function abytes(item) {
+      if (!(0, utils_js_1.isBytes)(item))
         throw new Error("Uint8Array expected");
     }
     function isNum(item) {
@@ -10981,8 +11025,8 @@
         throw new Error("number expected");
     }
     function expand_message_xmd(msg, DST, lenInBytes, H) {
-      isBytes(msg);
-      isBytes(DST);
+      abytes(msg);
+      abytes(DST);
       isNum(lenInBytes);
       if (DST.length > 255)
         DST = H((0, utils_js_1.concatBytes)((0, utils_js_1.utf8ToBytes)("H2C-OVERSIZE-DST-"), DST));
@@ -11005,8 +11049,8 @@
     }
     exports.expand_message_xmd = expand_message_xmd;
     function expand_message_xof(msg, DST, lenInBytes, k, H) {
-      isBytes(msg);
-      isBytes(DST);
+      abytes(msg);
+      abytes(DST);
       isNum(lenInBytes);
       if (DST.length > 255) {
         const dkLen = Math.ceil(2 * k / 8);
@@ -11026,7 +11070,7 @@
         hash: "hash"
       });
       const {p, k, m, hash, expand, DST: _DST} = options;
-      isBytes(msg);
+      abytes(msg);
       isNum(count);
       const DST = validateDST(_DST);
       const log2p = p.toString(2).length;
@@ -11424,6 +11468,12 @@
       }
       multiplyUnsafe(scalar) {
         return new RistPoint(this.ep.multiplyUnsafe(scalar));
+      }
+      double() {
+        return new RistPoint(this.ep.double());
+      }
+      negate() {
+        return new RistPoint(this.ep.negate());
       }
     };
     exports.RistrettoPoint = (() => {
@@ -18031,30 +18081,30 @@
   // node_modules/@babel/runtime/helpers/toPrimitive.js
   var require_toPrimitive = __commonJS((exports, module) => {
     var _typeof = require_typeof()["default"];
-    function _toPrimitive(input, hint) {
-      if (_typeof(input) !== "object" || input === null)
-        return input;
-      var prim = input[Symbol.toPrimitive];
-      if (prim !== void 0) {
-        var res = prim.call(input, hint || "default");
-        if (_typeof(res) !== "object")
-          return res;
+    function toPrimitive(t, r) {
+      if (_typeof(t) != "object" || !t)
+        return t;
+      var e = t[Symbol.toPrimitive];
+      if (e !== void 0) {
+        var i = e.call(t, r || "default");
+        if (_typeof(i) != "object")
+          return i;
         throw new TypeError("@@toPrimitive must return a primitive value.");
       }
-      return (hint === "string" ? String : Number)(input);
+      return (r === "string" ? String : Number)(t);
     }
-    module.exports = _toPrimitive, module.exports.__esModule = true, module.exports["default"] = module.exports;
+    module.exports = toPrimitive, module.exports.__esModule = true, module.exports["default"] = module.exports;
   });
 
   // node_modules/@babel/runtime/helpers/toPropertyKey.js
   var require_toPropertyKey = __commonJS((exports, module) => {
     var _typeof = require_typeof()["default"];
     var toPrimitive = require_toPrimitive();
-    function _toPropertyKey(arg) {
-      var key = toPrimitive(arg, "string");
-      return _typeof(key) === "symbol" ? key : String(key);
+    function toPropertyKey(t) {
+      var i = toPrimitive(t, "string");
+      return _typeof(i) == "symbol" ? i : String(i);
     }
-    module.exports = _toPropertyKey, module.exports.__esModule = true, module.exports["default"] = module.exports;
+    module.exports = toPropertyKey, module.exports.__esModule = true, module.exports["default"] = module.exports;
   });
 
   // node_modules/@babel/runtime/helpers/createClass.js
@@ -18335,6 +18385,47 @@
     }
   });
 
+  // node_modules/rpc-websockets/dist/lib/utils.js
+  var require_utils3 = __commonJS((exports) => {
+    "use strict";
+    var _interopRequireDefault = require_interopRequireDefault();
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.DefaultDataPack = void 0;
+    exports.createError = createError;
+    var _classCallCheck2 = _interopRequireDefault(require_classCallCheck());
+    var _createClass2 = _interopRequireDefault(require_createClass());
+    var errors = new Map([[-32e3, "Event not provided"], [-32600, "Invalid Request"], [-32601, "Method not found"], [-32602, "Invalid params"], [-32603, "Internal error"], [-32604, "Params not found"], [-32605, "Method forbidden"], [-32606, "Event forbidden"], [-32700, "Parse error"]]);
+    var DefaultDataPack = /* @__PURE__ */ function() {
+      function DefaultDataPack2() {
+        (0, _classCallCheck2["default"])(this, DefaultDataPack2);
+      }
+      (0, _createClass2["default"])(DefaultDataPack2, [{
+        key: "encode",
+        value: function encode(value) {
+          return JSON.stringify(value);
+        }
+      }, {
+        key: "decode",
+        value: function decode(value) {
+          return JSON.parse(value);
+        }
+      }]);
+      return DefaultDataPack2;
+    }();
+    exports.DefaultDataPack = DefaultDataPack;
+    function createError(code, details) {
+      var error = {
+        code,
+        message: errors.get(code) || "Internal Server Error"
+      };
+      if (details)
+        error["data"] = details;
+      return error;
+    }
+  });
+
   // node_modules/rpc-websockets/dist/lib/client.js
   var require_client = __commonJS((exports) => {
     "use strict";
@@ -18352,6 +18443,7 @@
     var _possibleConstructorReturn2 = _interopRequireDefault(require_possibleConstructorReturn());
     var _getPrototypeOf2 = _interopRequireDefault(require_getPrototypeOf());
     var _eventemitter = require_eventemitter3();
+    var _utils = require_utils3();
     function _createSuper(Derived) {
       var hasNativeReflectConstruct = _isNativeReflectConstruct();
       return function _createSuperInternal() {
@@ -18401,6 +18493,7 @@
         var address = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "ws://localhost:8080";
         var _a = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
         var generate_request_id = arguments.length > 3 ? arguments[3] : void 0;
+        var dataPack = arguments.length > 4 ? arguments[4] : void 0;
         (0, _classCallCheck2["default"])(this, CommonClient2);
         var _a$autoconnect = _a.autoconnect, autoconnect = _a$autoconnect === void 0 ? true : _a$autoconnect, _a$reconnect = _a.reconnect, reconnect = _a$reconnect === void 0 ? true : _a$reconnect, _a$reconnect_interval = _a.reconnect_interval, reconnect_interval = _a$reconnect_interval === void 0 ? 1e3 : _a$reconnect_interval, _a$max_reconnects = _a.max_reconnects, max_reconnects = _a$max_reconnects === void 0 ? 5 : _a$max_reconnects, rest_options = __rest2(_a, ["autoconnect", "reconnect", "reconnect_interval", "max_reconnects"]);
         _this = _super.call(this);
@@ -18419,6 +18512,10 @@
         _this.generate_request_id = generate_request_id || function() {
           return ++_this.rpc_id;
         };
+        if (!dataPack)
+          _this.dataPack = new _utils.DefaultDataPack();
+        else
+          _this.dataPack = dataPack;
         if (_this.autoconnect)
           _this._connect(_this.address, Object.assign({
             autoconnect: _this.autoconnect,
@@ -18455,10 +18552,10 @@
             var message = {
               jsonrpc: "2.0",
               method,
-              params: params || null,
+              params: params || void 0,
               id: rpc_id
             };
-            _this2.socket.send(JSON.stringify(message), ws_opts, function(error) {
+            _this2.socket.send(_this2.dataPack.encode(message), ws_opts, function(error) {
               if (error)
                 return reject(error);
               _this2.queue[rpc_id] = {
@@ -18539,9 +18636,9 @@
             var message = {
               jsonrpc: "2.0",
               method,
-              params: params || null
+              params
             };
-            _this3.socket.send(JSON.stringify(message), function(error) {
+            _this3.socket.send(_this3.dataPack.encode(message), function(error) {
               if (error)
                 return reject(error);
               resolve();
@@ -18637,7 +18734,7 @@
             if (message instanceof ArrayBuffer)
               message = Buffer.from(message).toString();
             try {
-              message = JSON.parse(message);
+              message = _this4.dataPack.decode(message);
             } catch (error) {
               return;
             }
@@ -18656,9 +18753,9 @@
               });
             }
             if (!_this4.queue[message.id]) {
-              if (message.method && message.params) {
+              if (message.method) {
                 return Promise.resolve().then(function() {
-                  _this4.emit(message.method, message.params);
+                  _this4.emit(message.method, message === null || message === void 0 ? void 0 : message.params);
                 });
               }
               return;
@@ -19040,7 +19137,7 @@
       toSig(hex) {
         const {Err: E} = exports.DER;
         const data = typeof hex === "string" ? h2b(hex) : hex;
-        if (!(data instanceof Uint8Array))
+        if (!ut.isBytes(data))
           throw new Error("ui8a expected");
         let l = data.length;
         if (l < 2 || data[0] != 48)
@@ -19104,7 +19201,7 @@
       function normPrivateKeyToScalar(key) {
         const {allowedPrivateKeyLengths: lengths, nByteLength, wrapPrivateKey, n} = CURVE;
         if (lengths && typeof key !== "bigint") {
-          if (key instanceof Uint8Array)
+          if (ut.isBytes(key))
             key = ut.bytesToHex(key);
           if (typeof key !== "string" || !lengths.includes(key.length))
             throw new Error("Invalid key");
@@ -19569,7 +19666,7 @@
         return Point.fromPrivateKey(privateKey).toRawBytes(isCompressed);
       }
       function isProbPub(item) {
-        const arr = item instanceof Uint8Array;
+        const arr = ut.isBytes(item);
         const str = typeof item === "string";
         const len = (arr || str) && item.length;
         if (arr)
@@ -19665,7 +19762,7 @@
         let _sig = void 0;
         let P;
         try {
-          if (typeof sg === "string" || sg instanceof Uint8Array) {
+          if (typeof sg === "string" || ut.isBytes(sg)) {
             try {
               _sig = Signature.fromDER(sg);
             } catch (derError) {
@@ -20139,10 +20236,9 @@
   var import_react = __toModule(require_react());
 
   // src/nativeRequests/nativeGetAccounts.ts
-  var import_safari_extension_walletlib = __toModule(require_lib());
+  var import_safari_extension_walletlib_js = __toModule(require_lib());
 
   // node_modules/js-base64/base64.mjs
-  var _hasatob = typeof atob === "function";
   var _hasBuffer = typeof Buffer === "function";
   var _TD = typeof TextDecoder === "function" ? new TextDecoder() : void 0;
   var _TE = typeof TextEncoder === "function" ? new TextEncoder() : void 0;
@@ -20169,7 +20265,7 @@
     }
     return bin;
   };
-  var _atob = _hasatob ? (asc) => atob(_tidyB64(asc)) : _hasBuffer ? (asc) => Buffer.from(asc, "base64").toString("binary") : atobPolyfill;
+  var _atob = typeof atob === "function" ? (asc) => atob(_tidyB64(asc)) : _hasBuffer ? (asc) => Buffer.from(asc, "base64").toString("binary") : atobPolyfill;
   var _toUint8Array = _hasBuffer ? (a) => _U8Afrom(Buffer.from(a, "base64")) : (a) => _U8Afrom(_atob(a).split("").map((c) => c.charCodeAt(0)));
   var toUint8Array = (a) => _toUint8Array(_unURI(a));
   var _unURI = (a) => _tidyB64(a.replace(/[-_]/g, (m0) => m0 == "-" ? "+" : "/"));
@@ -21559,25 +21655,27 @@
       }
       this.signatures[index].signature = import_buffer.Buffer.from(signature);
     }
-    verifySignatures(requireAllSignatures) {
-      return this._verifySignatures(this.serializeMessage(), requireAllSignatures === void 0 ? true : requireAllSignatures);
+    verifySignatures(requireAllSignatures = true) {
+      const signatureErrors = this._getMessageSignednessErrors(this.serializeMessage(), requireAllSignatures);
+      return !signatureErrors;
     }
-    _verifySignatures(signData, requireAllSignatures) {
+    _getMessageSignednessErrors(message, requireAllSignatures) {
+      const errors = {};
       for (const {
         signature,
         publicKey: publicKey2
       } of this.signatures) {
         if (signature === null) {
           if (requireAllSignatures) {
-            return false;
+            (errors.missing || (errors.missing = [])).push(publicKey2);
           }
         } else {
-          if (!verify(signature, signData, publicKey2.toBytes())) {
-            return false;
+          if (!verify(signature, message, publicKey2.toBytes())) {
+            (errors.invalid || (errors.invalid = [])).push(publicKey2);
           }
         }
       }
-      return true;
+      return errors.invalid || errors.missing ? errors : void 0;
     }
     serialize(config) {
       const {
@@ -21588,8 +21686,20 @@
         verifySignatures: true
       }, config);
       const signData = this.serializeMessage();
-      if (verifySignatures && !this._verifySignatures(signData, requireAllSignatures)) {
-        throw new Error("Signature verification failed");
+      if (verifySignatures) {
+        const sigErrors = this._getMessageSignednessErrors(signData, requireAllSignatures);
+        if (sigErrors) {
+          let errorMessage = "Signature verification failed.";
+          if (sigErrors.invalid) {
+            errorMessage += `
+Invalid signature for public key${sigErrors.invalid.length === 1 ? "" : "(s)"} [\`${sigErrors.invalid.map((p) => p.toBase58()).join("`, `")}\`].`;
+          }
+          if (sigErrors.missing) {
+            errorMessage += `
+Missing signature for public key${sigErrors.missing.length === 1 ? "" : "(s)"} [\`${sigErrors.missing.map((p) => p.toBase58()).join("`, `")}\`].`;
+          }
+          throw new Error(errorMessage);
+        }
       }
       return this._serialize(signData);
     }
@@ -22788,7 +22898,7 @@
   })));
   var GetTransactionRpcResult = jsonRpcResult(nullable(type({
     slot: number(),
-    meta: ConfirmedTransactionMetaResult,
+    meta: nullable(ConfirmedTransactionMetaResult),
     blockTime: optional(nullable(number())),
     transaction: ConfirmedTransactionResult,
     version: optional(TransactionVersionStruct)
@@ -23463,7 +23573,7 @@
       if (custodianPubkey) {
         keys.push({
           pubkey: custodianPubkey,
-          isSigner: false,
+          isSigner: true,
           isWritable: false
         });
       }
@@ -23506,7 +23616,7 @@
       if (custodianPubkey) {
         keys.push({
           pubkey: custodianPubkey,
-          isSigner: false,
+          isSigner: true,
           isWritable: false
         });
       }
@@ -23650,7 +23760,7 @@
       if (custodianPubkey) {
         keys.push({
           pubkey: custodianPubkey,
-          isSigner: false,
+          isSigner: true,
           isWritable: false
         });
       }
@@ -23903,7 +24013,7 @@
 
   // src/nativeRequests/nativeGetAccounts.ts
   async function nativeGetAccounts() {
-    const result = await (0, import_safari_extension_walletlib.sendNativeGetAccountsRequest)();
+    const result = await (0, import_safari_extension_walletlib_js.sendNativeGetAccountsRequest)();
     return result.addresses.map((bs64EncodedAddress) => {
       const bytes = toUint8Array(bs64EncodedAddress);
       return new PublicKey(bytes);

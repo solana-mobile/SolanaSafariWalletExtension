@@ -1,5 +1,5 @@
 framework module SafariExtensionWalletlibSwift {
-  umbrella header "SafariExtensionWalletlibSwift-umbrella.h"
+  umbrella header "safari-extension-walletlib-swift-umbrella.h"
 
   export *
   module * { export * }

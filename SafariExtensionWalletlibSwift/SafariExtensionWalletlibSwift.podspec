@@ -7,9 +7,9 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'SafariExtensionWalletlibSwift'
+  s.name             = 'safari-extension-walletlib-swift'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of SafariExtensionWalletlibSwift.'
+  s.summary          = 'A Swift SDK to receive and respond to Safari Extension Wallet JS messages.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,8 +18,9 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  SafariExtensionWalletlibSwift is a Swift library that is part of a dual SDK for Safari Extension Wallet communication.
+  It defines basic wallet RPC requests that a wallet might need, an extendable interface for defining add custom requests, and helper functions to parse and respond to these requests. 
+  DESC
 
   s.homepage         = 'https://github.com/michaelsulistio/SafariExtensionWalletlibSwift'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
