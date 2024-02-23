@@ -1,9 +1,5 @@
-import {
-  Base58EncodedAddress,
-  sendNativeGetAccountsRequest
-} from "safari-extension-walletlib";
+import { sendNativeGetAccountsRequest } from "@solana-mobile/safari-extension-walletlib-js";
 import { toUint8Array } from "js-base64";
-import base58 from "bs58";
 import { PublicKey } from "@solana/web3.js";
 
 export async function nativeGetAccounts(): Promise<PublicKey[]> {

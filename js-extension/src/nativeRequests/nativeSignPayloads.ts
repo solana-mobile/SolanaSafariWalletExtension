@@ -1,4 +1,4 @@
-import { sendNativeSignPayloadsRequest } from "safari-extension-walletlib";
+import { sendNativeSignPayloadsRequest } from "@solana-mobile/safari-extension-walletlib-js";
 import { fromUint8Array, toUint8Array } from "js-base64";
 import { PublicKey } from "@solana/web3.js";
 

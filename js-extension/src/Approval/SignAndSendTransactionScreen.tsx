@@ -1,18 +1,14 @@
 import React from "react";
 import {
-  SignAndSendTransactionRequestEncoded,
   SolanaSignTransactionInputEncoded,
   SolanaSignTransactionOutputEncoded
 } from "../types/messageTypes";
-import bs58 from "bs58";
-import { PublicKey, Transaction, VersionedTransaction } from "@solana/web3.js";
-import { SolanaChain, getClusterForChain } from "../wallet/solana";
-import useDummyKeypair from "./useDummyKeypair";
+import { PublicKey, Transaction } from "@solana/web3.js";
 import { Separator } from "@radix-ui/react-separator";
 import ApprovalFooter from "./ApprovalFooter";
 import ApprovalHeader from "./ApprovalHeader";
 import WalletDisplay from "./WalletDisplay";
-import { Base58EncodedAddress } from "safari-extension-walletlib";
+import { Base58EncodedAddress } from "@solana-mobile/safari-extension-walletlib-js";
 import { RpcRequestQueueItem } from "./ApprovalScreen";
 import { RpcResponse } from "../pageRpc/requests";
 import { toUint8Array, fromUint8Array } from "js-base64";

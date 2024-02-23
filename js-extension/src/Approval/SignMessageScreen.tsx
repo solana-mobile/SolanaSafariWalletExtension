@@ -13,7 +13,7 @@ import { nativeSignPayload } from "../nativeRequests/nativeSignPayloads";
 import { fromUint8Array, toUint8Array } from "js-base64";
 import { PublicKey } from "@solana/web3.js";
 import { RpcResponse } from "../pageRpc/requests";
-import { Base58EncodedAddress } from "safari-extension-walletlib";
+import { Base58EncodedAddress } from "@solana-mobile/safari-extension-walletlib-js";
 import { PAGE_WALLET_RESPONSE_CHANNEL } from "../pageRpc/constants";
 import base58 from "bs58";
 

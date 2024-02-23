@@ -10,7 +10,7 @@ import ApprovalFooter from "./ApprovalFooter";
 import { RpcRequestQueueItem } from "./ApprovalScreen";
 import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
 import { fromUint8Array } from "js-base64";
-import { Base58EncodedAddress } from "safari-extension-walletlib";
+import { Base58EncodedAddress } from "@solana-mobile/safari-extension-walletlib-js";
 import { PAGE_WALLET_RESPONSE_CHANNEL } from "../pageRpc/constants";
 import { RpcResponse } from "../pageRpc/requests";
 

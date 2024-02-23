@@ -1,6 +1,5 @@
 import React from "react";
 
-import { PublicKey } from "@solana/web3.js";
 import { Wallet as WalletIcon } from "lucide-react";
 
 type Props = Readonly<{

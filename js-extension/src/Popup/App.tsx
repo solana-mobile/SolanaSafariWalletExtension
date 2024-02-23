@@ -1,8 +1,5 @@
 import React, { useEffect } from "react";
-import { WalletRequestMethod } from "../types/messageTypes";
 import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
-import { toUint8Array } from "js-base64";
-import base58 from "bs58";
 
 export default function App() {
   const popupContainer = {
