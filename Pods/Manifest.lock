@@ -2,15 +2,15 @@ PODS:
   - safari-extension-walletlib-swift (0.1.0)
 
 DEPENDENCIES:
-  - safari-extension-walletlib-swift (from `../../sms/safari-extension-walletlib/safari-extension-walletlib-swift/`)
+  - safari-extension-walletlib-swift (~> 0.1)
 
-EXTERNAL SOURCES:
-  safari-extension-walletlib-swift:
-    :path: "../../sms/safari-extension-walletlib/safari-extension-walletlib-swift/"
+SPEC REPOS:
+  trunk:
+    - safari-extension-walletlib-swift
 
 SPEC CHECKSUMS:
-  safari-extension-walletlib-swift: 95aee9a2b54500b6cda9ee8796f337a204521358
+  safari-extension-walletlib-swift: 3fee72a4f064b2398be7d7749c4e635d2f83150e
 
-PODFILE CHECKSUM: 5efdbeaa274d757690c2356ade5b797b598b3bef
+PODFILE CHECKSUM: 958bc21a1401b0694b3b78adac0e5bdf3b202f38
 
 COCOAPODS: 1.12.0

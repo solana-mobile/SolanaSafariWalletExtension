@@ -7104,7 +7104,7 @@
     }
   });
 
-  // ../../../sms/safari-extension-walletlib/safari-extension-walletlib-js/lib/nativeRpc/sendNativeRpcRequest.js
+  // node_modules/@solana-mobile/safari-extension-walletlib-js/lib/nativeRpc/sendNativeRpcRequest.js
   var require_sendNativeRpcRequest = __commonJS((exports) => {
     "use strict";
     var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
@@ -7153,7 +7153,7 @@
     exports.sendNativeRpcRequest = sendNativeRpcRequest;
   });
 
-  // ../../../sms/safari-extension-walletlib/safari-extension-walletlib-js/lib/nativeRpc/nativeGetAccounts.js
+  // node_modules/@solana-mobile/safari-extension-walletlib-js/lib/nativeRpc/nativeGetAccounts.js
   var require_nativeGetAccounts = __commonJS((exports) => {
     "use strict";
     var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
@@ -7214,7 +7214,7 @@
     exports.sendNativeGetAccountsRequest = sendNativeGetAccountsRequest2;
   });
 
-  // ../../../sms/safari-extension-walletlib/safari-extension-walletlib-js/lib/nativeRpc/nativeSignPayloads.js
+  // node_modules/@solana-mobile/safari-extension-walletlib-js/lib/nativeRpc/nativeSignPayloads.js
   var require_nativeSignPayloads = __commonJS((exports) => {
     "use strict";
     var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
@@ -7277,13 +7277,13 @@
     exports.sendNativeSignPayloadsRequest = sendNativeSignPayloadsRequest;
   });
 
-  // ../../../sms/safari-extension-walletlib/safari-extension-walletlib-js/lib/nativeRpc/types.js
+  // node_modules/@solana-mobile/safari-extension-walletlib-js/lib/nativeRpc/types.js
   var require_types = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {value: true});
   });
 
-  // ../../../sms/safari-extension-walletlib/safari-extension-walletlib-js/lib/index.js
+  // node_modules/@solana-mobile/safari-extension-walletlib-js/lib/index.js
   var require_lib = __commonJS((exports) => {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {

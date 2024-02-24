@@ -21,8 +21,8 @@ end
 target 'SolanaSafariWalletExtension Extension' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  
   # Pods for SolanaSafariWalletExtension Extension
-  pod 'safari-extension-walletlib-swift', :path => '../../sms/safari-extension-walletlib/safari-extension-walletlib-swift/'
+  pod 'safari-extension-walletlib-swift', '~> 0.1'
 
 end
