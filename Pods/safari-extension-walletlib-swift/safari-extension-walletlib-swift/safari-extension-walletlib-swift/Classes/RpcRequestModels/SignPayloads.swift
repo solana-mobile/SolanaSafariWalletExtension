@@ -1,7 +1,6 @@
 public struct SignPayloadsParams: Decodable {
     public let address: String // Base64EncodedAddress
     public let payloads: [String] // Base64EncodedPayload
-    public let extra_data: [String: String]?
 }
 
 public struct SignPayloadsResult: Encodable {

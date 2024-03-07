@@ -7,59 +7,60 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F4696630831C8416F980583997E6575 /* safari-extension-walletlib-swift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 787C15C95A26CB67D602E7EFD309606E /* safari-extension-walletlib-swift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0058CB8A5B430BF6A8B021AE76A52F76 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494F9FF389139BB45828C330499DB9C8 /* Errors.swift */; };
+		01013CC2DA4A80AE7FF9F7CBB6FC635B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		365AE158E0A2AC1A622A67C38A6FCBC4 /* Pods-SolanaSafariWalletExtension Extension-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BFCDAC5C0197C8C0F89AC3319A729F8F /* Pods-SolanaSafariWalletExtension Extension-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		56F622CD54E3B0D46FE9FC447BBD7893 /* Pods-SolanaSafariWalletExtensionTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DF3AE690C459980D38282177105E61 /* Pods-SolanaSafariWalletExtensionTests-dummy.m */; };
-		5E1873653D9BDAA2F13D91D886B2A2B0 /* SignPayloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5486C62608255477D6D8604216CC88 /* SignPayloads.swift */; };
 		64AF3B29BFC4BA6484012BBE117E88C6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		689315CD19F8BCE3DA5AFD23389C0A35 /* Pods-SolanaSafariWalletExtensionTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE07DDCC1D273B45C9D062416122014 /* Pods-SolanaSafariWalletExtensionTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6BB931422B820F23DFCB51ADE5EE8195 /* Pods-SolanaSafariWalletExtension Extension-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE4299994F4FAC4B89BB6C9FC6CC91 /* Pods-SolanaSafariWalletExtension Extension-dummy.m */; };
+		6EE3850F48C67B233ED6BD2C5E050CB3 /* NSExtensionContext+RpcRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC02CE26EE4EBF1E9E6DF50AE2F78B7 /* NSExtensionContext+RpcRequest.swift */; };
 		7524F5E2F1DF7BAA685FB94FF0331A84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		7582C0CA189E52CF9E46EDEB7A1E473B /* Pods-SolanaSafariWalletExtension-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 46529511091088B04DB32559A53CBA37 /* Pods-SolanaSafariWalletExtension-dummy.m */; };
+		77EE9C82A74506F1ED8C4123BA9AE2A8 /* safari-extension-walletlib-swift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 631B74BFC19E458AD8D66C9EDDAB832B /* safari-extension-walletlib-swift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B0A7B90CA5CA3A4B506B89186C96FAD /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F02004AB29DD3D58BB46E4527E4F8A /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-dummy.m */; };
-		84948C59465D9AF9C0D21B746990C252 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		AD3EBF581AE15FF0EDE4AC9E9601D096 /* GetAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E3E17D869E34B9A386F850F46AFD71 /* GetAccounts.swift */; };
-		B2CC244D95FBC643B364C8BA7DDFABF4 /* safari-extension-walletlib-swift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EE78D5AA66462378BB258C606AB76035 /* safari-extension-walletlib-swift-dummy.m */; };
+		969169443828C9C841884BA9C9AD9483 /* safari-extension-walletlib-swift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B964A0DEC80F5326DC6B1BF965448A /* safari-extension-walletlib-swift-dummy.m */; };
 		BE9151772A676DE301402518A2220586 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C1652F131B55227D64EB4451286D731D /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CA6EB97920A18B6BCE9EC1C2E764E333 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		D3C19909BE5F69339BD8EF8EE59F6A15 /* NSExtensionContext+RpcRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09BE68C5F82ED15766605B41E99972C /* NSExtensionContext+RpcRequest.swift */; };
+		CD0EA2CB0AB0F603EB5DFF9F3317292E /* GetAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA94B52279947862E00F88784342FA37 /* GetAccounts.swift */; };
 		D4B5C5C16CCC83B801DBCF971E985545 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		F0BB309CD7757763E14064F752B00D4C /* SignPayloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7232EEA872035364DE7AC6B46C22BA /* SignPayloads.swift */; };
 		FA2E34DCC701D982BDE0C82EAF985FC4 /* Pods-SolanaSafariWalletExtension-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AB8E18C1A84CD4196B73517C620AAA /* Pods-SolanaSafariWalletExtension-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		856A6424C80BDA07B7D2F6A336127FEC /* PBXContainerItemProxy */ = {
+		505B6C447E1F1C385B05AA538679889B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03ECE306CB296377EDB3D2E78FF2E1EE;
+			remoteInfo = "safari-extension-walletlib-swift";
+		};
+		704F038ED0DB69637D70E8779AFE281C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03ECE306CB296377EDB3D2E78FF2E1EE;
+			remoteInfo = "safari-extension-walletlib-swift";
+		};
+		BAC0FD939647FD487932BCD9139D8E33 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8644C3C4E8B506942F2BB7A684CDD86B;
 			remoteInfo = "Pods-SolanaSafariWalletExtension";
 		};
-		BE0499710DB8BA9A81E58E5ED6F85664 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 03ECE306CB296377EDB3D2E78FF2E1EE;
-			remoteInfo = "safari-extension-walletlib-swift";
-		};
-		C212F4084E92D19965B17CE857E49B7D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 03ECE306CB296377EDB3D2E78FF2E1EE;
-			remoteInfo = "safari-extension-walletlib-swift";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00EFC2F62ED73A680E0BA31561E7FB8E /* safari-extension-walletlib-swift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "safari-extension-walletlib-swift-prefix.pch"; sourceTree = "<group>"; };
+		02D5A541BAC68B0CA7BB09FE00A17CE2 /* safari-extension-walletlib-swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "safari-extension-walletlib-swift.release.xcconfig"; sourceTree = "<group>"; };
 		02D86DF3B4F9262348619B68C71B86EF /* Pods-SolanaSafariWalletExtension.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SolanaSafariWalletExtension.modulemap"; sourceTree = "<group>"; };
 		03F02004AB29DD3D58BB46E4527E4F8A /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-dummy.m"; sourceTree = "<group>"; };
-		10E3E17D869E34B9A386F850F46AFD71 /* GetAccounts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GetAccounts.swift; path = "safari-extension-walletlib-swift/safari-extension-walletlib-swift/Classes/RpcRequestModels/GetAccounts.swift"; sourceTree = "<group>"; };
 		155C0354CC59C2956EA03AD0040C7D16 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-acknowledgements.plist"; sourceTree = "<group>"; };
 		1FA6BC79866F949972F420CF134AC0DA /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.release.xcconfig"; sourceTree = "<group>"; };
 		23CE7C3ACF34F72C43087D5536A127BC /* safari-extension-walletlib-swift */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "safari-extension-walletlib-swift"; path = SafariExtensionWalletlibSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		30C6842AA240BFAF96CEBA978A797A3B /* Pods-SolanaSafariWalletExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SolanaSafariWalletExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
-		32F11F25FD9CD9C7714AFF29647E779C /* safari-extension-walletlib-swift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "safari-extension-walletlib-swift-Info.plist"; sourceTree = "<group>"; };
 		33DF3AE690C459980D38282177105E61 /* Pods-SolanaSafariWalletExtensionTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SolanaSafariWalletExtensionTests-dummy.m"; sourceTree = "<group>"; };
 		34C22DF740B637ACE5FA70B38A4D4E8A /* Pods-SolanaSafariWalletExtension Extension-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SolanaSafariWalletExtension Extension-acknowledgements.markdown"; sourceTree = "<group>"; };
 		362E790673112A6AD6A48316AE76CA5F /* Pods-SolanaSafariWalletExtension Extension */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-SolanaSafariWalletExtension Extension"; path = Pods_SolanaSafariWalletExtension_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,8 +68,10 @@
 		3C77C5B44104D3ABA7CFBE8CF65DDFF9 /* Pods-SolanaSafariWalletExtensionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SolanaSafariWalletExtensionTests.release.xcconfig"; sourceTree = "<group>"; };
 		46529511091088B04DB32559A53CBA37 /* Pods-SolanaSafariWalletExtension-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SolanaSafariWalletExtension-dummy.m"; sourceTree = "<group>"; };
 		46AB8E18C1A84CD4196B73517C620AAA /* Pods-SolanaSafariWalletExtension-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SolanaSafariWalletExtension-umbrella.h"; sourceTree = "<group>"; };
+		494F9FF389139BB45828C330499DB9C8 /* Errors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Errors.swift; path = "safari-extension-walletlib-swift/safari-extension-walletlib-swift/Classes/Errors/Errors.swift"; sourceTree = "<group>"; };
 		4C30B6B1F47A640B07A19459F5478C11 /* Pods-SolanaSafariWalletExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SolanaSafariWalletExtension.release.xcconfig"; sourceTree = "<group>"; };
 		53362DA162DDF037B36D1015381CC32B /* Pods-SolanaSafariWalletExtension Extension-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SolanaSafariWalletExtension Extension-acknowledgements.plist"; sourceTree = "<group>"; };
+		631B74BFC19E458AD8D66C9EDDAB832B /* safari-extension-walletlib-swift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "safari-extension-walletlib-swift-umbrella.h"; sourceTree = "<group>"; };
 		694A168FD2323B130515BAA1713B7177 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-Info.plist"; sourceTree = "<group>"; };
 		69AE63432F1A732B777AC026CFE4C63A /* Pods-SolanaSafariWalletExtension Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SolanaSafariWalletExtension Extension.release.xcconfig"; sourceTree = "<group>"; };
 		6B56B044957CB189745C13EA236BA47A /* Pods-SolanaSafariWalletExtension Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SolanaSafariWalletExtension Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -76,30 +79,29 @@
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		75E4F0A40501D0A9E8C4713E27CFC61E /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		76B5EACD5E9221FC53A6920BDA364912 /* Pods-SolanaSafariWalletExtension Extension-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SolanaSafariWalletExtension Extension-Info.plist"; sourceTree = "<group>"; };
-		787C15C95A26CB67D602E7EFD309606E /* safari-extension-walletlib-swift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "safari-extension-walletlib-swift-umbrella.h"; sourceTree = "<group>"; };
 		7B502759365DE25BBFAFA58CA10D718A /* Pods-SolanaSafariWalletExtension-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SolanaSafariWalletExtension-Info.plist"; sourceTree = "<group>"; };
 		7C07619DD6C414A0B37BB5ACDBFC3E9A /* Pods-SolanaSafariWalletExtension-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SolanaSafariWalletExtension-acknowledgements.markdown"; sourceTree = "<group>"; };
 		7EA380D336AE000AA0FD26FE305ACC44 /* Pods-SolanaSafariWalletExtension Extension.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SolanaSafariWalletExtension Extension.modulemap"; sourceTree = "<group>"; };
 		8072C9C5A12777CB57D3CD67AF00D844 /* Pods-SolanaSafariWalletExtensionTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SolanaSafariWalletExtensionTests-Info.plist"; sourceTree = "<group>"; };
+		8B7232EEA872035364DE7AC6B46C22BA /* SignPayloads.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignPayloads.swift; path = "safari-extension-walletlib-swift/safari-extension-walletlib-swift/Classes/RpcRequestModels/SignPayloads.swift"; sourceTree = "<group>"; };
+		8FC02CE26EE4EBF1E9E6DF50AE2F78B7 /* NSExtensionContext+RpcRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSExtensionContext+RpcRequest.swift"; path = "safari-extension-walletlib-swift/safari-extension-walletlib-swift/Classes/Extensions/NSExtensionContext+RpcRequest.swift"; sourceTree = "<group>"; };
 		8FE07DDCC1D273B45C9D062416122014 /* Pods-SolanaSafariWalletExtensionTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SolanaSafariWalletExtensionTests-umbrella.h"; sourceTree = "<group>"; };
 		91AE4299994F4FAC4B89BB6C9FC6CC91 /* Pods-SolanaSafariWalletExtension Extension-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SolanaSafariWalletExtension Extension-dummy.m"; sourceTree = "<group>"; };
 		9282369F763D8EFFB10E660C3D1FCE9B /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests.modulemap"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A073453D74E0E5A78C425283A852959C /* safari-extension-walletlib-swift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "safari-extension-walletlib-swift-Info.plist"; sourceTree = "<group>"; };
 		ADE002F4933231EA9817A94B1E502182 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests"; path = Pods_SolanaSafariWalletExtension_SolanaSafariWalletExtensionUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AE4C71AED3DB4B1AE31EF185988A35C3 /* safari-extension-walletlib-swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "safari-extension-walletlib-swift.debug.xcconfig"; sourceTree = "<group>"; };
-		AF5486C62608255477D6D8604216CC88 /* SignPayloads.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignPayloads.swift; path = "safari-extension-walletlib-swift/safari-extension-walletlib-swift/Classes/RpcRequestModels/SignPayloads.swift"; sourceTree = "<group>"; };
+		B5E83C3C3987FFEAD2C90CA62DE7192A /* safari-extension-walletlib-swift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "safari-extension-walletlib-swift.modulemap"; sourceTree = "<group>"; };
 		BFCDAC5C0197C8C0F89AC3319A729F8F /* Pods-SolanaSafariWalletExtension Extension-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SolanaSafariWalletExtension Extension-umbrella.h"; sourceTree = "<group>"; };
 		C1652F131B55227D64EB4451286D731D /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-umbrella.h"; sourceTree = "<group>"; };
+		C2B964A0DEC80F5326DC6B1BF965448A /* safari-extension-walletlib-swift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "safari-extension-walletlib-swift-dummy.m"; sourceTree = "<group>"; };
 		C8CC3CCA5EF9005460577C505E1E3460 /* Pods-SolanaSafariWalletExtension-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SolanaSafariWalletExtension-acknowledgements.plist"; sourceTree = "<group>"; };
-		CDFA162DA78198802FD3CD37D51CB063 /* safari-extension-walletlib-swift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "safari-extension-walletlib-swift-prefix.pch"; sourceTree = "<group>"; };
+		D64632442EF3EA101EA79BCA33F04104 /* safari-extension-walletlib-swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "safari-extension-walletlib-swift.debug.xcconfig"; sourceTree = "<group>"; };
 		D6F650BEEB8B26193C353BDEF5526565 /* Pods-SolanaSafariWalletExtension-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SolanaSafariWalletExtension-frameworks.sh"; sourceTree = "<group>"; };
-		DD8D0FBDFE2C4A3232E4EF611B2BE517 /* safari-extension-walletlib-swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "safari-extension-walletlib-swift.release.xcconfig"; sourceTree = "<group>"; };
 		E0B7DB7AE64FAD0602CC859ADD882DE7 /* Pods-SolanaSafariWalletExtensionTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-SolanaSafariWalletExtensionTests"; path = Pods_SolanaSafariWalletExtensionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E644E249431051D7D71A06B1B670E376 /* Pods-SolanaSafariWalletExtensionTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SolanaSafariWalletExtensionTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		EE78D5AA66462378BB258C606AB76035 /* safari-extension-walletlib-swift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "safari-extension-walletlib-swift-dummy.m"; sourceTree = "<group>"; };
-		F09BE68C5F82ED15766605B41E99972C /* NSExtensionContext+RpcRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSExtensionContext+RpcRequest.swift"; path = "safari-extension-walletlib-swift/safari-extension-walletlib-swift/Classes/Extensions/NSExtensionContext+RpcRequest.swift"; sourceTree = "<group>"; };
+		EA94B52279947862E00F88784342FA37 /* GetAccounts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GetAccounts.swift; path = "safari-extension-walletlib-swift/safari-extension-walletlib-swift/Classes/RpcRequestModels/GetAccounts.swift"; sourceTree = "<group>"; };
 		F3C875234914D0A593CC0EEF5E4A0F8C /* Pods-SolanaSafariWalletExtension */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-SolanaSafariWalletExtension"; path = Pods_SolanaSafariWalletExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5A2C84CA719CD98B92D620C045BB8C2 /* safari-extension-walletlib-swift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "safari-extension-walletlib-swift.modulemap"; sourceTree = "<group>"; };
 		F6D43C96E88B6B91BD2F016F1FBD803E /* Pods-SolanaSafariWalletExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SolanaSafariWalletExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		FC3B12980AB29F5276090F06FF14E0D8 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,14 +112,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				64AF3B29BFC4BA6484012BBE117E88C6 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5CFE6366FFB2DFCFC1001A3957F9507E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				84948C59465D9AF9C0D21B746990C252 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +128,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4B5C5C16CCC83B801DBCF971E985545 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D60EF3E38C8498FD9262F8E388844FCA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01013CC2DA4A80AE7FF9F7CBB6FC635B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,27 +166,12 @@
 			path = "Target Support Files/Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests";
 			sourceTree = "<group>";
 		};
-		46A693D443D083905FA99BA1DFB9893B /* Pods */ = {
+		2690222C0C253EA34FFDCCE5F92CBD47 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				647D1CE30C3D99AF04A8C01DFBE3A38B /* safari-extension-walletlib-swift */,
+				FFD53400A344C8F98F7AC487717AA7E1 /* safari-extension-walletlib-swift */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		4FEBCCD5D473FD2453456987D7B1D81F /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				F5A2C84CA719CD98B92D620C045BB8C2 /* safari-extension-walletlib-swift.modulemap */,
-				EE78D5AA66462378BB258C606AB76035 /* safari-extension-walletlib-swift-dummy.m */,
-				32F11F25FD9CD9C7714AFF29647E779C /* safari-extension-walletlib-swift-Info.plist */,
-				CDFA162DA78198802FD3CD37D51CB063 /* safari-extension-walletlib-swift-prefix.pch */,
-				787C15C95A26CB67D602E7EFD309606E /* safari-extension-walletlib-swift-umbrella.h */,
-				AE4C71AED3DB4B1AE31EF185988A35C3 /* safari-extension-walletlib-swift.debug.xcconfig */,
-				DD8D0FBDFE2C4A3232E4EF611B2BE517 /* safari-extension-walletlib-swift.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/safari-extension-walletlib-swift";
 			sourceTree = "<group>";
 		};
 		578452D2E740E91742655AC8F1636D1F /* iOS */ = {
@@ -211,16 +198,19 @@
 			path = "Target Support Files/Pods-SolanaSafariWalletExtensionTests";
 			sourceTree = "<group>";
 		};
-		647D1CE30C3D99AF04A8C01DFBE3A38B /* safari-extension-walletlib-swift */ = {
+		5C780D2A6F50091852F56C0E0A6629EF /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				10E3E17D869E34B9A386F850F46AFD71 /* GetAccounts.swift */,
-				F09BE68C5F82ED15766605B41E99972C /* NSExtensionContext+RpcRequest.swift */,
-				AF5486C62608255477D6D8604216CC88 /* SignPayloads.swift */,
-				4FEBCCD5D473FD2453456987D7B1D81F /* Support Files */,
+				B5E83C3C3987FFEAD2C90CA62DE7192A /* safari-extension-walletlib-swift.modulemap */,
+				C2B964A0DEC80F5326DC6B1BF965448A /* safari-extension-walletlib-swift-dummy.m */,
+				A073453D74E0E5A78C425283A852959C /* safari-extension-walletlib-swift-Info.plist */,
+				00EFC2F62ED73A680E0BA31561E7FB8E /* safari-extension-walletlib-swift-prefix.pch */,
+				631B74BFC19E458AD8D66C9EDDAB832B /* safari-extension-walletlib-swift-umbrella.h */,
+				D64632442EF3EA101EA79BCA33F04104 /* safari-extension-walletlib-swift.debug.xcconfig */,
+				02D5A541BAC68B0CA7BB09FE00A17CE2 /* safari-extension-walletlib-swift.release.xcconfig */,
 			);
-			name = "safari-extension-walletlib-swift";
-			path = "safari-extension-walletlib-swift";
+			name = "Support Files";
+			path = "../Target Support Files/safari-extension-walletlib-swift";
 			sourceTree = "<group>";
 		};
 		907797DE88E803C3B8BA3E4BB735E249 /* Pods-SolanaSafariWalletExtension */ = {
@@ -284,7 +274,7 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
-				46A693D443D083905FA99BA1DFB9893B /* Pods */,
+				2690222C0C253EA34FFDCCE5F92CBD47 /* Pods */,
 				BD8DB691C17AD9B726FE3C73BC07F880 /* Products */,
 				B98FF22D37D80B3C16BC0258EAC60D52 /* Targets Support Files */,
 			);
@@ -298,22 +288,35 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FFD53400A344C8F98F7AC487717AA7E1 /* safari-extension-walletlib-swift */ = {
+			isa = PBXGroup;
+			children = (
+				494F9FF389139BB45828C330499DB9C8 /* Errors.swift */,
+				EA94B52279947862E00F88784342FA37 /* GetAccounts.swift */,
+				8FC02CE26EE4EBF1E9E6DF50AE2F78B7 /* NSExtensionContext+RpcRequest.swift */,
+				8B7232EEA872035364DE7AC6B46C22BA /* SignPayloads.swift */,
+				5C780D2A6F50091852F56C0E0A6629EF /* Support Files */,
+			);
+			name = "safari-extension-walletlib-swift";
+			path = "safari-extension-walletlib-swift";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		20F89BF17BA698704A2E7E68F25CA928 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77EE9C82A74506F1ED8C4123BA9AE2A8 /* safari-extension-walletlib-swift-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5518C3AA24D487E553A98524F52B18D4 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				BE9151772A676DE301402518A2220586 /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		58E807DB094D9A3D4B529B85E49A2C10 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1F4696630831C8416F980583997E6575 /* safari-extension-walletlib-swift-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,12 +349,12 @@
 /* Begin PBXNativeTarget section */
 		03ECE306CB296377EDB3D2E78FF2E1EE /* safari-extension-walletlib-swift */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2366D2C4EB64E98FB2029894E2321730 /* Build configuration list for PBXNativeTarget "safari-extension-walletlib-swift" */;
+			buildConfigurationList = 5EAA99352269F8D5F1A63D5DA70CC168 /* Build configuration list for PBXNativeTarget "safari-extension-walletlib-swift" */;
 			buildPhases = (
-				58E807DB094D9A3D4B529B85E49A2C10 /* Headers */,
-				A8BB2388E509FA4FDB985F9ADAA1CCF8 /* Sources */,
-				5CFE6366FFB2DFCFC1001A3957F9507E /* Frameworks */,
-				E89CF1F728E5A23E94CAEDD7412BEE7B /* Resources */,
+				20F89BF17BA698704A2E7E68F25CA928 /* Headers */,
+				573DEFF02FC81F3EFB0E419275EE4EA7 /* Sources */,
+				D60EF3E38C8498FD9262F8E388844FCA /* Frameworks */,
+				8DEC225457BA83E14BD6CD2B55A00F07 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -374,7 +377,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				D2D39140ED753A3419016BE8095C8B89 /* PBXTargetDependency */,
+				419FA71BEF5C122906A47AC63DF9C5F2 /* PBXTargetDependency */,
 			);
 			name = "Pods-SolanaSafariWalletExtensionTests";
 			productName = Pods_SolanaSafariWalletExtensionTests;
@@ -393,7 +396,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				15A39E8DD9D7B34D95018B62CAB5AC1C /* PBXTargetDependency */,
+				9914E7FF0569B720E1972CDCF2F0F2F5 /* PBXTargetDependency */,
 			);
 			name = "Pods-SolanaSafariWalletExtension Extension";
 			productName = Pods_SolanaSafariWalletExtension_Extension;
@@ -412,7 +415,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				81487825A35ACF12F665462DC3760A6B /* PBXTargetDependency */,
+				B279E8485323A9680CFD994A6776F9E3 /* PBXTargetDependency */,
 			);
 			name = "Pods-SolanaSafariWalletExtension";
 			productName = Pods_SolanaSafariWalletExtension;
@@ -490,14 +493,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		923949DDCED0D65DB5E6866F5C972749 /* Resources */ = {
+		8DEC225457BA83E14BD6CD2B55A00F07 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E89CF1F728E5A23E94CAEDD7412BEE7B /* Resources */ = {
+		923949DDCED0D65DB5E6866F5C972749 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -507,6 +510,18 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		573DEFF02FC81F3EFB0E419275EE4EA7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0058CB8A5B430BF6A8B021AE76A52F76 /* Errors.swift in Sources */,
+				CD0EA2CB0AB0F603EB5DFF9F3317292E /* GetAccounts.swift in Sources */,
+				6EE3850F48C67B233ED6BD2C5E050CB3 /* NSExtensionContext+RpcRequest.swift in Sources */,
+				969169443828C9C841884BA9C9AD9483 /* safari-extension-walletlib-swift-dummy.m in Sources */,
+				F0BB309CD7757763E14064F752B00D4C /* SignPayloads.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		699F72EF29F2FCC9FC25F3E8B6D3A76C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -520,17 +535,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B0A7B90CA5CA3A4B506B89186C96FAD /* Pods-SolanaSafariWalletExtension-SolanaSafariWalletExtensionUITests-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A8BB2388E509FA4FDB985F9ADAA1CCF8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AD3EBF581AE15FF0EDE4AC9E9601D096 /* GetAccounts.swift in Sources */,
-				D3C19909BE5F69339BD8EF8EE59F6A15 /* NSExtensionContext+RpcRequest.swift in Sources */,
-				B2CC244D95FBC643B364C8BA7DDFABF4 /* safari-extension-walletlib-swift-dummy.m in Sources */,
-				5E1873653D9BDAA2F13D91D886B2A2B0 /* SignPayloads.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,23 +557,23 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		15A39E8DD9D7B34D95018B62CAB5AC1C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "safari-extension-walletlib-swift";
-			target = 03ECE306CB296377EDB3D2E78FF2E1EE /* safari-extension-walletlib-swift */;
-			targetProxy = BE0499710DB8BA9A81E58E5ED6F85664 /* PBXContainerItemProxy */;
-		};
-		81487825A35ACF12F665462DC3760A6B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "safari-extension-walletlib-swift";
-			target = 03ECE306CB296377EDB3D2E78FF2E1EE /* safari-extension-walletlib-swift */;
-			targetProxy = C212F4084E92D19965B17CE857E49B7D /* PBXContainerItemProxy */;
-		};
-		D2D39140ED753A3419016BE8095C8B89 /* PBXTargetDependency */ = {
+		419FA71BEF5C122906A47AC63DF9C5F2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-SolanaSafariWalletExtension";
 			target = 8644C3C4E8B506942F2BB7A684CDD86B /* Pods-SolanaSafariWalletExtension */;
-			targetProxy = 856A6424C80BDA07B7D2F6A336127FEC /* PBXContainerItemProxy */;
+			targetProxy = BAC0FD939647FD487932BCD9139D8E33 /* PBXContainerItemProxy */;
+		};
+		9914E7FF0569B720E1972CDCF2F0F2F5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "safari-extension-walletlib-swift";
+			target = 03ECE306CB296377EDB3D2E78FF2E1EE /* safari-extension-walletlib-swift */;
+			targetProxy = 704F038ED0DB69637D70E8779AFE281C /* PBXContainerItemProxy */;
+		};
+		B279E8485323A9680CFD994A6776F9E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "safari-extension-walletlib-swift";
+			target = 03ECE306CB296377EDB3D2E78FF2E1EE /* safari-extension-walletlib-swift */;
+			targetProxy = 505B6C447E1F1C385B05AA538679889B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -610,42 +614,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		061F79ED7CAA79452995C2491F872C11 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD8D0FBDFE2C4A3232E4EF611B2BE517 /* safari-extension-walletlib-swift.release.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift.modulemap";
-				PRODUCT_MODULE_NAME = SafariExtensionWalletlibSwift;
-				PRODUCT_NAME = SafariExtensionWalletlibSwift;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
 		};
 		093D0081731AD66B8AC42FE6D015D950 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -722,41 +690,6 @@
 			};
 			name = Debug;
 		};
-		1463048FA10B1EC0DC8008F995F18A6F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = AE4C71AED3DB4B1AE31EF185988A35C3 /* safari-extension-walletlib-swift.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift.modulemap";
-				PRODUCT_MODULE_NAME = SafariExtensionWalletlibSwift;
-				PRODUCT_NAME = SafariExtensionWalletlibSwift;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		23D123AA5B75ECD159C253A94627970C /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C77C5B44104D3ABA7CFBE8CF65DDFF9 /* Pods-SolanaSafariWalletExtensionTests.release.xcconfig */;
@@ -788,6 +721,42 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		2F45F1C303D92605C2798CDB12DAB369 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 02D5A541BAC68B0CA7BB09FE00A17CE2 /* safari-extension-walletlib-swift.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift.modulemap";
+				PRODUCT_MODULE_NAME = SafariExtensionWalletlibSwift;
+				PRODUCT_NAME = SafariExtensionWalletlibSwift;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1035,6 +1004,41 @@
 			};
 			name = Debug;
 		};
+		E04452A91EA32F367DE68F51C6810075 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D64632442EF3EA101EA79BCA33F04104 /* safari-extension-walletlib-swift.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/safari-extension-walletlib-swift/safari-extension-walletlib-swift.modulemap";
+				PRODUCT_MODULE_NAME = SafariExtensionWalletlibSwift;
+				PRODUCT_NAME = SafariExtensionWalletlibSwift;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		E83D92B963E3022798364183E6AAB841 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 69AE63432F1A732B777AC026CFE4C63A /* Pods-SolanaSafariWalletExtension Extension.release.xcconfig */;
@@ -1076,15 +1080,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2366D2C4EB64E98FB2029894E2321730 /* Build configuration list for PBXNativeTarget "safari-extension-walletlib-swift" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1463048FA10B1EC0DC8008F995F18A6F /* Debug */,
-				061F79ED7CAA79452995C2491F872C11 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		39F1BB19BD7AD1B8D327F6AA2ED940A1 /* Build configuration list for PBXNativeTarget "Pods-SolanaSafariWalletExtensionTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1108,6 +1103,15 @@
 			buildConfigurations = (
 				0113527B46CA39F1A62F2D78175B67FA /* Debug */,
 				093D0081731AD66B8AC42FE6D015D950 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5EAA99352269F8D5F1A63D5DA70CC168 /* Build configuration list for PBXNativeTarget "safari-extension-walletlib-swift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E04452A91EA32F367DE68F51C6810075 /* Debug */,
+				2F45F1C303D92605C2798CDB12DAB369 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

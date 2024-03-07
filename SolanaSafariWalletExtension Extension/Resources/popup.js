@@ -23655,18 +23655,18 @@ Missing signature for public key${sigErrors.missing.length === 1 ? "" : "(s)"} [
         data
       });
     }
-    static split(params) {
+    static split(params, rentExemptReserve) {
       const transaction = new Transaction();
       transaction.add(SystemProgram.createAccount({
         fromPubkey: params.authorizedPubkey,
         newAccountPubkey: params.splitStakePubkey,
-        lamports: 0,
+        lamports: rentExemptReserve,
         space: this.space,
         programId: this.programId
       }));
       return transaction.add(this.splitInstruction(params));
     }
-    static splitWithSeed(params) {
+    static splitWithSeed(params, rentExemptReserve) {
       const {
         stakePubkey,
         authorizedPubkey,
@@ -23683,6 +23683,13 @@ Missing signature for public key${sigErrors.missing.length === 1 ? "" : "(s)"} [
         space: this.space,
         programId: this.programId
       }));
+      if (rentExemptReserve && rentExemptReserve > 0) {
+        transaction.add(SystemProgram.transfer({
+          fromPubkey: params.authorizedPubkey,
+          toPubkey: splitStakePubkey,
+          lamports: rentExemptReserve
+        }));
+      }
       return transaction.add(this.splitInstruction({
         stakePubkey,
         authorizedPubkey,

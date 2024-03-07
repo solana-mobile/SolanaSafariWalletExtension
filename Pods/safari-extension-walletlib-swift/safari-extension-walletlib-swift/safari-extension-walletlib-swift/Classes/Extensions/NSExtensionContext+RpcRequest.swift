@@ -1,14 +1,16 @@
-//
-//  NSExtensionContext+RpcParsing.swift
-//  FBSnapshotTestCase
-//
-//  Created by Mike Sulistio on 2/13/24.
-//
-
 import Foundation
 import SafariServices
 
 public extension NSExtensionContext {
+    func requestId() -> String? {
+        guard let item = self.inputItems.first as? NSExtensionItem,
+              let rawMessage = item.userInfo?[SFExtensionMessageKey] as? [String: Any],
+              let id = rawMessage["id"] as? String else {
+            return nil
+        }
+        return id
+    }
+    
     func requestMethod() -> String? {
         guard let item = self.inputItems.first as? NSExtensionItem,
               let rawMessage = item.userInfo?[SFExtensionMessageKey] as? [String: Any],
@@ -26,7 +28,6 @@ public extension NSExtensionContext {
         }
         
         guard let jsonData = paramsJsonString.data(using: .utf8) else {
-            print("Error converting Params JSON string to Data")
             return nil
         }
         
@@ -36,7 +37,6 @@ public extension NSExtensionContext {
             let params = try decoder.decode(T.self, from: jsonData)
             return params
         } catch {
-            print("Failed to decode parameters: \(error)")
             return nil
         }
     }
@@ -50,22 +50,32 @@ public extension NSExtensionContext {
             let response = NSExtensionItem()
             response.userInfo = [
                 SFExtensionMessageKey: [
+                    
+                    "jsonrpc": "2.0",
+                    "id": self.requestId(),
                     "result": resultJsonString, // Pass jsonString here
-                    "error": nil
+                    "error": nil,
                 ]
             ]
             self.completeRequest(returningItems: [response])
         } catch {
-            self.completeRpcRequestWith(errorMessage: "Failed to encode result to JSON")
+            self.completeRpcRequestWith(error: WalletlibRpcErrors.internalError)
         }
     }
     
-    func completeRpcRequestWith(errorMessage: String) -> Void {
+    func completeRpcRequestWith(error: RPCError) -> Void {
+        self.completeRpcRequestWith(errorCode: error.code, errorMessage: error.message)
+    }
+    
+    func completeRpcRequestWith(errorCode: Int, errorMessage: String) -> Void {
         let response = NSExtensionItem()
         response.userInfo = [
             SFExtensionMessageKey: [
+                "jsonrpc": "2.0",
+                "id": self.requestId(),
                 "result": nil,
                 "error": [
+                    "code": errorCode,
                     "message": errorMessage
                 ]
             ]

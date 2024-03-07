@@ -1,7 +1,3 @@
-public struct GetAccountsParams: Decodable {
-    public let extra_data: [String: String]?
-}
-
 public struct GetAccountsResult: Encodable {
     // Base58 encoded address
     public let addresses: [String]
