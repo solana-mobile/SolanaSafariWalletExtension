@@ -23,6 +23,6 @@ target 'SolanaSafariWalletExtension Extension' do
   use_frameworks!
   
   # Pods for SolanaSafariWalletExtension Extension
-  pod 'safari-extension-walletlib-swift', '~> 0.1'
+  pod 'safari-extension-walletlib-swift', '~> 0.2'
 
 end
