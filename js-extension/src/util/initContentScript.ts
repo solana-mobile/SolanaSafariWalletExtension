@@ -39,6 +39,10 @@ export function initContentScript() {
         forwardToPageScript({
           ...message
         });
+      } else if (message.type === "approval-heartbeat") {
+        forwardToPageScript({
+          ...message
+        });
       }
     }
   );
