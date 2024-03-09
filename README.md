@@ -52,9 +52,11 @@ Now your native app and extension handler can read and write to the same UserDef
 
 ## Folder Reference
 
-`js-extension`: The React UI that renders within the safari browser. The UI is bundled into raw minified `.js` scripts which are exported to the Safari Extension folder with `npm run build:publish`.
+`js-extension`: All the JS in the web extension is built from this directory (i.e Approval UI, page/content/background scripts, wallet standard, etc). The JS is bundled into raw minified `.js` scripts which are exported to the Safari Extension folder with `npm run build:publish`.
 
-`SolanaSafariWalletExtension Extension`: The **Safari Web Extension** Swift code. TThis contains the bundled `js` and `html` from the `js-extension` folder and also the _Extension handler_ code, which acts as a bridge between JS and the native app.
+`js-extension/Approval`: React components and logic for the Approval Popup UI.
+
+`SolanaSafariWalletExtension Extension`: The **Safari Web Extension** Swift code. This contains the bundled `js` and `html` from the `js-extension` folder and also the _Extension handler_ code, which acts as a bridge between JS and the native app.
 
 `SolanaSafariWalletExtension`: The native iOS wallet app built with SwiftUI.
 
@@ -77,9 +79,11 @@ Just like Chrome extension wallets, this uses [Wallet-standard](https://github.c
 
 3. The _content script_ forwards this message to the Extension's _background script_ (`background.ts`) using ` browser.runtime.sendMessage`.
 
-4. The _background script_ initializes the Approval UI Tab (`approval.tsx`) using `browser.tabs` API.
+4. The _background script_ initializes the Approval UI (`approval.tsx`) using `browser.action.openPopup()` API.
 
-5. On approve, the Approval UI tab sends the connect response back to the connecting dApp (`browser.tabs.sendMessage(originTabId, response)`).
+5. The Approval UI is able to communicate and fetch necessary data from the native app with `browser.runtime.sendNativeMessage`.
+
+6. On approve, the Approval UI tab sends the connect response back to the page with `browser.tabs.sendMessage(originTabId, response)`.
 
 ## Architecture Diagrams
 
