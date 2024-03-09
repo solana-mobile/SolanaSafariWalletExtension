@@ -2,21 +2,18 @@ import React from "react";
 import {
   SolanaSignTransactionInputEncoded,
   SolanaSignTransactionOutputEncoded
-} from "../types/messageTypes";
+} from "../../types/messageTypes";
 import { PublicKey, Transaction } from "@solana/web3.js";
-import { Separator } from "@/components/ui/separator";
-import ApprovalFooter from "./ApprovalFooter";
-import ApprovalHeader from "./ApprovalHeader";
-import WalletDisplay from "./WalletSelectorButton";
-import { toUint8Array, fromUint8Array } from "js-base64";
+import { Separator } from "@radix-ui/react-separator";
+import ApprovalFooter from "../ApprovalFooter";
+import ApprovalHeader from "../ApprovalHeader";
+import WalletDisplay from "../WalletSelectorButton";
 import { Base58EncodedAddress } from "@solana-mobile/safari-extension-walletlib-js";
-import { nativeSignPayload } from "../nativeRequests/nativeSignPayloads";
-import { RpcRequestQueueItem } from "./ApprovalScreen";
-import { Buffer } from "buffer";
-import { RpcResponse } from "../pageRpc/requests";
-import { PAGE_WALLET_RESPONSE_CHANNEL } from "../pageRpc/constants";
-import { Download, SendHorizontal } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { RpcRequestQueueItem } from "../ApprovalScreen";
+import { RpcResponse } from "../../pageRpc/requests";
+import { toUint8Array, fromUint8Array } from "js-base64";
+import { nativeSignPayload } from "../../nativeRequests/nativeSignPayloads";
+import { PAGE_WALLET_RESPONSE_CHANNEL } from "../../pageRpc/constants";
 
 type Props = Readonly<{
   request: RpcRequestQueueItem;
@@ -28,12 +25,13 @@ type Props = Readonly<{
   selectedAccount: Base58EncodedAddress | null;
 }>;
 
-export default function SignTransactionScreen({
+export default function SignAndSendTransactionScreen({
   request,
-  onComplete,
-  selectedAccount
+  onComplete
 }: Props) {
-  const handleSignTransaction = async (request: RpcRequestQueueItem) => {
+  const dummyKeypair = useDummyKeypair();
+
+  const handleSignAndSendTransaction = async (request: RpcRequestQueueItem) => {
     if (!request.origin || !request.origin.tab?.id) {
       throw new Error("Sender origin is missing: " + request);
     }
@@ -61,14 +59,22 @@ export default function SignTransactionScreen({
       signedTransaction: fromUint8Array(tx.serialize())
     };
 
-    onComplete(
-      {
-        id: request.rpcRequest.id,
-        result: encodedResult
-      },
-      request.origin.tab.id,
-      PAGE_WALLET_RESPONSE_CHANNEL
-    );
+    // const { signature } = await signAndSendTransaction(
+    //   VersionedTransaction.deserialize(txBytes),
+    //   dummyKeypair,
+    //   getClusterForChain(input.chain as SolanaChain),
+    //   input.options
+    // );
+
+    // onComplete({
+    //   type: "wallet-response",
+    //   method: request.method,
+    //   requestId: request.requestId,
+    //   origin: request.origin,
+    //   output: {
+    //     signature
+    //   }
+    // });
   };
 
   const handleCancel = async (request: RpcRequestQueueItem) => {
@@ -89,25 +95,25 @@ export default function SignTransactionScreen({
   };
 
   return (
-    <div className="flex flex-col p-2 mx-auto max-w-sm min-h-screen">
+    <div className="flex flex-col mx-auto max-w-sm min-h-screen">
       <div className="flex-grow flex-col space-y-4">
         <ApprovalHeader
-          title={request.origin.tab?.title ?? "Unknown website"}
-          subtitle="wants you to approve a transaction"
-          connectedAddress={selectedAccount ?? "..."}
+          title="Sign Transaction"
+          description="A website is requesting you to approve a transaction."
+          origin={request.origin}
+          displayTitle={true}
         />
 
         <Separator className="mb-4" />
 
         <div className="text-lg font-bold">Estimated Changes</div>
 
-        {/* 
         <div className="bg-slate-400 rounded-lg p-4 text-center text-black">
           Transaction simulation not implemented as part of demo
-        </div> */}
+        </div>
 
         {/* Demo UI */}
-        <div className="flex justify-between">
+        {/* <div className="flex justify-between">
           <span className="font-bold">Network fee</span>
           <span>{"< 0.00001 SOL"}</span>
         </div>
@@ -126,7 +132,14 @@ export default function SignTransactionScreen({
             <span className="font-bold ml-3">Received</span>
           </div>
           <span className="text-green-500 font-semibold">{"0.236 USDC"}</span>
-        </div>
+        </div>*/}
+
+        <Separator className="my-4" />
+
+        <div className="text-lg font-bold">as:</div>
+        <WalletDisplay
+          walletAddress={dummyKeypair?.publicKey.toBase58() ?? "Loading..."}
+        />
       </div>
 
       <ApprovalFooter
@@ -135,14 +148,14 @@ export default function SignTransactionScreen({
         }}
         onConfirm={async () => {
           try {
-            await handleSignTransaction(request);
+            await handleSignAndSendTransaction(request);
           } catch (err: any) {
-            console.log(err);
+            const error = err as Error;
             onComplete(
               {
                 id: request.rpcRequest.id,
                 error: {
-                  value: "Error during signing: " + (err as Error).message
+                  value: "User during signing."
                 }
               },
               request.origin.tab!.id!,

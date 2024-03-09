@@ -27,19 +27,25 @@ export default function ApprovalFooter({
   };
 
   return (
-    <div className="mt-auto flex justify-evenly pb-32 space-x-2">
-      <Button className="rounded-full w-2/5 mr-2" onClick={handleCancel}>
+    <div className="mt-auto flex justify-between pb-24 space-x-2">
+      <Button
+        className="rounded-2xl bg-black w-2/5 h-12 mr-2"
+        onClick={handleCancel}
+      >
         {isCancelLoading ? (
           <Loader2 className="h-4 w-4 animate-spin" />
         ) : (
-          "Cancel"
+          <span className="text-base">Cancel</span>
         )}
       </Button>
-      <Button className="rounded-full w-2/5 px-4" onClick={handleConfirm}>
+      <Button
+        className="rounded-2xl bg-black w-2/5 h-12 px-4"
+        onClick={handleConfirm}
+      >
         {isConfirmLoading ? (
           <Loader2 className="h-4 w-4 animate-spin" />
         ) : (
-          confirmText
+          <span className="text-base">{confirmText}</span>
         )}
       </Button>
     </div>

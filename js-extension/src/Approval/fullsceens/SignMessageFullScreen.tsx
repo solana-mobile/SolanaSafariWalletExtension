@@ -2,19 +2,19 @@ import React from "react";
 import {
   SolanaSignMessageInputEncoded,
   SolanaSignMessageOutputEncoded
-} from "../types/messageTypes";
+} from "../../types/messageTypes";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import WalletDisplay from "./WalletSelectorButton";
-import ApprovalHeader from "./ApprovalHeader";
-import ApprovalFooter from "./ApprovalFooter";
-import { RpcRequestQueueItem } from "./ApprovalScreen";
-import { nativeSignPayload } from "../nativeRequests/nativeSignPayloads";
+import WalletDisplay from "../WalletSelectorButton";
+import ApprovalHeader from "../ApprovalHeader";
+import ApprovalFooter from "../ApprovalFooter";
+import { RpcRequestQueueItem } from "../ApprovalScreen";
+import { nativeSignPayload } from "../../nativeRequests/nativeSignPayloads";
 import { fromUint8Array, toUint8Array } from "js-base64";
 import { PublicKey } from "@solana/web3.js";
-import { RpcResponse } from "../pageRpc/requests";
+import { RpcResponse } from "../../pageRpc/requests";
 import { Base58EncodedAddress } from "@solana-mobile/safari-extension-walletlib-js";
-import { PAGE_WALLET_RESPONSE_CHANNEL } from "../pageRpc/constants";
+import { PAGE_WALLET_RESPONSE_CHANNEL } from "../../pageRpc/constants";
 import base58 from "bs58";
 
 type Props = Readonly<{
@@ -85,22 +85,28 @@ export default function SignMessageScreen({
   };
 
   return (
-    <div className="flex flex-col p-2 mx-auto max-w-sm min-h-screen">
+    <div className="flex flex-col mx-auto max-w-sm min-h-screen">
       <div className="flex-grow flex-col space-y-4">
         <ApprovalHeader
-          title={request.origin.tab?.title ?? "Unknown website"}
-          subtitle="wants you to sign a message"
-          connectedAddress={selectedAccount ?? "..."}
+          title="Sign Message"
+          description="A website is requesting you to sign a message."
+          origin={request.origin}
+          displayTitle={true}
         />
 
-        <div className="text-black font-bold text-lg">Message</div>
-        <div className="pl-4 rounded-md shadow">
+        <Separator className="mb-4" />
+
+        <div className="text-lg font-bold">Sign this message</div>
+        <div className="p-4 bg-gray-100 rounded-md shadow">
           <ScrollArea className="h-[50px]">
             <p className="text-sm text-muted-foreground mt-2">Hello Solana!</p>
           </ScrollArea>
         </div>
 
         <Separator className="my-4" />
+
+        <div className="text-lg font-bold">Wallet</div>
+        <WalletDisplay walletAddress={selectedAccount ?? "Loading.."} />
       </div>
 
       <ApprovalFooter
@@ -125,7 +131,7 @@ export default function SignMessageScreen({
             );
           }
         }}
-        confirmText={"Sign"}
+        confirmText={"Sign Message"}
       />
     </div>
   );

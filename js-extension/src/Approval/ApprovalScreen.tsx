@@ -116,6 +116,9 @@ export default function ApprovalScreen() {
           responseChannel: PAGE_WALLET_RESPONSE_CHANNEL
         };
         setRequest(queueItem);
+        setTimeout(() => {
+          console.log(event.origin);
+        }, 5000);
         startHeartbeat(queueItem);
       }
     }

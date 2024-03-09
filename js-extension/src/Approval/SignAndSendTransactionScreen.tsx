@@ -7,7 +7,7 @@ import { PublicKey, Transaction } from "@solana/web3.js";
 import { Separator } from "@radix-ui/react-separator";
 import ApprovalFooter from "./ApprovalFooter";
 import ApprovalHeader from "./ApprovalHeader";
-import WalletDisplay from "./WalletDisplay";
+import WalletDisplay from "./WalletSelectorButton";
 import { Base58EncodedAddress } from "@solana-mobile/safari-extension-walletlib-js";
 import { RpcRequestQueueItem } from "./ApprovalScreen";
 import { RpcResponse } from "../pageRpc/requests";
