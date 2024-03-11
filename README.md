@@ -5,7 +5,7 @@
 
 ## Demo
 
-[Video](https://github.com/Michaelsulistio/SolanaSafariWalletExtension/assets/18451967/b40ce3e3-33bb-4c60-9486-4b34f8db0076) of a Jupiter Exchange swap
+[Video](https://github.com/Michaelsulistio/SolanaSafariWalletExtension/assets/18451967/b40ce3e3-33bb-4c60-9486-4b34f8db0076) of a Jupiter Exchange swap (_outdated video needs updating to Popup UI_).
 
 <div style="display: flex;">
     <img src="assets/AppHomeScreen.png" width="25%">
@@ -51,9 +51,9 @@ Now your native app and extension handler can read and write to the same UserDef
 4. Select "Always allow" then "Always allow on every website".
 
 <div style="display: flex;">
-    <img src="assets/Onboarding1.png" width="20%">
-    &nbsp;<img src="assets/Onboarding2.png" width="20%">
-    &nbsp;<img src="assets/Onboarding3.png" width="20%">
+    <img src="assets/Onboarding1.png" width="25%">
+    &nbsp;<img src="assets/Onboarding2.png" width="25%">
+    &nbsp;<img src="assets/Onboarding3.png" width="25%">
 </div>
 
 ## Folder Reference
