@@ -105,7 +105,13 @@ export default function ApprovalScreen() {
           origin: event.origin,
           rpcRequest: event.rpcRequest.detail,
           responseChannel: PAGE_WALLET_RESPONSE_CHANNEL
+<<<<<<< Updated upstream
         });
+=======
+        };
+        setRequest(queueItem);
+        startHeartbeat(queueItem);
+>>>>>>> Stashed changes
       }
     }
 
