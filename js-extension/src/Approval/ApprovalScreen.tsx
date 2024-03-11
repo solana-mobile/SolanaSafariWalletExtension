@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { WalletRequestMethod } from "../types/messageTypes";
 import ConnectScreen from "./ConnectScreen";
 import SignMessageScreen from "./SignMessageScreen";
@@ -6,6 +6,7 @@ import SignTransactionScreen from "./SignTransactionScreen";
 import SignAndSendTransactionScreen from "./SignAndSendTransactionScreen";
 import { nativeGetAccounts } from "../nativeRequests/nativeGetAccounts";
 import {
+  APPROVAL_HEARTBEAT_CHANNEL,
   PAGE_WALLET_REQUEST_CHANNEL,
   PAGE_WALLET_RESPONSE_CHANNEL
 } from "../pageRpc/constants";
@@ -79,6 +80,19 @@ function isValidRpcMethod(method: string): boolean {
   );
 }
 
+function startHeartbeat(queueItem: RpcRequestQueueItem) {
+  setInterval(() => {
+    browser.tabs
+      // Send heartbeats to the page
+      .sendMessage(queueItem.origin.tab?.id!, {
+        type: APPROVAL_HEARTBEAT_CHANNEL,
+        detail: {
+          requestId: queueItem.rpcRequest.id
+        }
+      });
+  }, 100);
+}
+
 export default function ApprovalScreen() {
   const [request, setRequest] = useState<RpcRequestQueueItem | undefined>(
     undefined
@@ -91,27 +105,19 @@ export default function ApprovalScreen() {
   //    2. Signals to background that this listener, and thus the approval tab, is ready to receive requests
   useEffect(() => {
     function handleWalletRequest(event: WalletEvent) {
-      console.log("Approval Screen Request Received: ", event);
-      setTimeout(() => {
-        console.log("Approval Screen Request Received: ", event);
-      }, 5000);
-
       if (
         event.rpcRequest.type === PAGE_WALLET_REQUEST_CHANNEL &&
         isValidRpcMethod(event.rpcRequest.detail.method)
       ) {
         // Add the new RPC Request to the queue
-        setRequest({
+        const queueItem = {
           origin: event.origin,
           rpcRequest: event.rpcRequest.detail,
           responseChannel: PAGE_WALLET_RESPONSE_CHANNEL
-<<<<<<< Updated upstream
-        });
-=======
         };
+
         setRequest(queueItem);
         startHeartbeat(queueItem);
->>>>>>> Stashed changes
       }
     }
 
@@ -143,7 +149,6 @@ export default function ApprovalScreen() {
     originTabId: number,
     responseChannel: string
   ) => {
-    // TODO: Only `update` and `close` tab if its the last request in queue
     browser.tabs
       // Sends an approval response to the originTab
       .sendMessage(originTabId, { type: responseChannel, detail: response })
@@ -156,7 +161,7 @@ export default function ApprovalScreen() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-2">
       {request
         ? getRequestScreenComponent(request, onRequestComplete, selectedAccount)
         : null}
