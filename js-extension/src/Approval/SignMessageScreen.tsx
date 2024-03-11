@@ -5,7 +5,7 @@ import {
 } from "../types/messageTypes";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import WalletDisplay from "./WalletDisplay";
+import WalletDisplay from "./WalletSelectorButton";
 import ApprovalHeader from "./ApprovalHeader";
 import ApprovalFooter from "./ApprovalFooter";
 import { RpcRequestQueueItem } from "./ApprovalScreen";
@@ -85,28 +85,22 @@ export default function SignMessageScreen({
   };
 
   return (
-    <div className="flex flex-col mx-auto max-w-sm min-h-screen">
+    <div className="flex flex-col p-2 mx-auto max-w-sm min-h-screen">
       <div className="flex-grow flex-col space-y-4">
         <ApprovalHeader
-          title="Sign Message"
-          description="A website is requesting you to sign a message."
-          origin={request.origin}
-          displayTitle={true}
+          title={request.origin.tab?.title ?? "Unknown website"}
+          subtitle="wants you to sign a message"
+          connectedAddress={selectedAccount ?? "..."}
         />
 
-        <Separator className="mb-4" />
-
-        <div className="text-lg font-bold">Sign this message</div>
-        <div className="p-4 bg-gray-100 rounded-md shadow">
+        <div className="text-black font-bold text-lg">Message</div>
+        <div className="pl-4 rounded-md shadow">
           <ScrollArea className="h-[50px]">
             <p className="text-sm text-muted-foreground mt-2">Hello Solana!</p>
           </ScrollArea>
         </div>
 
         <Separator className="my-4" />
-
-        <div className="text-lg font-bold">Wallet</div>
-        <WalletDisplay walletAddress={selectedAccount ?? "Loading.."} />
       </div>
 
       <ApprovalFooter
@@ -131,7 +125,7 @@ export default function SignMessageScreen({
             );
           }
         }}
-        confirmText={"Sign Message"}
+        confirmText={"Sign"}
       />
     </div>
   );

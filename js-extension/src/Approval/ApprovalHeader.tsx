@@ -1,12 +1,12 @@
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
 import OriginHeader from "./OriginHeader";
+import WalletDisplay from "./WalletSelectorButton";
 
 type Props = Readonly<{
   title: string;
-  description: string;
-  origin?: browser.runtime.MessageSender;
-  displayTitle: boolean;
+  subtitle: string;
+  connectedAddress: string;
 }>;
 
 function getBaseUrl(url: string | undefined): string | undefined {
@@ -19,23 +19,25 @@ function getBaseUrl(url: string | undefined): string | undefined {
 
 export default function ApprovalHeader({
   title,
-  description,
-  origin,
-  displayTitle
+  subtitle,
+  connectedAddress
 }: Props) {
   return (
-    <>
-      {displayTitle ? (
-        <CardHeader>
-          <CardTitle className="text-xxl">{title}</CardTitle>
-          <CardDescription>{description}</CardDescription>
-        </CardHeader>
-      ) : null}
-      <OriginHeader
-        title={origin?.tab?.title}
-        url={getBaseUrl(origin?.tab?.url)}
-        favIconUrl={origin?.tab?.favIconUrl}
-      />
-    </>
+    <div>
+      <div className="flex flex-row items-center justify-between mb-12">
+        <img
+          src={"https://jup.ag/favicon.ico"}
+          alt="FavIcon"
+          className="w-14 h-14 bg-gray-800 rounded-full p-2"
+        />
+
+        <WalletDisplay walletAddress={connectedAddress} />
+      </div>
+
+      <div className="flex-col">
+        <p className="font-bold text-xl">{title}</p>
+        <p className="font-bold text-muted-foreground text-lg">{subtitle}</p>
+      </div>
+    </div>
   );
 }
