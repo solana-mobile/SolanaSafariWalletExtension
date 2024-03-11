@@ -8,9 +8,9 @@
 [Video](https://github.com/Michaelsulistio/SolanaSafariWalletExtension/assets/18451967/b40ce3e3-33bb-4c60-9486-4b34f8db0076) of a Jupiter Exchange swap
 
 <div style="display: flex;">
-    <img src="assets/ExtensionScreen1.png" width="25%">
-    &nbsp;<img src="assets/ExtensionScreen2.png" width="25%">
-    &nbsp;<img src="assets/ExtensionScreen3.png" width="25%">
+    <img src="assets/AppHomeScreen.png" width="25%">
+    &nbsp;<img src="assets/ConnectScreenPopup.png" width="25%">
+    &nbsp;<img src="assets/SignScreenPopup.png" width="25%">
 </div>
 
 ## Installation
@@ -50,6 +50,12 @@ Now your native app and extension handler can read and write to the same UserDef
 3. Back in the _Aa_ menu, press new "Solana Safari Extension Wallet" button.
 4. Select "Always allow" then "Always allow on every website".
 
+<div style="display: flex;">
+    <img src="assets/Onboarding1.png" width="20%">
+    &nbsp;<img src="assets/Onboarding2.png" width="20%">
+    &nbsp;<img src="assets/Onboarding3.png" width="20%">
+</div>
+
 ## Folder Reference
 
 `js-extension`: All the JS in the web extension is built from this directory (i.e Approval UI, page/content/background scripts, wallet standard, etc). The JS is bundled into raw minified `.js` scripts which are exported to the Safari Extension folder with `npm run build:publish`.
@@ -65,7 +71,8 @@ Now your native app and extension handler can read and write to the same UserDef
 A [Safari Web Extension](https://developer.apple.com/documentation/safariservices/safari_web_extensions) allows an iOS app to add customized functionality to
 the Safari mobile browser. Similar to a Chrome browser extension, the Safari Web Extension can run background/content scripts and inject javascript into the web page.
 
-The **key benefit** of the web extension on mobile is that it is able to securely communicate with the native iOS app and relay information to the web page.
+The **key benefit** of the web extension on mobile is that it is able to communicate with the native iOS app, relay information to the web page, and render a bottom sheet pop up for
+a no-context switch signing experience.
 
 ## Wallet Standard
 
@@ -89,8 +96,8 @@ Just like Chrome extension wallets, this uses [Wallet-standard](https://github.c
 
 ### App + Extension Diagram
 
-![High Level Diagram](./assets/Diagram1.png)
+![High Level Diagram](./assets/App+Extension.png)
 
 ### JS Extension Diagram
 
-![JS Extension Diagram](./assets/Diagram2.png)
+![JS Extension Diagram](./assets/JSExtension.png)
